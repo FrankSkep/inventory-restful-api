@@ -2,7 +2,7 @@ package com.fran.Sistema_Inventario.Controller;
 
 import com.fran.Sistema_Inventario.Entity.MovimientoStock;
 import com.fran.Sistema_Inventario.Service.MovimientoService;
-import com.fran.Sistema_Inventario.Service.ProductoServiceImpl;
+import com.fran.Sistema_Inventario.Service.Impl.ProductoServiceImpl;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -31,8 +31,8 @@ public class MovimientosController {
         return ResponseEntity.status(HttpStatus.CREATED).body(movimientoRegistrado);
     }
 
-    @GetMapping("/todos")
-    public List<MovimientoStock> todosLosMovimiento() {
+    @GetMapping("/")
+    public List<MovimientoStock> todosLosMovimientos() {
         return movimientoService.obtenerTodosLosMovimientos();
     }
 

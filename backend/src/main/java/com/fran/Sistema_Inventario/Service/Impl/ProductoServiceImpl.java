@@ -1,11 +1,12 @@
-package com.fran.Sistema_Inventario.Service;
+package com.fran.Sistema_Inventario.Service.Impl;
 
 import com.fran.Sistema_Inventario.DTO.ProductoDTO;
 import com.fran.Sistema_Inventario.Entity.MovimientoStock;
 import com.fran.Sistema_Inventario.Entity.Producto;
-import com.fran.Sistema_Inventario.Entity.Proveedor;
 import com.fran.Sistema_Inventario.Repository.MovimientoStockRepository;
 import com.fran.Sistema_Inventario.Repository.ProductoRepository;
+import com.fran.Sistema_Inventario.Service.ProductoService;
+import com.fran.Sistema_Inventario.Service.ProveedorService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import java.time.LocalDateTime;
@@ -30,45 +31,60 @@ public class ProductoServiceImpl implements ProductoService {
         return productoRepository.findAll();
     }
 
+    // Obtener producto por su ID
     @Override
     public Producto obtenerPorID(Integer id) {
         return productoRepository.getReferenceById(id);
     }
 
+    // Guardar un nuevo producto
     @Override
     public Producto guardarProducto(ProductoDTO productoReq) {
 
-        Proveedor proveedor = proveedorService.obtenerPorID(productoReq.getProveedorId());
-
-        Producto producto = new Producto();
-        producto.setNombre(productoReq.getNombre());
-        producto.setDescripcion(productoReq.getDescripcion());
-        producto.setPrecio(productoReq.getPrecio());
-        producto.setCantidadStock(productoReq.getCantidadStock());
-        producto.setCategoria(productoReq.getCategoria());
-        producto.setProveedor(proveedor);
+        Producto producto = new Producto(
+                productoReq.getNombre(),
+                productoReq.getDescripcion(),
+                productoReq.getPrecio(),
+                productoReq.getCantidadStock(),
+                productoReq.getCategoria(),
+                proveedorService.obtenerPorID(productoReq.getProveedorId()));
 
         return productoRepository.save(producto);
     }
 
+    // Editar datos de un producto existente
     @Override
-    public Producto editarProducto(Integer id, ProductoDTO producto) {
+    public Producto editarProducto(Integer id, ProductoDTO productoReq) {
 
         Producto productoDB = productoRepository.getReferenceById(id);
 
-        productoDB.setNombre(producto.getNombre());
-        productoDB.setDescripcion(producto.getDescripcion());
-        productoDB.setPrecio(producto.getPrecio());
-        productoDB.setCantidadStock(id);
-        productoDB.setCategoria(producto.getCategoria());
-        productoDB.setProveedor(proveedorService.obtenerPorID(producto.getProveedorId()));
+        productoDB.setNombre(productoReq.getNombre());
+        productoDB.setDescripcion(productoReq.getDescripcion());
+        productoDB.setPrecio(productoReq.getPrecio());
+        productoDB.setCategoria(productoReq.getCategoria());
+        productoDB.setProveedor(proveedorService.obtenerPorID(productoReq.getProveedorId()));
 
         return productoRepository.save(productoDB);
+    }
+
+    // Eliminar un producto
+    @Override
+    public boolean eliminarProducto(Integer id) {
+
+        Producto producto = productoRepository.getReferenceById(id);
+
+        if (producto != null) {
+            productoRepository.delete(producto);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override
     @Transactional
     public MovimientoStock registrarMovimiento(MovimientoStock movimiento) {
+
         Producto producto = productoRepository.getReferenceById(movimiento.getProducto().getId());
 
         if (producto == null) {

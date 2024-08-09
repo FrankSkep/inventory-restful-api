@@ -9,7 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,12 +23,13 @@ public class ProveedorController {
     @Autowired
     private ProveedorService proveedorService;
 
+    // Obtener lista de todos los proveedores
     @GetMapping({"", "/"})
-
     public List<Proveedor> obtenerProbedores() {
         return proveedorService.obtenerProveedores();
     }
 
+    // Registrar nuevo proveedor
     @PostMapping("/registrar")
     public ResponseEntity<?> crearProveedor(@Valid @RequestBody ProveedorDTO proveedorDTO, BindingResult result) {
 
@@ -46,4 +49,14 @@ public class ProveedorController {
         return ResponseEntity.ok(proveedor);
     }
 
+    @PutMapping("/editar/{id}")
+    public ResponseEntity<?> editarDatosProveedor(@PathVariable Integer id, @Valid @RequestBody ProveedorDTO proveedor, BindingResult result) {
+
+        if (result.hasErrors()) {
+            return ResponseEntity.badRequest().body(result.getAllErrors());
+        }
+        
+        return ResponseEntity.ok(proveedorService.editarProveedor(id, proveedor));
+        
+    }
 }

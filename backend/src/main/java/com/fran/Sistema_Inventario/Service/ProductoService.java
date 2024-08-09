@@ -15,5 +15,7 @@ public interface ProductoService {
 
     public Producto editarProducto(Integer id, ProductoDTO producto);
 
+    public boolean eliminarProducto(Integer id);
+
     public MovimientoStock registrarMovimiento(MovimientoStock movimiento);
 }

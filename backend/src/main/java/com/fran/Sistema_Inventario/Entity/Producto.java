@@ -51,6 +51,28 @@ public class Producto {
     @JsonManagedReference
     private List<MovimientoStock> movimientosStock = new ArrayList<>();
 
+    public Producto(Integer id, String nombre, String descripcion, Double precio, Integer cantidadStock, String categoria, Proveedor proveedor) {
+        this.id = id;
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+        this.precio = precio;
+        this.cantidadStock = cantidadStock;
+        this.categoria = categoria;
+        this.proveedor = proveedor;
+    }
+
+    public Producto(String nombre, String descripcion, Double precio, Integer cantidadStock, String categoria, Proveedor proveedor) {
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+        this.precio = precio;
+        this.cantidadStock = cantidadStock;
+        this.categoria = categoria;
+        this.proveedor = proveedor;
+    }
+
+    public Producto() {
+    }
+
     public Integer getId() {
         return id;
     }
