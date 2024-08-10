@@ -24,6 +24,13 @@ public class MovimientosController {
     @Autowired
     private ProductoServiceImpl productoService;
 
+    // Obtener todos los movimientos
+    @GetMapping("/")
+    public List<MovimientoStock> todosLosMovimientos() {
+        return movimientoService.obtenerTodosLosMovimientos();
+    }
+
+    // Registrar nuevo movimiento de stock
     @PostMapping("/registrar")
     public ResponseEntity<MovimientoStock> registrarMovimientoStock(@RequestBody MovimientoStock movimiento) {
 
@@ -31,11 +38,7 @@ public class MovimientosController {
         return ResponseEntity.status(HttpStatus.CREATED).body(movimientoRegistrado);
     }
 
-    @GetMapping("/")
-    public List<MovimientoStock> todosLosMovimientos() {
-        return movimientoService.obtenerTodosLosMovimientos();
-    }
-
+    // Obtener movimientos de un producto
     @GetMapping("/{id}")
     public List<MovimientoStock> movimientosProducto(@PathVariable Integer id) {
         return movimientoService.obtenerMovimientosProducto(id);

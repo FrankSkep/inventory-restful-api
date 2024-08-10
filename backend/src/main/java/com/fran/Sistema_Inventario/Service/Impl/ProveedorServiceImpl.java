@@ -33,13 +33,26 @@ public class ProveedorServiceImpl implements ProveedorService {
     public Proveedor editarProveedor(Integer id, ProveedorDTO proveedor) {
 
         Proveedor proveedorDB = proveedorRepository.getReferenceById(id);
-        
+
         proveedorDB.setNombre(proveedor.getNombre());
         proveedorDB.setDireccion(proveedor.getDireccion());
         proveedorDB.setEmail(proveedor.getEmail());
         proveedorDB.setTelefono(proveedor.getTelefono());
-        proveedorDB.setIdentificacionFiscal(proveedor.getIdentificacionFiscal());                
+        proveedorDB.setIdentificacionFiscal(proveedor.getIdentificacionFiscal());
 
         return proveedorRepository.save(proveedorDB);
+    }
+
+    @Override
+    public boolean eliminarProveedor(Integer id) {
+
+        Proveedor proveedor = proveedorRepository.getReferenceById(id);
+
+        if (proveedor == null) {
+            return false;
+        }
+
+        proveedorRepository.delete(proveedor);
+        return true;
     }
 }

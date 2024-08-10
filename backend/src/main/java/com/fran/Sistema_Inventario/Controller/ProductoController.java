@@ -64,9 +64,9 @@ public class ProductoController {
     public ResponseEntity<?> eliminarProducto(@PathVariable Integer id) {
 
         if (productoService.eliminarProducto(id)) {
-            return ResponseEntity.ok("Producto con id " + id + " eliminado correctamente.");
+            return ResponseEntity.ok("Producto eliminado correctamente.");
         } else {
-            return ResponseEntity.ok("No se encontro el producto con id " + id);
+            return ResponseEntity.badRequest().body("No se encontro el producto con id " + id);
         }
     }
 }

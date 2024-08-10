@@ -8,6 +8,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,7 +26,7 @@ public class ProveedorController {
 
     // Obtener lista de todos los proveedores
     @GetMapping({"", "/"})
-    public List<Proveedor> obtenerProbedores() {
+    public List<Proveedor> obtenerProveedores() {
         return proveedorService.obtenerProveedores();
     }
 
@@ -55,8 +56,18 @@ public class ProveedorController {
         if (result.hasErrors()) {
             return ResponseEntity.badRequest().body(result.getAllErrors());
         }
-        
+
         return ResponseEntity.ok(proveedorService.editarProveedor(id, proveedor));
-        
+    }
+
+    @DeleteMapping("/eliminar/{id}")
+    public ResponseEntity<?> eliminarProveedor(@PathVariable Integer id) {
+
+        if (proveedorService.eliminarProveedor(id)) {
+            return ResponseEntity.ok("Proveedor eliminado correctamente.");
+        } else {
+            return ResponseEntity.badRequest().body("No se encontro el producto con id " + id);
+        }
+
     }
 }

@@ -23,7 +23,7 @@ public class ProductoDTO {
     private String categoria;
 
     @NotNull(message = "Debe seleccionar un proveedor")
-    private Integer proveedorId; // Suponiendo que el proveedor se identifica por un ID entero
+    private Integer proveedorId;
 
     public ProductoDTO(String nombre, String descripcion, Double precio, Integer cantidadStock, String categoria, Integer proveedorId) {
         this.nombre = nombre;

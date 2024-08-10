@@ -13,5 +13,7 @@ public interface ProveedorService {
     public Proveedor editarProveedor(Integer id, ProveedorDTO proveedor);
 
     public Proveedor obtenerPorID(Integer id);
+    
+    public boolean eliminarProveedor(Integer id);
 
 }

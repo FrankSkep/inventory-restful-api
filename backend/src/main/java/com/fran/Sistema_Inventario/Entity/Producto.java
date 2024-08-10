@@ -23,24 +23,18 @@ public class Producto {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @NotBlank(message = "El nombre del producto es obligatorio")
-    @Size(max = 100, message = "El nombre no debe exceder los 100 caracteres")
     @Column(nullable = false)
     private String nombre;
 
     private String descripcion;
 
-    @NotNull(message = "El precio es obligatorio")
-    @Min(value = 0, message = "El precio debe ser mayor o igual a 0")
     @Column(nullable = false)
     private Double precio;
 
-    @NotNull(message = "La cantidad en stock es obligatoria")
-    @Min(value = 0, message = "La cantidad en stock debe ser mayor o igual a 0")
     @Column(name = "cantidad_stock", nullable = false)
     private Integer cantidadStock;
 
-    @NotNull(message = "Debe seleccionar una categoría")
+    @Column(nullable = false)
     private String categoria;
 
     @ManyToOne
