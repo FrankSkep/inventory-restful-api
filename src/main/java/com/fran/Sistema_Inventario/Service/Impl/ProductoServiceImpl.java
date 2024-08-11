@@ -1,6 +1,8 @@
 package com.fran.Sistema_Inventario.Service.Impl;
 
+import com.fran.Sistema_Inventario.DTO.ProductoBasicoDTO;
 import com.fran.Sistema_Inventario.DTO.ProductoDTO;
+import com.fran.Sistema_Inventario.DTO.ProductoDetalladoDTO;
 import com.fran.Sistema_Inventario.Entity.MovimientoStock;
 import com.fran.Sistema_Inventario.Entity.Producto;
 import com.fran.Sistema_Inventario.Repository.MovimientoStockRepository;
@@ -9,12 +11,12 @@ import com.fran.Sistema_Inventario.Service.ProductoService;
 import com.fran.Sistema_Inventario.Service.ProveedorService;
 import com.google.cloud.storage.BlobId;
 import com.google.cloud.storage.Storage;
-import com.google.cloud.storage.StorageOptions;
 import com.google.firebase.cloud.StorageClient;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -36,14 +38,37 @@ public class ProductoServiceImpl implements ProductoService {
     private final String BUCKET_NAME = "productos-inventario-7f2d7.appspot.com";
 
     @Override
-    public List<Producto> obtenerProductos() {
-        return productoRepository.findAll();
+    public List<ProductoBasicoDTO> obtenerProductos() {
+
+        List<Producto> productos = productoRepository.findAll();
+        return productos.stream().map(this::convertirABasicoDTO).collect(Collectors.toList());
+    }
+
+    private ProductoBasicoDTO convertirABasicoDTO(Producto producto) {
+
+        ProductoBasicoDTO dto = new ProductoBasicoDTO(
+                producto.getId(), producto.getNombre(),
+                producto.getDescripcion(), producto.getPrecio(),
+                producto.getCantidadStock(), producto.getCategoria(),
+                producto.getImageUrl()
+        );
+        return dto;
     }
 
     // Obtener producto por su ID
     @Override
-    public Producto obtenerPorID(Long id) {
-        return productoRepository.getReferenceById(id);
+    public ProductoDetalladoDTO obtenerPorID(Long id) {
+
+        Producto producto = productoRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Producto no encontrado"));
+
+        return new ProductoDetalladoDTO(
+                producto.getId(), producto.getNombre(),
+                producto.getDescripcion(), producto.getPrecio(),
+                producto.getCantidadStock(), producto.getCategoria(),
+                producto.getImageUrl(), ProveedorServiceImpl.convertirDTOrespuesta(producto.getProveedor()),
+                producto.getUmbralBajoStock(), producto.getMovimientosStock()
+        );
     }
 
     // Guardar un nuevo producto

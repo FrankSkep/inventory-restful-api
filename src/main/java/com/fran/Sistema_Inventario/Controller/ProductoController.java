@@ -1,6 +1,8 @@
 package com.fran.Sistema_Inventario.Controller;
 
+import com.fran.Sistema_Inventario.DTO.ProductoBasicoDTO;
 import com.fran.Sistema_Inventario.DTO.ProductoDTO;
+import com.fran.Sistema_Inventario.DTO.ProductoDetalladoDTO;
 import com.fran.Sistema_Inventario.Entity.Producto;
 import com.fran.Sistema_Inventario.Service.Impl.FileUploadService;
 import com.fran.Sistema_Inventario.Service.Impl.ProductoServiceImpl;
@@ -39,13 +41,13 @@ public class ProductoController {
 
     // Obtener todos los productos del inventario
     @GetMapping("/")
-    public List<Producto> listaProductos() {
+    public List<ProductoBasicoDTO> listaProductos() {
         return productoService.obtenerProductos();
     }
 
     // Ver detalles de un producto
     @GetMapping("/detalles/{id}")
-    public ResponseEntity<?> obtenerProducto(@PathVariable Long id) {
+    public ResponseEntity<ProductoDetalladoDTO> obtenerProducto(@PathVariable Long id) {
         return ResponseEntity.ok(productoService.obtenerPorID(id));
     }
 

@@ -1,5 +1,6 @@
 package com.fran.Sistema_Inventario.Controller;
 
+import com.fran.Sistema_Inventario.DTO.ProveedorBasicoDTO;
 import com.fran.Sistema_Inventario.DTO.ProveedorDTO;
 import com.fran.Sistema_Inventario.Entity.Proveedor;
 import com.fran.Sistema_Inventario.Service.ProveedorService;
@@ -26,8 +27,14 @@ public class ProveedorController {
 
     // Obtener lista de todos los proveedores
     @GetMapping({"", "/"})
-    public List<Proveedor> obtenerProveedores() {
+    public List<ProveedorBasicoDTO> obtenerProveedores() {
         return proveedorService.obtenerProveedores();
+    }
+
+    // Detalles de un proveedor
+    @GetMapping("/detalles/{id}")
+    public Proveedor detallesProveedor(@PathVariable Long id) {
+        return proveedorService.obtenerPorID(id);
     }
 
     // Registrar nuevo proveedor
@@ -68,6 +75,5 @@ public class ProveedorController {
         } else {
             return ResponseEntity.badRequest().body("No se encontro el producto con id " + id);
         }
-
     }
 }

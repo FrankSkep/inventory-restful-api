@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,16 +30,20 @@ public class MovimientosController {
     }
 
     // Registrar nuevo movimiento de stock
-    @PostMapping("/registrar")
-    public ResponseEntity<MovimientoStock> registrarMovimientoStock(@RequestBody MovimientoStock movimiento) {
+    @PostMapping("/entrada")
+    public ResponseEntity<MovimientoStock> entradaStock(@RequestBody MovimientoStock movimiento) {
 
+        movimiento.setTipoMovimiento(MovimientoStock.TipoMovimiento.ENTRADA);
         MovimientoStock movimientoRegistrado = productoService.actualizarStock(movimiento);
         return ResponseEntity.status(HttpStatus.CREATED).body(movimientoRegistrado);
     }
 
-    // Obtener movimientos de un producto
-    @GetMapping("/{id}")
-    public List<MovimientoStock> movimientosProducto(@PathVariable Long id) {
-        return movimientoService.obtenerMovimientosProducto(id);
+    // Registrar nuevo movimiento de stock
+    @PostMapping("/salida")
+    public ResponseEntity<MovimientoStock> salidaStock(@RequestBody MovimientoStock movimiento) {
+
+        movimiento.setTipoMovimiento(MovimientoStock.TipoMovimiento.SALIDA);
+        MovimientoStock movimientoRegistrado = productoService.actualizarStock(movimiento);
+        return ResponseEntity.status(HttpStatus.CREATED).body(movimientoRegistrado);
     }
 }
