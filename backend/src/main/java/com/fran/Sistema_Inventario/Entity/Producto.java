@@ -1,6 +1,7 @@
 package com.fran.Sistema_Inventario.Entity;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fran.Sistema_Inventario.DTO.ProductoDTO;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -42,6 +43,8 @@ public class Producto {
     @JoinColumn(name = "proveedor_id", nullable = false)
     private Proveedor proveedor;
 
+    private Integer umbralBajoStock;
+
     @OneToMany(mappedBy = "producto", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
     private List<MovimientoStock> movimientosStock = new ArrayList<>();
@@ -56,7 +59,7 @@ public class Producto {
         this.proveedor = proveedor;
     }
 
-    public Producto(String nombre, String descripcion, Double precio, Long cantidadStock, String categoria, String imageUrl, Proveedor proveedor) {
+    public Producto(String nombre, String descripcion, Double precio, Long cantidadStock, String categoria, String imageUrl, Proveedor proveedor, Integer umbralBajoStock) {
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.precio = precio;
@@ -64,6 +67,7 @@ public class Producto {
         this.categoria = categoria;
         this.imageUrl = imageUrl;
         this.proveedor = proveedor;
+        this.umbralBajoStock = umbralBajoStock;
     }
 
     public Producto() {
@@ -117,14 +121,6 @@ public class Producto {
         this.categoria = categoria;
     }
 
-    public List<MovimientoStock> getMovimientosStock() {
-        return movimientosStock;
-    }
-
-    public void setMovimientosStock(List<MovimientoStock> movimientosStock) {
-        this.movimientosStock = movimientosStock;
-    }
-
     public String getImageUrl() {
         return imageUrl;
     }
@@ -140,4 +136,21 @@ public class Producto {
     public void setProveedor(Proveedor proveedor) {
         this.proveedor = proveedor;
     }
+
+    public Integer getUmbralBajoStock() {
+        return umbralBajoStock;
+    }
+
+    public void setUmbralBajoStock(Integer umbralBajoStock) {
+        this.umbralBajoStock = umbralBajoStock;
+    }
+
+    public List<MovimientoStock> getMovimientosStock() {
+        return movimientosStock;
+    }
+
+    public void setMovimientosStock(List<MovimientoStock> movimientosStock) {
+        this.movimientosStock = movimientosStock;
+    }
+
 }

@@ -34,7 +34,7 @@ public class MovimientosController {
     @PostMapping("/registrar")
     public ResponseEntity<MovimientoStock> registrarMovimientoStock(@RequestBody MovimientoStock movimiento) {
 
-        MovimientoStock movimientoRegistrado = productoService.registrarMovimiento(movimiento);
+        MovimientoStock movimientoRegistrado = productoService.actualizarStock(movimiento);
         return ResponseEntity.status(HttpStatus.CREATED).body(movimientoRegistrado);
     }
 

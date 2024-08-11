@@ -4,6 +4,7 @@ import com.fran.Sistema_Inventario.DTO.ProductoDTO;
 import com.fran.Sistema_Inventario.Entity.Producto;
 import com.fran.Sistema_Inventario.Service.Impl.FileUploadService;
 import com.fran.Sistema_Inventario.Service.Impl.ProductoServiceImpl;
+import com.fran.Sistema_Inventario.Utils.FileValidator;
 import jakarta.validation.Valid;
 import java.io.IOException;
 import java.util.List;
@@ -59,6 +60,11 @@ public class ProductoController {
             return ResponseEntity.badRequest().body(result.getAllErrors());
         }
 
+        // Verificar si el archivo es valido
+        if (!FileValidator.isValidFile(file)) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Archivo no válido");
+        }
+
         try {
             // Subir la imagen a Firebase y obtener la URL
             String imageUrl = fileUploadService.uploadFile(file);
@@ -68,7 +74,8 @@ public class ProductoController {
             Producto producto = productoService.guardarProducto(productoRequest);
             return ResponseEntity.ok(new ProductoDTO(producto.getId(), producto.getNombre(),
                     producto.getDescripcion(), producto.getPrecio(), producto.getCantidadStock(),
-                    producto.getCategoria(), producto.getImageUrl(), producto.getProveedor().getId()));
+                    producto.getCategoria(), producto.getImageUrl(), producto.getProveedor().getId(),
+                    producto.getUmbralBajoStock()));
         } catch (IOException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("Error al subir la imagen: " + e.getMessage());

@@ -10,6 +10,7 @@ import com.fran.Sistema_Inventario.Service.ProveedorService;
 import com.google.cloud.storage.BlobId;
 import com.google.cloud.storage.Storage;
 import com.google.cloud.storage.StorageOptions;
+import com.google.firebase.cloud.StorageClient;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import java.time.LocalDateTime;
@@ -31,6 +32,7 @@ public class ProductoServiceImpl implements ProductoService {
         this.proveedorService = proveedorService;
     }
 
+    // Bucket de firebase
     private final String BUCKET_NAME = "productos-inventario-7f2d7.appspot.com";
 
     @Override
@@ -55,7 +57,8 @@ public class ProductoServiceImpl implements ProductoService {
                 productoReq.getCantidadStock(),
                 productoReq.getCategoria(),
                 productoReq.getImageUrl(),
-                proveedorService.obtenerPorID(productoReq.getProveedorId()));
+                proveedorService.obtenerPorID(productoReq.getProveedorId()),
+                productoReq.getUmbralBajoStock());
 
         return productoRepository.save(producto);
     }
@@ -85,11 +88,20 @@ public class ProductoServiceImpl implements ProductoService {
             // Obtener la URL de la imagen asociada al producto
             String imageUrl = producto.getImageUrl();
 
-            // Extraer el nombre del archivo desde la URL
-            String fileName = extractFileNameFromUrl(imageUrl);
+            if (imageUrl != null && !imageUrl.isEmpty()) {
+                // Extraer el nombre del archivo desde la URL
+                String fileName = extractFileNameFromUrl(imageUrl);
 
-            // Eliminar la imagen de Firebase Storage
-            deleteImageFromFirebase(fileName);
+                System.out.println("Filename: " + fileName);
+
+                // Eliminar la imagen de Firebase Storage
+                try {
+                    deleteImageFromFirebase(fileName);
+                } catch (Exception e) {
+                    // Manejar el error de eliminación
+                    throw new RuntimeException("Error al eliminar la imagen de Firebase Storage: " + e.getMessage());
+                }
+            }
 
             // Eliminar el producto de la base de datos
             productoRepository.delete(producto);
@@ -99,27 +111,39 @@ public class ProductoServiceImpl implements ProductoService {
         }
     }
 
+    // Obtener nombre de imagen desde url
     private String extractFileNameFromUrl(String imageUrl) {
         // Extrae el nombre del archivo de la URL
-        return imageUrl.substring(imageUrl.lastIndexOf("/") + 1);
+        String fileName = imageUrl.substring(imageUrl.indexOf("/o/") + 3);
+        // Elimina cualquier parámetro de consulta, si está presente
+        int queryParamIndex = fileName.indexOf("?");
+        if (queryParamIndex != -1) {
+            fileName = fileName.substring(0, queryParamIndex);
+        }
+        // Reemplaza las codificaciones de URL
+        fileName = fileName.replace("%2F", "/");
+        return fileName;
     }
 
+    // Eliminar imagen de firebase
     private void deleteImageFromFirebase(String fileName) {
-        Storage storage = StorageOptions.getDefaultInstance().getService();
+        Storage storage = StorageClient.getInstance().bucket().getStorage();
 
         // Referencia al archivo en Firebase Storage
         BlobId blobId = BlobId.of(BUCKET_NAME, fileName);
+        System.out.println("Blob id: " + blobId.toString());
 
-        // Eliminar el archivo
+        // Eliminar el archivo  
         boolean deleted = storage.delete(blobId);
         if (!deleted) {
             throw new RuntimeException("No se pudo eliminar la imagen de Firebase Storage");
         }
     }
 
+    // Actualiza el stock y registra el movimiento
     @Override
     @Transactional
-    public MovimientoStock registrarMovimiento(MovimientoStock movimiento) {
+    public MovimientoStock actualizarStock(MovimientoStock movimiento) {
 
         Producto producto = productoRepository.getReferenceById(movimiento.getProducto().getId());
 
@@ -139,10 +163,19 @@ public class ProductoServiceImpl implements ProductoService {
             producto.setCantidadStock(stockActual + stockMovimiento);
         }
 
+        if (producto.getCantidadStock() <= producto.getUmbralBajoStock()) {
+            enviarAlertaStock();
+        }
+
         movimiento.setProducto(producto);
         movimiento.setFechaMovimiento(LocalDateTime.now());
 
         productoRepository.save(producto);
         return movimientoStockRepository.save(movimiento);
+    }
+
+    public void enviarAlertaStock() {
+        // Aqui implementare la notificacion por correo
+
     }
 }

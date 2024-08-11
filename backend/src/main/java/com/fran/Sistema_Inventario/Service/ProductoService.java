@@ -17,5 +17,5 @@ public interface ProductoService {
 
     public boolean eliminarProducto(Long id);
 
-    public MovimientoStock registrarMovimiento(MovimientoStock movimiento);
+    public MovimientoStock actualizarStock(MovimientoStock movimiento);
 }

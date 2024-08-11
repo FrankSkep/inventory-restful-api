@@ -27,6 +27,10 @@ public class ProductoDTO {
     @NotNull(message = "Debe seleccionar un proveedor")
     private Long proveedorId;
 
+    @NotNull(message = "Debe especificar el umbral de alerta de stock")
+    @Min(value = 0, message = "El umbral de alerta debe ser mayor o igual a 0")
+    private Integer umbralBajoStock;
+
     public ProductoDTO(String nombre, String descripcion, Double precio, Long cantidadStock, String categoria, Long proveedorId) {
         this.nombre = nombre;
         this.descripcion = descripcion;
@@ -46,7 +50,7 @@ public class ProductoDTO {
         this.proveedorId = proveedorId;
     }
 
-    public ProductoDTO(Long id, String nombre, String descripcion, Double precio, Long cantidadStock, String categoria, String imageUrl, Long proveedorId) {
+    public ProductoDTO(Long id, String nombre, String descripcion, Double precio, Long cantidadStock, String categoria, String imageUrl, Long proveedorId, Integer umbralBajoStock) {
         this.id = id;
         this.nombre = nombre;
         this.descripcion = descripcion;
@@ -55,10 +59,10 @@ public class ProductoDTO {
         this.categoria = categoria;
         this.imageUrl = imageUrl;
         this.proveedorId = proveedorId;
+        this.umbralBajoStock = umbralBajoStock;
     }
 
     public ProductoDTO() {
-
     }
 
     // Getters y Setters
@@ -124,5 +128,13 @@ public class ProductoDTO {
 
     public void setProveedorId(Long proveedorId) {
         this.proveedorId = proveedorId;
+    }
+
+    public Integer getUmbralBajoStock() {
+        return umbralBajoStock;
+    }
+
+    public void setUmbralBajoStock(Integer umbralStock) {
+        this.umbralBajoStock = umbralStock;
     }
 }
