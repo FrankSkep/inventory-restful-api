@@ -7,6 +7,8 @@ import jakarta.validation.constraints.Size;
 
 public class ProveedorDTO {
 
+    private Long id;
+
     @NotBlank(message = "El nombre del proveedor es obligatorio")
     @Size(max = 100, message = "El nombre no debe exceder los 100 caracteres")
     private String nombre;
@@ -26,7 +28,15 @@ public class ProveedorDTO {
 
     @Size(max = 15, message = "El número de identificación fiscal no debe exceder los 15 caracteres")
     private String identificacionFiscal;
-    
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public String getNombre() {
         return nombre;
     }

@@ -44,7 +44,7 @@ public class ProductoController {
 
     // Ver detalles de un producto
     @GetMapping("/detalles/{id}")
-    public ResponseEntity<?> obtenerProducto(@PathVariable Integer id) {
+    public ResponseEntity<?> obtenerProducto(@PathVariable Long id) {
         return ResponseEntity.ok(productoService.obtenerPorID(id));
     }
 
@@ -77,7 +77,7 @@ public class ProductoController {
 
     // Editar datos de un producto
     @PutMapping("/editar/{id}")
-    public ResponseEntity<?> editarProducto(@PathVariable Integer id, @Valid @RequestBody ProductoDTO productoRequest, BindingResult result) {
+    public ResponseEntity<?> editarProducto(@PathVariable Long id, @Valid @RequestBody ProductoDTO productoRequest, BindingResult result) {
 
         if (result.hasErrors()) {
             return ResponseEntity.badRequest().body(result.getAllErrors());
@@ -88,7 +88,7 @@ public class ProductoController {
 
     // Eliminar un producto por su ID
     @DeleteMapping("/eliminar/{id}")
-    public ResponseEntity<?> eliminarProducto(@PathVariable Integer id) {
+    public ResponseEntity<?> eliminarProducto(@PathVariable Long id) {
 
         if (productoService.eliminarProducto(id)) {
             return ResponseEntity.ok("Producto eliminado correctamente.");

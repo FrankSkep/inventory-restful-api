@@ -9,13 +9,13 @@ public interface ProductoService {
 
     public List<Producto> obtenerProductos();
 
-    public Producto obtenerPorID(Integer id);
+    public Producto obtenerPorID(Long id);
 
     public Producto guardarProducto(ProductoDTO producto);
 
-    public Producto editarProducto(Integer id, ProductoDTO producto);
+    public Producto editarProducto(Long id, ProductoDTO producto);
 
-    public boolean eliminarProducto(Integer id);
+    public boolean eliminarProducto(Long id);
 
     public MovimientoStock registrarMovimiento(MovimientoStock movimiento);
 }

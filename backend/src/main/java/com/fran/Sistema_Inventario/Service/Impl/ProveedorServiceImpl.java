@@ -20,7 +20,7 @@ public class ProveedorServiceImpl implements ProveedorService {
     }
 
     @Override
-    public Proveedor obtenerPorID(Integer id) {
+    public Proveedor obtenerPorID(Long id) {
         return proveedorRepository.getReferenceById(id);
     }
 
@@ -30,7 +30,7 @@ public class ProveedorServiceImpl implements ProveedorService {
     }
 
     @Override
-    public Proveedor editarProveedor(Integer id, ProveedorDTO proveedor) {
+    public Proveedor editarProveedor(Long id, ProveedorDTO proveedor) {
 
         Proveedor proveedorDB = proveedorRepository.getReferenceById(id);
 
@@ -44,7 +44,7 @@ public class ProveedorServiceImpl implements ProveedorService {
     }
 
     @Override
-    public boolean eliminarProveedor(Integer id) {
+    public boolean eliminarProveedor(Long id) {
 
         Proveedor proveedor = proveedorRepository.getReferenceById(id);
 

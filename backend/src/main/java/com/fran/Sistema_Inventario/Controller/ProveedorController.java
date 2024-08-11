@@ -51,7 +51,7 @@ public class ProveedorController {
     }
 
     @PutMapping("/editar/{id}")
-    public ResponseEntity<?> editarDatosProveedor(@PathVariable Integer id, @Valid @RequestBody ProveedorDTO proveedor, BindingResult result) {
+    public ResponseEntity<?> editarDatosProveedor(@PathVariable Long id, @Valid @RequestBody ProveedorDTO proveedor, BindingResult result) {
 
         if (result.hasErrors()) {
             return ResponseEntity.badRequest().body(result.getAllErrors());
@@ -61,7 +61,7 @@ public class ProveedorController {
     }
 
     @DeleteMapping("/eliminar/{id}")
-    public ResponseEntity<?> eliminarProveedor(@PathVariable Integer id) {
+    public ResponseEntity<?> eliminarProveedor(@PathVariable Long id) {
 
         if (proveedorService.eliminarProveedor(id)) {
             return ResponseEntity.ok("Proveedor eliminado correctamente.");

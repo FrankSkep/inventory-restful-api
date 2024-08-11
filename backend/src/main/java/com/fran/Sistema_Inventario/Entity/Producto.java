@@ -20,7 +20,7 @@ public class Producto {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
     @Column(nullable = false)
     private String nombre;
@@ -31,7 +31,7 @@ public class Producto {
     private Double precio;
 
     @Column(name = "cantidad_stock", nullable = false)
-    private Integer cantidadStock;
+    private Long cantidadStock;
 
     @Column(nullable = false)
     private String categoria;
@@ -46,7 +46,7 @@ public class Producto {
     @JsonManagedReference
     private List<MovimientoStock> movimientosStock = new ArrayList<>();
 
-    public Producto(Integer id, String nombre, String descripcion, Double precio, Integer cantidadStock, String categoria, Proveedor proveedor) {
+    public Producto(Long id, String nombre, String descripcion, Double precio, Long cantidadStock, String categoria, Proveedor proveedor) {
         this.id = id;
         this.nombre = nombre;
         this.descripcion = descripcion;
@@ -56,7 +56,7 @@ public class Producto {
         this.proveedor = proveedor;
     }
 
-    public Producto(String nombre, String descripcion, Double precio, Integer cantidadStock, String categoria, String imageUrl, Proveedor proveedor) {
+    public Producto(String nombre, String descripcion, Double precio, Long cantidadStock, String categoria, String imageUrl, Proveedor proveedor) {
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.precio = precio;
@@ -69,11 +69,11 @@ public class Producto {
     public Producto() {
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -101,11 +101,11 @@ public class Producto {
         this.precio = precio;
     }
 
-    public Integer getCantidadStock() {
+    public Long getCantidadStock() {
         return cantidadStock;
     }
 
-    public void setCantidadStock(Integer cantidadStock) {
+    public void setCantidadStock(Long cantidadStock) {
         this.cantidadStock = cantidadStock;
     }
 

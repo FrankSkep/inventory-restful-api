@@ -1,4 +1,4 @@
-package com.fran.Sistema_Inventario.Controller;
+    package com.fran.Sistema_Inventario.Controller;
 
 import com.fran.Sistema_Inventario.Entity.MovimientoStock;
 import com.fran.Sistema_Inventario.Service.MovimientoService;
@@ -40,7 +40,7 @@ public class MovimientosController {
 
     // Obtener movimientos de un producto
     @GetMapping("/{id}")
-    public List<MovimientoStock> movimientosProducto(@PathVariable Integer id) {
+    public List<MovimientoStock> movimientosProducto(@PathVariable Long id) {
         return movimientoService.obtenerMovimientosProducto(id);
     }
 }

@@ -40,7 +40,7 @@ public class ProductoServiceImpl implements ProductoService {
 
     // Obtener producto por su ID
     @Override
-    public Producto obtenerPorID(Integer id) {
+    public Producto obtenerPorID(Long id) {
         return productoRepository.getReferenceById(id);
     }
 
@@ -62,7 +62,7 @@ public class ProductoServiceImpl implements ProductoService {
 
     // Editar datos de un producto existente
     @Override
-    public Producto editarProducto(Integer id, ProductoDTO productoReq) {
+    public Producto editarProducto(Long id, ProductoDTO productoReq) {
 
         Producto productoDB = productoRepository.getReferenceById(id);
 
@@ -77,7 +77,7 @@ public class ProductoServiceImpl implements ProductoService {
 
     // Eliminar un producto
     @Override
-    public boolean eliminarProducto(Integer id) {
+    public boolean eliminarProducto(Long id) {
 
         Producto producto = productoRepository.getReferenceById(id);
 
@@ -127,8 +127,8 @@ public class ProductoServiceImpl implements ProductoService {
             throw new EntityNotFoundException("Producto no encontrado");
         }
 
-        Integer stockActual = producto.getCantidadStock();
-        Integer stockMovimiento = movimiento.getCantidad();
+        Long stockActual = producto.getCantidadStock();
+        Long stockMovimiento = movimiento.getCantidad();
 
         if (movimiento.getTipoMovimiento() == MovimientoStock.TipoMovimiento.SALIDA) {
             if (stockActual < stockMovimiento) {

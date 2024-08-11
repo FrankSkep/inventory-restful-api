@@ -20,7 +20,7 @@ public class MovimientoStock {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
@@ -32,17 +32,17 @@ public class MovimientoStock {
     private String razon;
 
     @NotNull(message = "La cantidad es obligatoria.")
-    private Integer cantidad;
+    private Long cantidad;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonBackReference
     private Producto producto;
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -78,11 +78,11 @@ public class MovimientoStock {
         this.producto = producto;
     }
 
-    public void setCantidad(Integer cantidad) {
+    public void setCantidad(Long cantidad) {
         this.cantidad = cantidad;
     }
 
-    public Integer getCantidad() {
+    public Long getCantidad() {
         return this.cantidad;
     }
 

@@ -19,7 +19,7 @@ public class MovimientoServiceImpl implements MovimientoService {
     ProductoRepository productoRepository;
 
     @Override
-    public List<MovimientoStock> obtenerMovimientosProducto(Integer id) {
+    public List<MovimientoStock> obtenerMovimientosProducto(Long id) {
         if (!productoRepository.existsById(id)) {
             throw new EntityNotFoundException("Producto no encontrado");
         }

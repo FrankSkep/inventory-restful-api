@@ -4,7 +4,7 @@ import jakarta.validation.constraints.*;
 
 public class ProductoDTO {
 
-    private Integer id;
+    private Long id;
 
     @NotBlank(message = "El nombre del producto es obligatorio")
     private String nombre;
@@ -17,7 +17,7 @@ public class ProductoDTO {
 
     @NotNull(message = "La cantidad en stock es obligatoria")
     @Min(value = 0, message = "La cantidad en stock debe ser mayor o igual a 0")
-    private Integer cantidadStock;
+    private Long cantidadStock;
 
     @NotBlank(message = "Debe seleccionar una categoría")
     private String categoria;
@@ -25,9 +25,9 @@ public class ProductoDTO {
     private String imageUrl;
 
     @NotNull(message = "Debe seleccionar un proveedor")
-    private Integer proveedorId;
+    private Long proveedorId;
 
-    public ProductoDTO(String nombre, String descripcion, Double precio, Integer cantidadStock, String categoria, Integer proveedorId) {
+    public ProductoDTO(String nombre, String descripcion, Double precio, Long cantidadStock, String categoria, Long proveedorId) {
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.precio = precio;
@@ -36,7 +36,7 @@ public class ProductoDTO {
         this.proveedorId = proveedorId;
     }
 
-    public ProductoDTO(Integer id, String nombre, String descripcion, Double precio, Integer cantidadStock, String categoria, Integer proveedorId) {
+    public ProductoDTO(Long id, String nombre, String descripcion, Double precio, Long cantidadStock, String categoria, Long proveedorId) {
         this.id = id;
         this.nombre = nombre;
         this.descripcion = descripcion;
@@ -46,7 +46,7 @@ public class ProductoDTO {
         this.proveedorId = proveedorId;
     }
 
-    public ProductoDTO(Integer id, String nombre, String descripcion, Double precio, Integer cantidadStock, String categoria, String imageUrl, Integer proveedorId) {
+    public ProductoDTO(Long id, String nombre, String descripcion, Double precio, Long cantidadStock, String categoria, String imageUrl, Long proveedorId) {
         this.id = id;
         this.nombre = nombre;
         this.descripcion = descripcion;
@@ -62,11 +62,11 @@ public class ProductoDTO {
     }
 
     // Getters y Setters
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -94,11 +94,11 @@ public class ProductoDTO {
         this.precio = precio;
     }
 
-    public Integer getCantidadStock() {
+    public Long getCantidadStock() {
         return cantidadStock;
     }
 
-    public void setCantidadStock(Integer cantidadStock) {
+    public void setCantidadStock(Long cantidadStock) {
         this.cantidadStock = cantidadStock;
     }
 
@@ -118,11 +118,11 @@ public class ProductoDTO {
         this.imageUrl = imageUrl;
     }
 
-    public Integer getProveedorId() {
+    public Long getProveedorId() {
         return proveedorId;
     }
 
-    public void setProveedorId(Integer proveedorId) {
+    public void setProveedorId(Long proveedorId) {
         this.proveedorId = proveedorId;
     }
 }

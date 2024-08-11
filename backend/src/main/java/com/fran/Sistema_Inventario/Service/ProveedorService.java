@@ -10,10 +10,10 @@ public interface ProveedorService {
 
     public Proveedor registrarProveedor(Proveedor proveedor);
     
-    public Proveedor editarProveedor(Integer id, ProveedorDTO proveedor);
+    public Proveedor editarProveedor(Long id, ProveedorDTO proveedor);
 
-    public Proveedor obtenerPorID(Integer id);
+    public Proveedor obtenerPorID(Long id);
     
-    public boolean eliminarProveedor(Integer id);
+    public boolean eliminarProveedor(Long id);
 
 }

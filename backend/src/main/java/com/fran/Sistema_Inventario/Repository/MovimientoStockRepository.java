@@ -6,5 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface MovimientoStockRepository extends JpaRepository<MovimientoStock, Integer> {
 
-    List<MovimientoStock> findByProductoId(Integer id);
+    List<MovimientoStock> findByProductoId(Long id);
 }
