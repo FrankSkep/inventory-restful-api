@@ -10,11 +10,13 @@ API RESTful para la gestión de inventarios. Permite controlar y administrar pro
   - Crear, leer, actualizar y eliminar productos.
   - Gestionar imágenes de productos.
   - Buscar y filtrar productos.
+  - Exportar reporte PDF del inventario actual.
 
 - **Stock**:
   - Registrar entradas y salidas de stock.
   - Visualizar el historial de movimientos de stock.
   - Notificaciones por correo electrónico para stock bajo.
+  - Exportar reporte PDF de movimientos de stock.
 
 - **Proveedores**:
   - Crear, leer, actualizar y eliminar proveedores.
