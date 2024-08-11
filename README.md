@@ -1,4 +1,4 @@
-# Sistema de Gestión de Inventario API
+# APIREST Gestion de Inventario
 
 ## Descripción
 
@@ -10,6 +10,7 @@ API RESTful para la gestión de inventarios. Permite controlar y administrar pro
   - Crear, leer, actualizar y eliminar productos.
   - Gestionar imágenes de productos.
   - Buscar y filtrar productos.
+  - Ver detalles (datos del producto, entradas/salidas de stock y proveedor).
   - Exportar reporte PDF del inventario actual.
 
 - **Stock**:
@@ -21,6 +22,7 @@ API RESTful para la gestión de inventarios. Permite controlar y administrar pro
 - **Proveedores**:
   - Crear, leer, actualizar y eliminar proveedores.
   - Asociar productos con proveedores.
+  - Ver detalles (datos del proveedor y productos que provee).
 
 - **Autenticación y Autorización**:
   - Gestión de roles y permisos.
