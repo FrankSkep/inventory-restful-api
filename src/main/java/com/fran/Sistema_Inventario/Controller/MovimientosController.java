@@ -1,4 +1,4 @@
-    package com.fran.Sistema_Inventario.Controller;
+package com.fran.Sistema_Inventario.Controller;
 
 import com.fran.Sistema_Inventario.Entity.MovimientoStock;
 import com.fran.Sistema_Inventario.Service.MovimientoService;
@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/movimientos")
+@RequestMapping("/stock")
 public class MovimientosController {
 
     @Autowired
