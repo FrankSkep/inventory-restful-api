@@ -11,7 +11,6 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,6 +36,8 @@ public class Producto {
     @Column(nullable = false)
     private String categoria;
 
+    private String imageUrl;
+
     @ManyToOne
     @JoinColumn(name = "proveedor_id", nullable = false)
     private Proveedor proveedor;
@@ -55,12 +56,13 @@ public class Producto {
         this.proveedor = proveedor;
     }
 
-    public Producto(String nombre, String descripcion, Double precio, Integer cantidadStock, String categoria, Proveedor proveedor) {
+    public Producto(String nombre, String descripcion, Double precio, Integer cantidadStock, String categoria, String imageUrl, Proveedor proveedor) {
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.precio = precio;
         this.cantidadStock = cantidadStock;
         this.categoria = categoria;
+        this.imageUrl = imageUrl;
         this.proveedor = proveedor;
     }
 
@@ -121,6 +123,14 @@ public class Producto {
 
     public void setMovimientosStock(List<MovimientoStock> movimientosStock) {
         this.movimientosStock = movimientosStock;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
     public Proveedor getProveedor() {

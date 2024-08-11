@@ -22,6 +22,8 @@ public class ProductoDTO {
     @NotBlank(message = "Debe seleccionar una categoría")
     private String categoria;
 
+    private String imageUrl;
+
     @NotNull(message = "Debe seleccionar un proveedor")
     private Integer proveedorId;
 
@@ -41,6 +43,17 @@ public class ProductoDTO {
         this.precio = precio;
         this.cantidadStock = cantidadStock;
         this.categoria = categoria;
+        this.proveedorId = proveedorId;
+    }
+
+    public ProductoDTO(Integer id, String nombre, String descripcion, Double precio, Integer cantidadStock, String categoria, String imageUrl, Integer proveedorId) {
+        this.id = id;
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+        this.precio = precio;
+        this.cantidadStock = cantidadStock;
+        this.categoria = categoria;
+        this.imageUrl = imageUrl;
         this.proveedorId = proveedorId;
     }
 
@@ -95,6 +108,14 @@ public class ProductoDTO {
 
     public void setCategoria(String categoria) {
         this.categoria = categoria;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
     public Integer getProveedorId() {

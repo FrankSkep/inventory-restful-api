@@ -19,7 +19,7 @@ target/
 *.iml
 *.ipr
 
-src/main/resources/productos-inventario-7f2d7-firebase-adminsdk-71r6z-7d167907e8.json
+src/main/resources/serviceAccountKey.json
 
 ### NetBeans ###
 /nbproject/private/

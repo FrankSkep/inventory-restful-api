@@ -7,6 +7,9 @@ import com.fran.Sistema_Inventario.Repository.MovimientoStockRepository;
 import com.fran.Sistema_Inventario.Repository.ProductoRepository;
 import com.fran.Sistema_Inventario.Service.ProductoService;
 import com.fran.Sistema_Inventario.Service.ProveedorService;
+import com.google.cloud.storage.BlobId;
+import com.google.cloud.storage.Storage;
+import com.google.cloud.storage.StorageOptions;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import java.time.LocalDateTime;
@@ -17,14 +20,18 @@ import org.springframework.stereotype.Service;
 @Service
 public class ProductoServiceImpl implements ProductoService {
 
-    @Autowired
     private ProductoRepository productoRepository;
-
-    @Autowired
     private MovimientoStockRepository movimientoStockRepository;
+    private ProveedorService proveedorService;
 
     @Autowired
-    private ProveedorService proveedorService;
+    public ProductoServiceImpl(ProductoRepository productoRepository, MovimientoStockRepository movimientoStockRepository, ProveedorService proveedorService) {
+        this.productoRepository = productoRepository;
+        this.movimientoStockRepository = movimientoStockRepository;
+        this.proveedorService = proveedorService;
+    }
+
+    private final String BUCKET_NAME = "productos-inventario-7f2d7.appspot.com";
 
     @Override
     public List<Producto> obtenerProductos() {
@@ -47,6 +54,7 @@ public class ProductoServiceImpl implements ProductoService {
                 productoReq.getPrecio(),
                 productoReq.getCantidadStock(),
                 productoReq.getCategoria(),
+                productoReq.getImageUrl(),
                 proveedorService.obtenerPorID(productoReq.getProveedorId()));
 
         return productoRepository.save(producto);
@@ -74,10 +82,38 @@ public class ProductoServiceImpl implements ProductoService {
         Producto producto = productoRepository.getReferenceById(id);
 
         if (producto != null) {
+            // Obtener la URL de la imagen asociada al producto
+            String imageUrl = producto.getImageUrl();
+
+            // Extraer el nombre del archivo desde la URL
+            String fileName = extractFileNameFromUrl(imageUrl);
+
+            // Eliminar la imagen de Firebase Storage
+            deleteImageFromFirebase(fileName);
+
+            // Eliminar el producto de la base de datos
             productoRepository.delete(producto);
             return true;
         } else {
             return false;
+        }
+    }
+
+    private String extractFileNameFromUrl(String imageUrl) {
+        // Extrae el nombre del archivo de la URL
+        return imageUrl.substring(imageUrl.lastIndexOf("/") + 1);
+    }
+
+    private void deleteImageFromFirebase(String fileName) {
+        Storage storage = StorageOptions.getDefaultInstance().getService();
+
+        // Referencia al archivo en Firebase Storage
+        BlobId blobId = BlobId.of(BUCKET_NAME, fileName);
+
+        // Eliminar el archivo
+        boolean deleted = storage.delete(blobId);
+        if (!deleted) {
+            throw new RuntimeException("No se pudo eliminar la imagen de Firebase Storage");
         }
     }
 
