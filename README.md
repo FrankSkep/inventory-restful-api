@@ -1,4 +1,4 @@
-# APIREST Gestion de Inventario
+# Gestion de Inventario - APIREST
 
 ## Descripción
 
