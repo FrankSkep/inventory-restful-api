@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.fran</groupId>
-    <artifactId>Sistema_Inventario</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
-    <name>Sistema_Inventario</name>
-    <description>Sistema de inventario</description>
+    <artifactId>Inventory_Management_APIREST</artifactId>
+    <version>0.1</version>
+    <name>Inventory_Management</name>
+    <description>Apirest sistema de gestion de inventario</description>
     <url/>
     <licenses>
         <license/>
