@@ -27,4 +27,4 @@ API RESTful para la gestión de inventarios. Permite controlar y administrar pro
 
 - Java 17+
 - Spring Boot
-- Base de datos (MySQL, PostgreSQL, etc.)
+- Base de datos (MySQL)
