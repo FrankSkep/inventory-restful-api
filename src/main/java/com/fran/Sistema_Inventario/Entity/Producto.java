@@ -1,7 +1,8 @@
 package com.fran.Sistema_Inventario.Entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fran.Sistema_Inventario.DTO.ProductoDTO;
+import com.fran.Sistema_Inventario.DTO.ProductoDTOs.ProductoDTO;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -41,6 +42,7 @@ public class Producto {
 
     @ManyToOne
     @JoinColumn(name = "proveedor_id", nullable = false)
+    @JsonBackReference
     private Proveedor proveedor;
 
     private Integer umbralBajoStock;

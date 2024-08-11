@@ -1,9 +1,10 @@
 package com.fran.Sistema_Inventario.Controller;
 
-import com.fran.Sistema_Inventario.DTO.ProductoBasicoDTO;
-import com.fran.Sistema_Inventario.DTO.ProductoDTO;
-import com.fran.Sistema_Inventario.DTO.ProductoDetalladoDTO;
+import com.fran.Sistema_Inventario.DTO.ProductoDTOs.ProductoBasicoDTO;
+import com.fran.Sistema_Inventario.DTO.ProductoDTOs.ProductoDTO;
+import com.fran.Sistema_Inventario.DTO.ProductoDTOs.ProductoDetalladoDTO;
 import com.fran.Sistema_Inventario.Entity.Producto;
+import com.fran.Sistema_Inventario.MapperDTO.ProductoMapper;
 import com.fran.Sistema_Inventario.Service.Impl.FileUploadService;
 import com.fran.Sistema_Inventario.Service.Impl.ProductoServiceImpl;
 import com.fran.Sistema_Inventario.Utils.FileValidator;
@@ -32,11 +33,13 @@ public class ProductoController {
 
     private final ProductoServiceImpl productoService;
     private final FileUploadService fileUploadService;
+    private final ProductoMapper productoMapper;
 
     @Autowired
-    public ProductoController(ProductoServiceImpl productoService, FileUploadService fileUploadService) {
+    public ProductoController(ProductoServiceImpl productoService, FileUploadService fileUploadService, ProductoMapper productoMapper) {
         this.productoService = productoService;
         this.fileUploadService = fileUploadService;
+        this.productoMapper = productoMapper;
     }
 
     // Obtener todos los productos del inventario
@@ -47,7 +50,7 @@ public class ProductoController {
 
     // Ver detalles de un producto
     @GetMapping("/detalles/{id}")
-    public ResponseEntity<ProductoDetalladoDTO> obtenerProducto(@PathVariable Long id) {
+    public ResponseEntity<ProductoDetalladoDTO> detallesProducto(@PathVariable Long id) {
         return ResponseEntity.ok(productoService.obtenerPorID(id));
     }
 
@@ -70,14 +73,12 @@ public class ProductoController {
         try {
             // Subir la imagen a Firebase y obtener la URL
             String imageUrl = fileUploadService.uploadFile(file);
-            productoRequest.setImageUrl(imageUrl);
+            productoRequest.setImageUrl(imageUrl); // Asignar url al objeto
 
             // Guardar el producto en la base de datos
             Producto producto = productoService.guardarProducto(productoRequest);
-            return ResponseEntity.ok(new ProductoDTO(producto.getId(), producto.getNombre(),
-                    producto.getDescripcion(), producto.getPrecio(), producto.getCantidadStock(),
-                    producto.getCategoria(), producto.getImageUrl(), producto.getProveedor().getId(),
-                    producto.getUmbralBajoStock()));
+
+            return ResponseEntity.ok(productoMapper.toDTO(producto));
         } catch (IOException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("Error al subir la imagen: " + e.getMessage());

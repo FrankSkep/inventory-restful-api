@@ -1,8 +1,10 @@
 package com.fran.Sistema_Inventario.Service.Impl;
 
-import com.fran.Sistema_Inventario.DTO.ProveedorBasicoDTO;
-import com.fran.Sistema_Inventario.DTO.ProveedorDTO;
+import com.fran.Sistema_Inventario.DTO.ProveedorDTOs.ProveedorBasicoDTO;
+import com.fran.Sistema_Inventario.DTO.ProveedorDTOs.ProveedorDTO;
+import com.fran.Sistema_Inventario.DTO.ProveedorDTOs.ProveedorDetalladoDTO;
 import com.fran.Sistema_Inventario.Entity.Proveedor;
+import com.fran.Sistema_Inventario.MapperDTO.ProveedorMapperDTO;
 import com.fran.Sistema_Inventario.Repository.ProveedorRepository;
 import com.fran.Sistema_Inventario.Service.ProveedorService;
 import jakarta.persistence.EntityNotFoundException;
@@ -17,27 +19,24 @@ public class ProveedorServiceImpl implements ProveedorService {
     @Autowired
     private ProveedorRepository proveedorRepository;
 
+    @Autowired
+    private ProveedorMapperDTO proveedorMapper;
+
     @Override
     public List<ProveedorBasicoDTO> obtenerProveedores() {
-
+        // ProveedorServiceImpl::convertirDTOrespuesta
         List<Proveedor> proveedores = proveedorRepository.findAll();
-        return proveedores.stream().map(ProveedorServiceImpl::convertirDTOrespuesta).collect(Collectors.toList());
-    }
-
-    public static ProveedorBasicoDTO convertirDTOrespuesta(Proveedor proveedor) {
-
-        ProveedorBasicoDTO dto = new ProveedorBasicoDTO(
-                proveedor.getId(), proveedor.getNombre(),
-                proveedor.getDireccion(), proveedor.getEmail(),
-                proveedor.getTelefono(), proveedor.getIdentificacionFiscal()
-        );
-        return dto;
+        return proveedores.stream().map(proveedorMapper::toDTObasic).collect(Collectors.toList());
     }
 
     @Override
     public Proveedor obtenerPorID(Long id) {
         return proveedorRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Proveedor no encontrado"));
+    }
+    
+    public ProveedorDetalladoDTO detallesProveedor(Proveedor provedor) {
+        return proveedorMapper.toDTOdetailed(provedor);
     }
 
     @Override

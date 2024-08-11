@@ -17,11 +17,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/stock")
 public class MovimientosController {
 
-    @Autowired
     private MovimientoService movimientoService;
+    private ProductoServiceImpl productoService;
 
     @Autowired
-    private ProductoServiceImpl productoService;
+    public MovimientosController(MovimientoService movimientoService, ProductoServiceImpl productoService) {
+        this.movimientoService = movimientoService;
+        this.productoService = productoService;
+    }
 
     // Obtener todos los movimientos
     @GetMapping("/")
@@ -29,7 +32,7 @@ public class MovimientosController {
         return movimientoService.obtenerTodosLosMovimientos();
     }
 
-    // Registrar nuevo movimiento de stock
+    // Registrar entrada de stock
     @PostMapping("/entrada")
     public ResponseEntity<MovimientoStock> entradaStock(@RequestBody MovimientoStock movimiento) {
 
@@ -38,7 +41,7 @@ public class MovimientosController {
         return ResponseEntity.status(HttpStatus.CREATED).body(movimientoRegistrado);
     }
 
-    // Registrar nuevo movimiento de stock
+    // Registrar salida de stock
     @PostMapping("/salida")
     public ResponseEntity<MovimientoStock> salidaStock(@RequestBody MovimientoStock movimiento) {
 

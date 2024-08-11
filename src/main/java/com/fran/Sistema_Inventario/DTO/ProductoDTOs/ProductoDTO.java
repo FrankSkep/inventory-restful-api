@@ -1,4 +1,4 @@
-package com.fran.Sistema_Inventario.DTO;
+package com.fran.Sistema_Inventario.DTO.ProductoDTOs;
 
 import jakarta.validation.constraints.*;
 

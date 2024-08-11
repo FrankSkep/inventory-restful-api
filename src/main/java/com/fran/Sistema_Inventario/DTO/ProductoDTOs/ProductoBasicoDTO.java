@@ -1,10 +1,6 @@
-package com.fran.Sistema_Inventario.DTO;
+package com.fran.Sistema_Inventario.DTO.ProductoDTOs;
 
-import com.fran.Sistema_Inventario.Entity.MovimientoStock;
-import java.util.ArrayList;
-import java.util.List;
-
-public class ProductoDetalladoDTO {
+public class ProductoBasicoDTO {
 
     private Long id;
 
@@ -20,13 +16,7 @@ public class ProductoDetalladoDTO {
 
     private String imageUrl;
 
-    private ProveedorBasicoDTO proveedor;
-
-    private Integer umbralBajoStock;
-
-    private List<MovimientoStock> movimientosStock = new ArrayList<>();
-
-    public ProductoDetalladoDTO(Long id, String nombre, String descripcion, Double precio, Long cantidadStock, String categoria, String imageUrl, ProveedorBasicoDTO proveedor, Integer umbralBajoStock, List<MovimientoStock> movimientos) {
+    public ProductoBasicoDTO(Long id, String nombre, String descripcion, Double precio, Long cantidadStock, String categoria, String imageUrl) {
         this.id = id;
         this.nombre = nombre;
         this.descripcion = descripcion;
@@ -34,9 +24,6 @@ public class ProductoDetalladoDTO {
         this.cantidadStock = cantidadStock;
         this.categoria = categoria;
         this.imageUrl = imageUrl;
-        this.proveedor = proveedor;
-        this.umbralBajoStock = umbralBajoStock;
-        this.movimientosStock = movimientos;
     }
 
     public Long getId() {
@@ -93,30 +80,6 @@ public class ProductoDetalladoDTO {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
-    }
-
-    public ProveedorBasicoDTO getProveedor() {
-        return proveedor;
-    }
-
-    public void setProveedor(ProveedorBasicoDTO proveedor) {
-        this.proveedor = proveedor;
-    }
-
-    public Integer getUmbralBajoStock() {
-        return umbralBajoStock;
-    }
-
-    public void setUmbralBajoStock(Integer umbralBajoStock) {
-        this.umbralBajoStock = umbralBajoStock;
-    }
-
-    public List<MovimientoStock> getMovimientosStock() {
-        return movimientosStock;
-    }
-
-    public void setMovimientosStock(List<MovimientoStock> movimientosStock) {
-        this.movimientosStock = movimientosStock;
     }
 
 }

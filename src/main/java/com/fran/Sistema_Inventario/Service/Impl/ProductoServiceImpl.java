@@ -1,10 +1,11 @@
 package com.fran.Sistema_Inventario.Service.Impl;
 
-import com.fran.Sistema_Inventario.DTO.ProductoBasicoDTO;
-import com.fran.Sistema_Inventario.DTO.ProductoDTO;
-import com.fran.Sistema_Inventario.DTO.ProductoDetalladoDTO;
+import com.fran.Sistema_Inventario.DTO.ProductoDTOs.ProductoBasicoDTO;
+import com.fran.Sistema_Inventario.DTO.ProductoDTOs.ProductoDTO;
+import com.fran.Sistema_Inventario.DTO.ProductoDTOs.ProductoDetalladoDTO;
 import com.fran.Sistema_Inventario.Entity.MovimientoStock;
 import com.fran.Sistema_Inventario.Entity.Producto;
+import com.fran.Sistema_Inventario.MapperDTO.ProductoMapper;
 import com.fran.Sistema_Inventario.Repository.MovimientoStockRepository;
 import com.fran.Sistema_Inventario.Repository.ProductoRepository;
 import com.fran.Sistema_Inventario.Service.ProductoService;
@@ -26,12 +27,15 @@ public class ProductoServiceImpl implements ProductoService {
     private ProductoRepository productoRepository;
     private MovimientoStockRepository movimientoStockRepository;
     private ProveedorService proveedorService;
+    private ProductoMapper productoMapper;
 
     @Autowired
-    public ProductoServiceImpl(ProductoRepository productoRepository, MovimientoStockRepository movimientoStockRepository, ProveedorService proveedorService) {
+    public ProductoServiceImpl(ProductoRepository productoRepository, MovimientoStockRepository movimientoStockRepository,
+            ProveedorService proveedorService, ProductoMapper productoMapper) {
         this.productoRepository = productoRepository;
         this.movimientoStockRepository = movimientoStockRepository;
         this.proveedorService = proveedorService;
+        this.productoMapper = productoMapper;
     }
 
     // Bucket de firebase
@@ -41,18 +45,7 @@ public class ProductoServiceImpl implements ProductoService {
     public List<ProductoBasicoDTO> obtenerProductos() {
 
         List<Producto> productos = productoRepository.findAll();
-        return productos.stream().map(this::convertirABasicoDTO).collect(Collectors.toList());
-    }
-
-    private ProductoBasicoDTO convertirABasicoDTO(Producto producto) {
-
-        ProductoBasicoDTO dto = new ProductoBasicoDTO(
-                producto.getId(), producto.getNombre(),
-                producto.getDescripcion(), producto.getPrecio(),
-                producto.getCantidadStock(), producto.getCategoria(),
-                producto.getImageUrl()
-        );
-        return dto;
+        return productos.stream().map(productoMapper::toDTObasic).collect(Collectors.toList());
     }
 
     // Obtener producto por su ID
@@ -62,28 +55,14 @@ public class ProductoServiceImpl implements ProductoService {
         Producto producto = productoRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Producto no encontrado"));
 
-        return new ProductoDetalladoDTO(
-                producto.getId(), producto.getNombre(),
-                producto.getDescripcion(), producto.getPrecio(),
-                producto.getCantidadStock(), producto.getCategoria(),
-                producto.getImageUrl(), ProveedorServiceImpl.convertirDTOrespuesta(producto.getProveedor()),
-                producto.getUmbralBajoStock(), producto.getMovimientosStock()
-        );
+        return productoMapper.toDTOdetailed(producto);
     }
 
     // Guardar un nuevo producto
     @Override
     public Producto guardarProducto(ProductoDTO productoReq) {
 
-        Producto producto = new Producto(
-                productoReq.getNombre(),
-                productoReq.getDescripcion(),
-                productoReq.getPrecio(),
-                productoReq.getCantidadStock(),
-                productoReq.getCategoria(),
-                productoReq.getImageUrl(),
-                proveedorService.obtenerPorID(productoReq.getProveedorId()),
-                productoReq.getUmbralBajoStock());
+        Producto producto = productoMapper.toEntity(productoReq);
 
         return productoRepository.save(producto);
     }

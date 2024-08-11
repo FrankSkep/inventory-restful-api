@@ -1,6 +1,7 @@
 package com.fran.Sistema_Inventario.Entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -43,7 +44,7 @@ public class Proveedor {
 
     // Relación con productos
     @OneToMany(mappedBy = "proveedor")
-    @JsonIgnore
+    @JsonManagedReference
     private Set<Producto> productos;
 
     public Proveedor() {

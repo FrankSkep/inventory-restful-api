@@ -1,8 +1,8 @@
 package com.fran.Sistema_Inventario.Service;
 
-import com.fran.Sistema_Inventario.DTO.ProductoBasicoDTO;
-import com.fran.Sistema_Inventario.DTO.ProductoDTO;
-import com.fran.Sistema_Inventario.DTO.ProductoDetalladoDTO;
+import com.fran.Sistema_Inventario.DTO.ProductoDTOs.ProductoBasicoDTO;
+import com.fran.Sistema_Inventario.DTO.ProductoDTOs.ProductoDTO;
+import com.fran.Sistema_Inventario.DTO.ProductoDTOs.ProductoDetalladoDTO;
 import com.fran.Sistema_Inventario.Entity.MovimientoStock;
 import com.fran.Sistema_Inventario.Entity.Producto;
 import java.util.List;
