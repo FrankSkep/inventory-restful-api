@@ -12,7 +12,7 @@ public class FileValidator {
     // Conjunto de MIME's permitidos
     private static final Set<String> ALLOWED_MIME_TYPES = Set.of("image/jpeg", "image/png", "image/jpg");
 
-    // Tamaño máximo permitido (por ejemplo, 5MB)
+    // Tamaño máximo permitido (5MB)
     private static final long MAX_FILE_SIZE = 5 * 1024 * 1024;
 
     public static boolean isValidFile(MultipartFile file) {
