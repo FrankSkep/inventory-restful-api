@@ -10,33 +10,24 @@ import com.fran.Sistema_Inventario.Service.ProveedorService;
 import jakarta.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.stream.Collectors;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class ProveedorServiceImpl implements ProveedorService {
 
-    @Autowired
     private ProveedorRepository proveedorRepository;
-
-    @Autowired
     private ProveedorMapperDTO proveedorMapper;
+
+    public ProveedorServiceImpl(ProveedorRepository proveedorRepository, ProveedorMapperDTO proveedorMapper) {
+        this.proveedorRepository = proveedorRepository;
+        this.proveedorMapper = proveedorMapper;
+    }
 
     @Override
     public List<ProveedorBasicoDTO> obtenerProveedores() {
         // ProveedorServiceImpl::convertirDTOrespuesta
         List<Proveedor> proveedores = proveedorRepository.findAll();
         return proveedores.stream().map(proveedorMapper::toDTObasic).collect(Collectors.toList());
-    }
-
-    @Override
-    public Proveedor obtenerPorID(Long id) {
-        return proveedorRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Proveedor no encontrado"));
-    }
-    
-    public ProveedorDetalladoDTO detallesProveedor(Proveedor provedor) {
-        return proveedorMapper.toDTOdetailed(provedor);
     }
 
     @Override
@@ -70,4 +61,16 @@ public class ProveedorServiceImpl implements ProveedorService {
         proveedorRepository.delete(proveedor);
         return true;
     }
+
+    @Override
+    public Proveedor obtenerPorID(Long id) {
+        return proveedorRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Proveedor no encontrado"));
+    }
+
+    @Override
+    public ProveedorDetalladoDTO detallesProveedor(Proveedor provedor) {
+        return proveedorMapper.toDTOdetailed(provedor);
+    }
+
 }

@@ -5,11 +5,9 @@ import com.fran.Sistema_Inventario.DTO.ProveedorDTOs.ProveedorDTO;
 import com.fran.Sistema_Inventario.DTO.ProveedorDTOs.ProveedorDetalladoDTO;
 import com.fran.Sistema_Inventario.Entity.Proveedor;
 import com.fran.Sistema_Inventario.MapperDTO.ProveedorMapperDTO;
-import com.fran.Sistema_Inventario.Service.Impl.ProveedorServiceImpl;
 import com.fran.Sistema_Inventario.Service.ProveedorService;
 import jakarta.validation.Valid;
 import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -25,11 +23,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/proveedores")
 public class ProveedorController {
 
-    @Autowired
-    private ProveedorServiceImpl proveedorService;
-
-    @Autowired
+    private ProveedorService proveedorService;
     private ProveedorMapperDTO proveedorMapper;
+
+    public ProveedorController(ProveedorService proveedorService, ProveedorMapperDTO proveedorMapper) {
+        this.proveedorService = proveedorService;
+        this.proveedorMapper = proveedorMapper;
+    }
 
     // Obtener lista de todos los proveedores
     @GetMapping({"", "/"})

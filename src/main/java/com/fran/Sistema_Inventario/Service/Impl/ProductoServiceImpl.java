@@ -18,7 +18,6 @@ import jakarta.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -29,7 +28,6 @@ public class ProductoServiceImpl implements ProductoService {
     private ProveedorService proveedorService;
     private ProductoMapper productoMapper;
 
-    @Autowired
     public ProductoServiceImpl(ProductoRepository productoRepository, MovimientoStockRepository movimientoStockRepository,
             ProveedorService proveedorService, ProductoMapper productoMapper) {
         this.productoRepository = productoRepository;
@@ -50,7 +48,7 @@ public class ProductoServiceImpl implements ProductoService {
 
     // Obtener producto por su ID
     @Override
-    public ProductoDetalladoDTO obtenerPorID(Long id) {
+    public ProductoDetalladoDTO detallesProducto(Long id) {
 
         Producto producto = productoRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Producto no encontrado"));

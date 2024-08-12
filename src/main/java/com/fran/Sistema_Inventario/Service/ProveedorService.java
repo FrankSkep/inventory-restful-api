@@ -2,6 +2,7 @@ package com.fran.Sistema_Inventario.Service;
 
 import com.fran.Sistema_Inventario.DTO.ProveedorDTOs.ProveedorBasicoDTO;
 import com.fran.Sistema_Inventario.DTO.ProveedorDTOs.ProveedorDTO;
+import com.fran.Sistema_Inventario.DTO.ProveedorDTOs.ProveedorDetalladoDTO;
 import com.fran.Sistema_Inventario.Entity.Proveedor;
 import java.util.List;
 
@@ -17,4 +18,5 @@ public interface ProveedorService {
 
     public boolean eliminarProveedor(Long id);
 
+    public ProveedorDetalladoDTO detallesProveedor(Proveedor provedor);
 }

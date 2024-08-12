@@ -6,17 +6,18 @@ import com.fran.Sistema_Inventario.Repository.ProductoRepository;
 import com.fran.Sistema_Inventario.Service.MovimientoService;
 import jakarta.persistence.EntityNotFoundException;
 import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class MovimientoServiceImpl implements MovimientoService {
 
-    @Autowired
-    MovimientoStockRepository movimientoRepository;
+    private MovimientoStockRepository movimientoRepository;
+    private ProductoRepository productoRepository;
 
-    @Autowired
-    ProductoRepository productoRepository;
+    public MovimientoServiceImpl(MovimientoStockRepository movimientoRepository, ProductoRepository productoRepository) {
+        this.movimientoRepository = movimientoRepository;
+        this.productoRepository = productoRepository;
+    }
 
     @Override
     public List<MovimientoStock> obtenerMovimientosProducto(Long id) {

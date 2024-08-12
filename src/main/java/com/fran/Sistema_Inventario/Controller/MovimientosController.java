@@ -2,9 +2,8 @@ package com.fran.Sistema_Inventario.Controller;
 
 import com.fran.Sistema_Inventario.Entity.MovimientoStock;
 import com.fran.Sistema_Inventario.Service.MovimientoService;
-import com.fran.Sistema_Inventario.Service.Impl.ProductoServiceImpl;
+import com.fran.Sistema_Inventario.Service.ProductoService;
 import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,11 +16,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/stock")
 public class MovimientosController {
 
-    private MovimientoService movimientoService;
-    private ProductoServiceImpl productoService;
+    private final MovimientoService movimientoService;
+    private final ProductoService productoService;
 
-    @Autowired
-    public MovimientosController(MovimientoService movimientoService, ProductoServiceImpl productoService) {
+    public MovimientosController(MovimientoService movimientoService, ProductoService productoService) {
         this.movimientoService = movimientoService;
         this.productoService = productoService;
     }

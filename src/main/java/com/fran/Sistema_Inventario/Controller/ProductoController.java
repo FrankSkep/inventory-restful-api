@@ -6,12 +6,11 @@ import com.fran.Sistema_Inventario.DTO.ProductoDTOs.ProductoDetalladoDTO;
 import com.fran.Sistema_Inventario.Entity.Producto;
 import com.fran.Sistema_Inventario.MapperDTO.ProductoMapper;
 import com.fran.Sistema_Inventario.Service.Impl.FileUploadService;
-import com.fran.Sistema_Inventario.Service.Impl.ProductoServiceImpl;
+import com.fran.Sistema_Inventario.Service.ProductoService;
 import com.fran.Sistema_Inventario.Utils.FileValidator;
 import jakarta.validation.Valid;
 import java.io.IOException;
 import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -31,12 +30,11 @@ import org.springframework.web.multipart.MultipartFile;
 @RequestMapping("/inventario")
 public class ProductoController {
 
-    private final ProductoServiceImpl productoService;
+    private final ProductoService productoService;
     private final FileUploadService fileUploadService;
     private final ProductoMapper productoMapper;
 
-    @Autowired
-    public ProductoController(ProductoServiceImpl productoService, FileUploadService fileUploadService, ProductoMapper productoMapper) {
+    public ProductoController(ProductoService productoService, FileUploadService fileUploadService, ProductoMapper productoMapper) {
         this.productoService = productoService;
         this.fileUploadService = fileUploadService;
         this.productoMapper = productoMapper;
@@ -51,7 +49,7 @@ public class ProductoController {
     // Ver detalles de un producto
     @GetMapping("/detalles/{id}")
     public ResponseEntity<ProductoDetalladoDTO> detallesProducto(@PathVariable Long id) {
-        return ResponseEntity.ok(productoService.obtenerPorID(id));
+        return ResponseEntity.ok(productoService.detallesProducto(id));
     }
 
     // Agregar nuevo producto al inventario

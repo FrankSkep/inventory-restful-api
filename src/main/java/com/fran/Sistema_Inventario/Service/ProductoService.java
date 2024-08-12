@@ -11,7 +11,7 @@ public interface ProductoService {
 
     public List<ProductoBasicoDTO> obtenerProductos();
 
-    public ProductoDetalladoDTO obtenerPorID(Long id);
+    public ProductoDetalladoDTO detallesProducto(Long id);
 
     public Producto guardarProducto(ProductoDTO producto);
 
@@ -20,4 +20,6 @@ public interface ProductoService {
     public boolean eliminarProducto(Long id);
 
     public MovimientoStock actualizarStock(MovimientoStock movimiento);
+
+    public void enviarAlertaStock();
 }
