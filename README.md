@@ -2,7 +2,7 @@
 
 ## Descripción
 
-API RESTful para la gestión de inventarios. Permite controlar y administrar productos, proveedores y stock con funcionalidades para agregar, actualizar y eliminar productos, gestionar entradas y salidas de stock, y recibir notificaciones por correo electrónico para alertas de bajo stock. Incluye autenticación y autorización, validaciones de entrada y manejo de imágenes de productos en la nube con firebase.
+API RESTful para la gestión de inventarios. Permite controlar y administrar productos, proveedores y stock con funcionalidades para agregar, editar y eliminar productos, gestionar entradas y salidas de stock, agregar, editar y eliminar proveedores, y recibir alertas por correo electrónico. Incluye autenticación y autorización, validaciones de entrada y manejo de imágenes de productos en la nube con firebase.
 
 ## Funcionalidades
 
