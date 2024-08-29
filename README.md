@@ -10,19 +10,20 @@ API RESTful para la gestión de inventarios. Permite controlar y administrar pro
   - Crear, leer, actualizar y eliminar productos.
   - Gestionar imágenes de productos.
   - Buscar y filtrar productos.
-  - Ver detalles (datos del producto, entradas/salidas de stock y proveedor).
+  - Ver detalles del producto (datos, entradas/salidas de stock y proveedor).
+  - Conteo del total de productos
   - Exportar reporte PDF del inventario actual.
 
 - **Stock**:
   - Registrar entradas y salidas de stock.
-  - Visualizar el historial de movimientos de stock.
-  - Notificaciones por correo electrónico para stock bajo.
+  - Visualizar el historial general de movimientos de stock.
+  - Alertas por correo electrónico para stock bajo.
   - Exportar reporte PDF de movimientos de stock.
 
 - **Proveedores**:
   - Crear, leer, actualizar y eliminar proveedores.
   - Asociar productos con proveedores.
-  - Ver detalles (datos del proveedor y productos que provee).
+  - Ver detalles del proveedor (datos y productos que provee).
 
 - **Autenticación y Autorización**:
   - Gestión de roles y permisos.
@@ -31,4 +32,4 @@ API RESTful para la gestión de inventarios. Permite controlar y administrar pro
 
 - Java 17+
 - Spring Boot
-- Base de datos (MySQL)
+- MySQL
