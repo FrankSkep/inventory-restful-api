@@ -5,12 +5,14 @@ import com.fran.Sistema_Inventario.DTO.ProductoDTOs.ProductoDTO;
 import com.fran.Sistema_Inventario.DTO.ProductoDTOs.ProductoDetalladoDTO;
 import com.fran.Sistema_Inventario.Entity.Producto;
 import com.fran.Sistema_Inventario.MapperDTO.ProductoMapper;
-import com.fran.Sistema_Inventario.Service.Impl.FileUploadService;
+import com.fran.Sistema_Inventario.Service.Impl.CloudinaryServiceImpl;
 import com.fran.Sistema_Inventario.Service.ProductoService;
 import com.fran.Sistema_Inventario.Utils.FileValidator;
 import jakarta.validation.Valid;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -31,12 +33,14 @@ import org.springframework.web.multipart.MultipartFile;
 public class ProductoController {
 
     private final ProductoService productoService;
-    private final FileUploadService fileUploadService;
+    private CloudinaryServiceImpl cloudinaryService;
+//    private final FileUploadService fileUploadService;
     private final ProductoMapper productoMapper;
 
-    public ProductoController(ProductoService productoService, FileUploadService fileUploadService, ProductoMapper productoMapper) {
+    public ProductoController(ProductoService productoService, CloudinaryServiceImpl cloudinaryService, ProductoMapper productoMapper) {
         this.productoService = productoService;
-        this.fileUploadService = fileUploadService;
+        this.cloudinaryService =  cloudinaryService;
+//        this.fileUploadService = fileUploadService;
         this.productoMapper = productoMapper;
     }
 
@@ -69,13 +73,19 @@ public class ProductoController {
         }
 
         try {
-            // Subir la imagen a Firebase y obtener la URL
-            String imageUrl = fileUploadService.uploadFile(file);
-            productoRequest.setImageUrl(imageUrl); // Asignar url al objeto
+            // Subir la imagen a Cloudinary y obtener la URL si el archivo no es nulo
+            if(!file.isEmpty()) {
+                // Subir la imagen y obtener la URL y el public_id
+                Map uploadResult = cloudinaryService.uploadFile(file);
+                String imageUrl = (String) uploadResult.get("url");
+                String imageId = (String) uploadResult.get("public_id");
 
+                productoRequest.setImageUrl(imageUrl);
+                productoRequest.setImageId(imageId);
+            }
             // Guardar el producto en la base de datos
             Producto producto = productoService.guardarProducto(productoRequest);
-
+            System.out.println("ID DE IMAGEN GUARDADO: "+ producto.getImageId());
             return ResponseEntity.ok(productoMapper.toDTO(producto));
         } catch (IOException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)

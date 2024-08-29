@@ -15,6 +15,8 @@ import com.google.cloud.storage.Storage;
 import com.google.firebase.cloud.StorageClient;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
+
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -23,17 +25,19 @@ import org.springframework.stereotype.Service;
 @Service
 public class ProductoServiceImpl implements ProductoService {
 
-    private ProductoRepository productoRepository;
-    private MovimientoStockRepository movimientoStockRepository;
-    private ProveedorService proveedorService;
-    private ProductoMapper productoMapper;
+    private final ProductoRepository productoRepository;
+    private final MovimientoStockRepository movimientoStockRepository;
+    private final ProveedorService proveedorService;
+    private final ProductoMapper productoMapper;
+    private CloudinaryServiceImpl cloudinaryService;
 
     public ProductoServiceImpl(ProductoRepository productoRepository, MovimientoStockRepository movimientoStockRepository,
-            ProveedorService proveedorService, ProductoMapper productoMapper) {
+            ProveedorService proveedorService, ProductoMapper productoMapper, CloudinaryServiceImpl cloudinaryService) {
         this.productoRepository = productoRepository;
         this.movimientoStockRepository = movimientoStockRepository;
         this.proveedorService = proveedorService;
         this.productoMapper = productoMapper;
+        this.cloudinaryService = cloudinaryService;
     }
 
     // Bucket de firebase
@@ -87,21 +91,14 @@ public class ProductoServiceImpl implements ProductoService {
         Producto producto = productoRepository.getReferenceById(id);
 
         if (producto != null) {
-            // Obtener la URL de la imagen asociada al producto
-            String imageUrl = producto.getImageUrl();
+            String publicId = producto.getImageId();
 
-            if (imageUrl != null && !imageUrl.isEmpty()) {
-                // Extraer el nombre del archivo desde la URL
-                String fileName = extractFileNameFromUrl(imageUrl);
-
-                System.out.println("Filename: " + fileName);
-
-                // Eliminar la imagen de Firebase Storage
+            if (publicId != null && !publicId.isEmpty()) {
                 try {
-                    deleteImageFromFirebase(fileName);
-                } catch (Exception e) {
-                    // Manejar el error de eliminación
-                    throw new RuntimeException("Error al eliminar la imagen de Firebase Storage: " + e.getMessage());
+                    // Eliminar la imagen de Cloudinary usando el public_id
+                    cloudinaryService.deleteFile(publicId);
+                } catch (IOException e) {
+                    throw new RuntimeException("Error al eliminar la imagen de Cloudinary: " + e.getMessage(), e);
                 }
             }
 

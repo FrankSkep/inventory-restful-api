@@ -40,6 +40,8 @@ public class Producto {
 
     private String imageUrl;
 
+    private String imageId;
+
     @ManyToOne
     @JoinColumn(name = "proveedor_id", nullable = false)
     @JsonBackReference
@@ -61,13 +63,14 @@ public class Producto {
         this.proveedor = proveedor;
     }
 
-    public Producto(String nombre, String descripcion, Double precio, Long cantidadStock, String categoria, String imageUrl, Proveedor proveedor, Integer umbralBajoStock) {
+    public Producto(String nombre, String descripcion, Double precio, Long cantidadStock, String categoria, String imageUrl, String imageId, Proveedor proveedor, Integer umbralBajoStock) {
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.precio = precio;
         this.cantidadStock = cantidadStock;
         this.categoria = categoria;
         this.imageUrl = imageUrl;
+        this.imageId = imageId;
         this.proveedor = proveedor;
         this.umbralBajoStock = umbralBajoStock;
     }
@@ -130,6 +133,10 @@ public class Producto {
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
     }
+
+    public String getImageId() {return imageId; }
+
+    public void setImageId(String imageId) { this.imageId = imageId; }
 
     public Proveedor getProveedor() {
         return proveedor;

@@ -28,6 +28,7 @@ public class ProductoMapper {
                 producto.getCantidadStock(),
                 producto.getCategoria(),
                 producto.getImageUrl(),
+                producto.getImageId(),
                 producto.getProveedor().getId(),
                 producto.getUmbralBajoStock());
     }
@@ -63,6 +64,7 @@ public class ProductoMapper {
                 productoDTO.getCantidadStock(),
                 productoDTO.getCategoria(),
                 productoDTO.getImageUrl(),
+                productoDTO.getImageId(),
                 proveedorService.obtenerPorID(productoDTO.getProveedorId()),
                 productoDTO.getUmbralBajoStock());
     }
