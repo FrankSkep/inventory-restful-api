@@ -12,9 +12,14 @@ import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.time.LocalDateTime;
 
 @Entity
+@Getter
+@Setter
 @Table(name = "movimientos_stock")
 public class MovimientoStock {
 
@@ -37,54 +42,6 @@ public class MovimientoStock {
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonBackReference
     private Producto producto;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public TipoMovimiento getTipoMovimiento() {
-        return tipoMovimiento;
-    }
-
-    public void setTipoMovimiento(TipoMovimiento tipoMovimiento) {
-        this.tipoMovimiento = tipoMovimiento;
-    }
-
-    public LocalDateTime getFechaMovimiento() {
-        return fechaMovimiento;
-    }
-
-    public void setFechaMovimiento(LocalDateTime fechaMovimiento) {
-        this.fechaMovimiento = fechaMovimiento;
-    }
-
-    public String getRazon() {
-        return razon;
-    }
-
-    public void setRazon(String razon) {
-        this.razon = razon;
-    }
-
-    public Producto getProducto() {
-        return producto;
-    }
-
-    public void setProducto(Producto producto) {
-        this.producto = producto;
-    }
-
-    public void setCantidad(Long cantidad) {
-        this.cantidad = cantidad;
-    }
-
-    public Long getCantidad() {
-        return this.cantidad;
-    }
 
     public enum TipoMovimiento {
         ENTRADA, SALIDA

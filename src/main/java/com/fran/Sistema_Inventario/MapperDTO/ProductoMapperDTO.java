@@ -5,16 +5,15 @@ import com.fran.Sistema_Inventario.DTO.ProductoDTOs.ProductoDTO;
 import com.fran.Sistema_Inventario.DTO.ProductoDTOs.ProductoDetalladoDTO;
 import com.fran.Sistema_Inventario.Entity.Producto;
 import com.fran.Sistema_Inventario.Service.ProveedorService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ProductoMapper {
+public class ProductoMapperDTO {
 
     private ProveedorService proveedorService;
     private ProveedorMapperDTO proveedorMapper;
 
-    public ProductoMapper(ProveedorService proveedorService, ProveedorMapperDTO proveedorMapper) {
+    public ProductoMapperDTO(ProveedorService proveedorService, ProveedorMapperDTO proveedorMapper) {
         this.proveedorService = proveedorService;
         this.proveedorMapper = proveedorMapper;
     }

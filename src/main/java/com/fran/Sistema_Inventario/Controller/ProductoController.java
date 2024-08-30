@@ -4,7 +4,7 @@ import com.fran.Sistema_Inventario.DTO.ProductoDTOs.ProductoBasicoDTO;
 import com.fran.Sistema_Inventario.DTO.ProductoDTOs.ProductoDTO;
 import com.fran.Sistema_Inventario.DTO.ProductoDTOs.ProductoDetalladoDTO;
 import com.fran.Sistema_Inventario.Entity.Producto;
-import com.fran.Sistema_Inventario.MapperDTO.ProductoMapper;
+import com.fran.Sistema_Inventario.MapperDTO.ProductoMapperDTO;
 import com.fran.Sistema_Inventario.Service.Impl.CloudinaryServiceImpl;
 import com.fran.Sistema_Inventario.Service.ProductoService;
 import com.fran.Sistema_Inventario.Utils.FileValidator;
@@ -12,7 +12,6 @@ import jakarta.validation.Valid;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -34,12 +33,12 @@ public class ProductoController {
 
     private final ProductoService productoService;
     private CloudinaryServiceImpl cloudinaryService;
-//    private final FileUploadService fileUploadService;
-    private final ProductoMapper productoMapper;
+    //    private final FileUploadService fileUploadService;
+    private final ProductoMapperDTO productoMapper;
 
-    public ProductoController(ProductoService productoService, CloudinaryServiceImpl cloudinaryService, ProductoMapper productoMapper) {
+    public ProductoController(ProductoService productoService, CloudinaryServiceImpl cloudinaryService, ProductoMapperDTO productoMapper) {
         this.productoService = productoService;
-        this.cloudinaryService =  cloudinaryService;
+        this.cloudinaryService = cloudinaryService;
 //        this.fileUploadService = fileUploadService;
         this.productoMapper = productoMapper;
     }
@@ -74,7 +73,7 @@ public class ProductoController {
 
         try {
             // Subir la imagen a Cloudinary y obtener la URL si el archivo no es nulo
-            if(!file.isEmpty()) {
+            if (!file.isEmpty()) {
                 // Subir la imagen y obtener la URL y el public_id
                 Map uploadResult = cloudinaryService.uploadFile(file);
                 String imageUrl = (String) uploadResult.get("url");
@@ -85,7 +84,6 @@ public class ProductoController {
             }
             // Guardar el producto en la base de datos
             Producto producto = productoService.guardarProducto(productoRequest);
-            System.out.println("ID DE IMAGEN GUARDADO: "+ producto.getImageId());
             return ResponseEntity.ok(productoMapper.toDTO(producto));
         } catch (IOException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)

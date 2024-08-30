@@ -5,7 +5,7 @@ import com.fran.Sistema_Inventario.DTO.ProductoDTOs.ProductoDTO;
 import com.fran.Sistema_Inventario.DTO.ProductoDTOs.ProductoDetalladoDTO;
 import com.fran.Sistema_Inventario.Entity.MovimientoStock;
 import com.fran.Sistema_Inventario.Entity.Producto;
-import com.fran.Sistema_Inventario.MapperDTO.ProductoMapper;
+import com.fran.Sistema_Inventario.MapperDTO.ProductoMapperDTO;
 import com.fran.Sistema_Inventario.Repository.MovimientoStockRepository;
 import com.fran.Sistema_Inventario.Repository.ProductoRepository;
 import com.fran.Sistema_Inventario.Service.ProductoService;
@@ -28,11 +28,11 @@ public class ProductoServiceImpl implements ProductoService {
     private final ProductoRepository productoRepository;
     private final MovimientoStockRepository movimientoStockRepository;
     private final ProveedorService proveedorService;
-    private final ProductoMapper productoMapper;
+    private final ProductoMapperDTO productoMapper;
     private CloudinaryServiceImpl cloudinaryService;
 
     public ProductoServiceImpl(ProductoRepository productoRepository, MovimientoStockRepository movimientoStockRepository,
-            ProveedorService proveedorService, ProductoMapper productoMapper, CloudinaryServiceImpl cloudinaryService) {
+                               ProveedorService proveedorService, ProductoMapperDTO productoMapper, CloudinaryServiceImpl cloudinaryService) {
         this.productoRepository = productoRepository;
         this.movimientoStockRepository = movimientoStockRepository;
         this.proveedorService = proveedorService;
