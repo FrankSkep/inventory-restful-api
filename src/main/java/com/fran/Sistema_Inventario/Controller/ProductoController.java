@@ -33,7 +33,6 @@ public class ProductoController {
 
     private final ProductoService productoService;
     private CloudinaryServiceImpl cloudinaryService;
-    //    private final FileUploadService fileUploadService;
     private final ProductoMapperDTO productoMapper;
 
     public ProductoController(ProductoService productoService, CloudinaryServiceImpl cloudinaryService, ProductoMapperDTO productoMapper) {
