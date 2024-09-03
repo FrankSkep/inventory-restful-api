@@ -40,9 +40,6 @@ public class ProductoServiceImpl implements ProductoService {
         this.cloudinaryService = cloudinaryService;
     }
 
-    // Bucket de firebase
-    private final String BUCKET_NAME = "productos-inventario-7f2d7.appspot.com";
-
     @Override
     public List<ProductoBasicoDTO> obtenerProductos() {
 
