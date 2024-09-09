@@ -21,7 +21,7 @@ public class CategoriaController {
         return categoriaService.getAllCategorias();
     }
 
-    @PostMapping("agregar")
+    @PostMapping("/agregar")
     public Categoria addCategoria(@RequestBody Categoria categoria) {
         return categoriaService.saveCategoria(categoria);
     }
