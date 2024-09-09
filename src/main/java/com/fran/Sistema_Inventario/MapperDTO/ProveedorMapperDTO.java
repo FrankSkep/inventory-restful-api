@@ -50,7 +50,7 @@ public class ProveedorMapperDTO {
                 producto.getDescripcion(),
                 producto.getPrecio(),
                 producto.getCantidadStock(),
-                producto.getCategoria(),
+                producto.getCategoria().getNombre(),
                 producto.getImageUrl()
         );
     }

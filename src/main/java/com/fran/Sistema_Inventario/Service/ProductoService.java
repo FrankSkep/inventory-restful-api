@@ -5,6 +5,8 @@ import com.fran.Sistema_Inventario.DTO.ProductoDTOs.ProductoDTO;
 import com.fran.Sistema_Inventario.DTO.ProductoDTOs.ProductoDetalladoDTO;
 import com.fran.Sistema_Inventario.Entity.MovimientoStock;
 import com.fran.Sistema_Inventario.Entity.Producto;
+import org.springframework.web.multipart.MultipartFile;
+
 import java.util.List;
 
 public interface ProductoService {
@@ -15,7 +17,9 @@ public interface ProductoService {
 
     public Producto guardarProducto(ProductoDTO producto);
 
-    public Producto editarProducto(Long id, ProductoDTO producto);
+    public void editarProducto(Long id, ProductoDTO producto);
+
+    public void updateFile(Long productoId, MultipartFile file);
 
     public boolean eliminarProducto(Long id);
 

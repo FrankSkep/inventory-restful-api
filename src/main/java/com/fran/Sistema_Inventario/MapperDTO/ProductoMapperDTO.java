@@ -4,6 +4,7 @@ import com.fran.Sistema_Inventario.DTO.ProductoDTOs.ProductoBasicoDTO;
 import com.fran.Sistema_Inventario.DTO.ProductoDTOs.ProductoDTO;
 import com.fran.Sistema_Inventario.DTO.ProductoDTOs.ProductoDetalladoDTO;
 import com.fran.Sistema_Inventario.Entity.Producto;
+import com.fran.Sistema_Inventario.Service.Impl.CategoriaServiceImpl;
 import com.fran.Sistema_Inventario.Service.ProveedorService;
 import org.springframework.stereotype.Component;
 
@@ -12,10 +13,12 @@ public class ProductoMapperDTO {
 
     private ProveedorService proveedorService;
     private ProveedorMapperDTO proveedorMapper;
+    private CategoriaServiceImpl categoriaService;
 
-    public ProductoMapperDTO(ProveedorService proveedorService, ProveedorMapperDTO proveedorMapper) {
+    public ProductoMapperDTO(ProveedorService proveedorService, ProveedorMapperDTO proveedorMapper, CategoriaServiceImpl categoriaService) {
         this.proveedorService = proveedorService;
         this.proveedorMapper = proveedorMapper;
+        this.categoriaService = categoriaService;
     }
     
     public ProductoDTO toDTO(Producto producto) {
@@ -25,7 +28,7 @@ public class ProductoMapperDTO {
                 producto.getDescripcion(),
                 producto.getPrecio(),
                 producto.getCantidadStock(),
-                producto.getCategoria(),
+                producto.getCategoria().getNombre(),
                 producto.getImageUrl(),
                 producto.getImageId(),
                 producto.getProveedor().getId(),
@@ -39,7 +42,7 @@ public class ProductoMapperDTO {
                 producto.getDescripcion(),
                 producto.getPrecio(),
                 producto.getCantidadStock(),
-                producto.getCategoria(),
+                producto.getCategoria().getNombre(),
                 producto.getImageUrl()
         );
     }
@@ -49,7 +52,7 @@ public class ProductoMapperDTO {
         return new ProductoDetalladoDTO(
                 producto.getId(), producto.getNombre(), producto.getDescripcion(),
                 producto.getPrecio(), producto.getCantidadStock(),
-                producto.getCategoria(), producto.getImageUrl(),
+                producto.getCategoria().getNombre(), producto.getImageUrl(),
                 proveedorMapper.toDTObasic(producto.getProveedor()),
                 producto.getUmbralBajoStock(), producto.getMovimientosStock()
         );
@@ -61,7 +64,7 @@ public class ProductoMapperDTO {
                 productoDTO.getDescripcion(),
                 productoDTO.getPrecio(),
                 productoDTO.getCantidadStock(),
-                productoDTO.getCategoria(),
+                categoriaService.getCategoriaByNombre(productoDTO.getCategoria()),
                 productoDTO.getImageUrl(),
                 productoDTO.getImageId(),
                 proveedorService.obtenerPorID(productoDTO.getProveedorId()),

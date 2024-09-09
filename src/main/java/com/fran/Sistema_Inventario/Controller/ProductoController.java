@@ -15,16 +15,7 @@ import java.util.Map;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 @RestController
@@ -92,13 +83,24 @@ public class ProductoController {
 
     // Editar datos de un producto
     @PutMapping("/editar/{id}")
-    public ResponseEntity<?> editarProducto(@PathVariable Long id, @Valid @RequestBody ProductoDTO productoRequest, BindingResult result) {
+    public ResponseEntity<?> editarProducto(@PathVariable Long id, @ModelAttribute ProductoDTO productoRequest,
+                                            @RequestPart(value = "file", required = false) MultipartFile nuevaImagenOpcional,
+                                            BindingResult result) throws IOException {
 
         if (result.hasErrors()) {
             return ResponseEntity.badRequest().body(result.getAllErrors());
         }
 
-        return ResponseEntity.ok(productoService.editarProducto(id, productoRequest));
+        if(nuevaImagenOpcional != null) {
+            try {
+                productoService.updateFile(productoRequest.getId(), nuevaImagenOpcional);
+            } catch (Exception e) {
+                System.out.println("Error al subir la imagen: " + e.getMessage());
+            }
+        }
+
+        productoService.editarProducto(id, productoRequest);
+        return ResponseEntity.ok().body("Producto Editado");
     }
 
     // Eliminar un producto por su ID

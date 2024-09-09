@@ -3,16 +3,9 @@ package com.fran.Sistema_Inventario.Entity;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fran.Sistema_Inventario.DTO.ProductoDTOs.ProductoDTO;
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import org.checkerframework.checker.units.qual.C;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,8 +28,9 @@ public class Producto {
     @Column(name = "cantidad_stock", nullable = false)
     private Long cantidadStock;
 
-    @Column(nullable = false)
-    private String categoria;
+    @ManyToOne(fetch = FetchType.LAZY) // Lazy loading, para cargar la categoría solo cuando se necesita
+    @JoinColumn(name = "categoria_id", nullable = false)
+    private Categoria categoria;
 
     private String imageUrl;
 
@@ -53,7 +47,7 @@ public class Producto {
     @JsonManagedReference
     private List<MovimientoStock> movimientosStock = new ArrayList<>();
 
-    public Producto(Long id, String nombre, String descripcion, Double precio, Long cantidadStock, String categoria, Proveedor proveedor) {
+    public Producto(Long id, String nombre, String descripcion, Double precio, Long cantidadStock, Categoria categoria, Proveedor proveedor) {
         this.id = id;
         this.nombre = nombre;
         this.descripcion = descripcion;
@@ -63,7 +57,7 @@ public class Producto {
         this.proveedor = proveedor;
     }
 
-    public Producto(String nombre, String descripcion, Double precio, Long cantidadStock, String categoria, String imageUrl, String imageId, Proveedor proveedor, Integer umbralBajoStock) {
+    public Producto(String nombre, String descripcion, Double precio, Long cantidadStock, Categoria categoria, String imageUrl, String imageId, Proveedor proveedor, Integer umbralBajoStock) {
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.precio = precio;
@@ -118,11 +112,11 @@ public class Producto {
         this.cantidadStock = cantidadStock;
     }
 
-    public String getCategoria() {
+    public Categoria getCategoria() {
         return categoria;
     }
 
-    public void setCategoria(String categoria) {
+    public void setCategoria(Categoria categoria) {
         this.categoria = categoria;
     }
 

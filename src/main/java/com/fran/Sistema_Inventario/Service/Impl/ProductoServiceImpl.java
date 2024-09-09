@@ -19,8 +19,10 @@ import jakarta.transaction.Transactional;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class ProductoServiceImpl implements ProductoService {
@@ -30,14 +32,17 @@ public class ProductoServiceImpl implements ProductoService {
     private final ProveedorService proveedorService;
     private final ProductoMapperDTO productoMapper;
     private CloudinaryServiceImpl cloudinaryService;
+    private CategoriaServiceImpl categoriaService;
 
     public ProductoServiceImpl(ProductoRepository productoRepository, MovimientoStockRepository movimientoStockRepository,
-                               ProveedorService proveedorService, ProductoMapperDTO productoMapper, CloudinaryServiceImpl cloudinaryService) {
+                               ProveedorService proveedorService, ProductoMapperDTO productoMapper, CloudinaryServiceImpl cloudinaryService,
+                               CategoriaServiceImpl categoriaService) {
         this.productoRepository = productoRepository;
         this.movimientoStockRepository = movimientoStockRepository;
         this.proveedorService = proveedorService;
         this.productoMapper = productoMapper;
         this.cloudinaryService = cloudinaryService;
+        this.categoriaService = categoriaService;
     }
 
     @Override
@@ -68,17 +73,35 @@ public class ProductoServiceImpl implements ProductoService {
 
     // Editar datos de un producto existente
     @Override
-    public Producto editarProducto(Long id, ProductoDTO productoReq) {
+    public void editarProducto(Long id, ProductoDTO productoReq) {
 
         Producto productoDB = productoRepository.getReferenceById(id);
 
         productoDB.setNombre(productoReq.getNombre());
         productoDB.setDescripcion(productoReq.getDescripcion());
         productoDB.setPrecio(productoReq.getPrecio());
-        productoDB.setCategoria(productoReq.getCategoria());
+        productoDB.setCategoria(categoriaService.getCategoriaByNombre(productoReq.getCategoria()));
         productoDB.setProveedor(proveedorService.obtenerPorID(productoReq.getProveedorId()));
+        productoDB.setUmbralBajoStock(productoReq.getUmbralBajoStock());
 
-        return productoRepository.save(productoDB);
+        productoRepository.save(productoDB);
+    }
+
+    @Override
+    public void updateFile(Long productoId, MultipartFile file) {
+        try {
+            Producto producto = productoRepository.getReferenceById(productoId);
+            cloudinaryService.deleteFile(producto.getImageId());
+            Map uploadResult = cloudinaryService.uploadFile(file);
+            String imageUrl = (String) uploadResult.get("url");
+            String newImageId = (String) uploadResult.get("public_id");
+            producto.setImageId(newImageId);
+            producto.setImageUrl(imageUrl);
+            productoRepository.save(producto);
+        }
+        catch (Exception e) {
+            System.out.println("Error al actualizar la imagen: " + e.getMessage());
+        }
     }
 
     // Eliminar un producto
@@ -91,12 +114,8 @@ public class ProductoServiceImpl implements ProductoService {
             String publicId = producto.getImageId();
 
             if (publicId != null && !publicId.isEmpty()) {
-                try {
-                    // Eliminar la imagen de Cloudinary usando el public_id
-                    cloudinaryService.deleteFile(publicId);
-                } catch (IOException e) {
-                    throw new RuntimeException("Error al eliminar la imagen de Cloudinary: " + e.getMessage(), e);
-                }
+                // Eliminar la imagen de Cloudinary usando el public_id
+                cloudinaryService.deleteFile(publicId);
             }
 
             // Eliminar el producto de la base de datos
@@ -107,45 +126,12 @@ public class ProductoServiceImpl implements ProductoService {
         }
     }
 
-    // Obtener nombre de imagen desde url
-    private String extractFileNameFromUrl(String imageUrl) {
-        // Extrae el nombre del archivo de la URL
-        String fileName = imageUrl.substring(imageUrl.indexOf("/o/") + 3);
-        // Elimina cualquier parámetro de consulta, si está presente
-        int queryParamIndex = fileName.indexOf("?");
-        if (queryParamIndex != -1) {
-            fileName = fileName.substring(0, queryParamIndex);
-        }
-        // Reemplaza las codificaciones de URL
-        fileName = fileName.replace("%2F", "/");
-        return fileName;
-    }
-
-    // Eliminar imagen de firebase
-    private void deleteImageFromFirebase(String fileName) {
-        Storage storage = StorageClient.getInstance().bucket().getStorage();
-
-        // Referencia al archivo en Firebase Storage
-        BlobId blobId = BlobId.of(BUCKET_NAME, fileName);
-        System.out.println("Blob id: " + blobId.toString());
-
-        // Eliminar el archivo  
-        boolean deleted = storage.delete(blobId);
-        if (!deleted) {
-            throw new RuntimeException("No se pudo eliminar la imagen de Firebase Storage");
-        }
-    }
-
     // Actualiza el stock y registra el movimiento
     @Override
     @Transactional
     public MovimientoStock actualizarStock(MovimientoStock movimiento) {
 
         Producto producto = productoRepository.getReferenceById(movimiento.getProducto().getId());
-
-        if (producto == null) {
-            throw new EntityNotFoundException("Producto no encontrado");
-        }
 
         Long stockActual = producto.getCantidadStock();
         Long stockMovimiento = movimiento.getCantidad();
