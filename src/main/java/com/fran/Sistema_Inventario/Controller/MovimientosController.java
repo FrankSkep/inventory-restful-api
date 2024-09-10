@@ -1,8 +1,8 @@
 package com.fran.Sistema_Inventario.Controller;
 
 import com.fran.Sistema_Inventario.Entity.MovimientoStock;
-import com.fran.Sistema_Inventario.Service.MovimientoService;
-import com.fran.Sistema_Inventario.Service.ProductoService;
+import com.fran.Sistema_Inventario.Service.Impl.MovimientoServiceImpl;
+import com.fran.Sistema_Inventario.Service.Impl.ProductoServiceImpl;
 import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,13 +13,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/stock")
+@RequestMapping("/movimientos")
 public class MovimientosController {
 
-    private final MovimientoService movimientoService;
-    private final ProductoService productoService;
+    private final MovimientoServiceImpl movimientoService;
+    private final ProductoServiceImpl productoService;
 
-    public MovimientosController(MovimientoService movimientoService, ProductoService productoService) {
+    public MovimientosController(MovimientoServiceImpl movimientoService, ProductoServiceImpl productoService) {
         this.movimientoService = movimientoService;
         this.productoService = productoService;
     }
@@ -30,20 +30,8 @@ public class MovimientosController {
         return movimientoService.obtenerTodosLosMovimientos();
     }
 
-    // Registrar entrada de stock
-    @PostMapping("/entrada")
-    public ResponseEntity<MovimientoStock> entradaStock(@RequestBody MovimientoStock movimiento) {
-
-        movimiento.setTipoMovimiento(MovimientoStock.TipoMovimiento.ENTRADA);
-        MovimientoStock movimientoRegistrado = productoService.actualizarStock(movimiento);
-        return ResponseEntity.status(HttpStatus.CREATED).body(movimientoRegistrado);
-    }
-
-    // Registrar salida de stock
-    @PostMapping("/salida")
-    public ResponseEntity<MovimientoStock> salidaStock(@RequestBody MovimientoStock movimiento) {
-
-        movimiento.setTipoMovimiento(MovimientoStock.TipoMovimiento.SALIDA);
+    @PostMapping("/registrar")
+    public ResponseEntity<?> registrar(@RequestBody MovimientoStock movimiento) {
         MovimientoStock movimientoRegistrado = productoService.actualizarStock(movimiento);
         return ResponseEntity.status(HttpStatus.CREATED).body(movimientoRegistrado);
     }

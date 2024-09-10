@@ -10,13 +10,9 @@ import com.fran.Sistema_Inventario.Repository.MovimientoStockRepository;
 import com.fran.Sistema_Inventario.Repository.ProductoRepository;
 import com.fran.Sistema_Inventario.Service.ProductoService;
 import com.fran.Sistema_Inventario.Service.ProveedorService;
-import com.google.cloud.storage.BlobId;
-import com.google.cloud.storage.Storage;
-import com.google.firebase.cloud.StorageClient;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 
-import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
@@ -35,8 +31,8 @@ public class ProductoServiceImpl implements ProductoService {
     private CategoriaServiceImpl categoriaService;
 
     public ProductoServiceImpl(ProductoRepository productoRepository, MovimientoStockRepository movimientoStockRepository,
-                               ProveedorService proveedorService, ProductoMapperDTO productoMapper, CloudinaryServiceImpl cloudinaryService,
-                               CategoriaServiceImpl categoriaService) {
+            ProveedorService proveedorService, ProductoMapperDTO productoMapper, CloudinaryServiceImpl cloudinaryService,
+            CategoriaServiceImpl categoriaService) {
         this.productoRepository = productoRepository;
         this.movimientoStockRepository = movimientoStockRepository;
         this.proveedorService = proveedorService;
@@ -98,8 +94,7 @@ public class ProductoServiceImpl implements ProductoService {
             producto.setImageId(newImageId);
             producto.setImageUrl(imageUrl);
             productoRepository.save(producto);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             System.out.println("Error al actualizar la imagen: " + e.getMessage());
         }
     }

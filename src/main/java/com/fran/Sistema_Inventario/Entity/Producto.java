@@ -2,9 +2,7 @@ package com.fran.Sistema_Inventario.Entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fran.Sistema_Inventario.DTO.ProductoDTOs.ProductoDTO;
 import jakarta.persistence.*;
-import org.checkerframework.checker.units.qual.C;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -128,9 +126,13 @@ public class Producto {
         this.imageUrl = imageUrl;
     }
 
-    public String getImageId() {return imageId; }
+    public String getImageId() {
+        return imageId;
+    }
 
-    public void setImageId(String imageId) { this.imageId = imageId; }
+    public void setImageId(String imageId) {
+        this.imageId = imageId;
+    }
 
     public Proveedor getProveedor() {
         return proveedor;

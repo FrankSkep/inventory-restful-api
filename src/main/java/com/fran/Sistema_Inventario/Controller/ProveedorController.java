@@ -5,7 +5,7 @@ import com.fran.Sistema_Inventario.DTO.ProveedorDTOs.ProveedorDTO;
 import com.fran.Sistema_Inventario.DTO.ProveedorDTOs.ProveedorDetalladoDTO;
 import com.fran.Sistema_Inventario.Entity.Proveedor;
 import com.fran.Sistema_Inventario.MapperDTO.ProveedorMapperDTO;
-import com.fran.Sistema_Inventario.Service.ProveedorService;
+import com.fran.Sistema_Inventario.Service.Impl.ProveedorServiceImpl;
 import jakarta.validation.Valid;
 import java.util.List;
 import org.springframework.http.ResponseEntity;
@@ -23,10 +23,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/proveedores")
 public class ProveedorController {
 
-    private ProveedorService proveedorService;
+    private ProveedorServiceImpl proveedorService;
     private ProveedorMapperDTO proveedorMapper;
 
-    public ProveedorController(ProveedorService proveedorService, ProveedorMapperDTO proveedorMapper) {
+    public ProveedorController(ProveedorServiceImpl proveedorService, ProveedorMapperDTO proveedorMapper) {
         this.proveedorService = proveedorService;
         this.proveedorMapper = proveedorMapper;
     }

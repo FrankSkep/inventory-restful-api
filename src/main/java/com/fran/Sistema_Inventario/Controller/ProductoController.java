@@ -6,7 +6,7 @@ import com.fran.Sistema_Inventario.DTO.ProductoDTOs.ProductoDetalladoDTO;
 import com.fran.Sistema_Inventario.Entity.Producto;
 import com.fran.Sistema_Inventario.MapperDTO.ProductoMapperDTO;
 import com.fran.Sistema_Inventario.Service.Impl.CloudinaryServiceImpl;
-import com.fran.Sistema_Inventario.Service.ProductoService;
+import com.fran.Sistema_Inventario.Service.Impl.ProductoServiceImpl;
 import com.fran.Sistema_Inventario.Utils.FileValidator;
 import jakarta.validation.Valid;
 import java.io.IOException;
@@ -22,14 +22,13 @@ import org.springframework.web.multipart.MultipartFile;
 @RequestMapping("/inventario")
 public class ProductoController {
 
-    private final ProductoService productoService;
+    private final ProductoServiceImpl productoService;
     private CloudinaryServiceImpl cloudinaryService;
     private final ProductoMapperDTO productoMapper;
 
-    public ProductoController(ProductoService productoService, CloudinaryServiceImpl cloudinaryService, ProductoMapperDTO productoMapper) {
+    public ProductoController(ProductoServiceImpl productoService, CloudinaryServiceImpl cloudinaryService, ProductoMapperDTO productoMapper) {
         this.productoService = productoService;
         this.cloudinaryService = cloudinaryService;
-//        this.fileUploadService = fileUploadService;
         this.productoMapper = productoMapper;
     }
 
@@ -62,7 +61,6 @@ public class ProductoController {
         }
 
         try {
-            // Subir la imagen a Cloudinary y obtener la URL si el archivo no es nulo
             if (!file.isEmpty()) {
                 // Subir la imagen y obtener la URL y el public_id
                 Map uploadResult = cloudinaryService.uploadFile(file);
@@ -84,14 +82,14 @@ public class ProductoController {
     // Editar datos de un producto
     @PutMapping("/editar/{id}")
     public ResponseEntity<?> editarProducto(@PathVariable Long id, @ModelAttribute ProductoDTO productoRequest,
-                                            @RequestPart(value = "file", required = false) MultipartFile nuevaImagenOpcional,
-                                            BindingResult result) throws IOException {
+            @RequestPart(value = "file", required = false) MultipartFile nuevaImagenOpcional,
+            BindingResult result) throws IOException {
 
         if (result.hasErrors()) {
             return ResponseEntity.badRequest().body(result.getAllErrors());
         }
 
-        if(nuevaImagenOpcional != null) {
+        if (nuevaImagenOpcional != null) {
             try {
                 productoService.updateFile(productoRequest.getId(), nuevaImagenOpcional);
             } catch (Exception e) {
