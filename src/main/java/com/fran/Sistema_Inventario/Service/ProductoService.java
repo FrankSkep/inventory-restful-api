@@ -17,7 +17,7 @@ public interface ProductoService {
 
     public Producto guardarProducto(ProductoDTO producto);
 
-    public void editarProducto(Long id, ProductoDTO producto);
+    public void actualizarProducto(ProductoDTO productoReq);
 
     public void updateFile(Long productoId, MultipartFile file);
 

@@ -17,6 +17,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -31,8 +32,8 @@ public class ProductoServiceImpl implements ProductoService {
     private CategoriaServiceImpl categoriaService;
 
     public ProductoServiceImpl(ProductoRepository productoRepository, MovimientoStockRepository movimientoStockRepository,
-            ProveedorService proveedorService, ProductoMapperDTO productoMapper, CloudinaryServiceImpl cloudinaryService,
-            CategoriaServiceImpl categoriaService) {
+                               ProveedorService proveedorService, ProductoMapperDTO productoMapper, CloudinaryServiceImpl cloudinaryService,
+                               CategoriaServiceImpl categoriaService) {
         this.productoRepository = productoRepository;
         this.movimientoStockRepository = movimientoStockRepository;
         this.proveedorService = proveedorService;
@@ -69,9 +70,9 @@ public class ProductoServiceImpl implements ProductoService {
 
     // Editar datos de un producto existente
     @Override
-    public void editarProducto(Long id, ProductoDTO productoReq) {
+    public void actualizarProducto(ProductoDTO productoReq) {
 
-        Producto productoDB = productoRepository.getReferenceById(id);
+        Producto productoDB = productoRepository.getReferenceById(productoReq.getId());
 
         productoDB.setNombre(productoReq.getNombre());
         productoDB.setDescripcion(productoReq.getDescripcion());
@@ -79,6 +80,8 @@ public class ProductoServiceImpl implements ProductoService {
         productoDB.setCategoria(categoriaService.getCategoriaByNombre(productoReq.getCategoria()));
         productoDB.setProveedor(proveedorService.obtenerPorID(productoReq.getProveedorId()));
         productoDB.setUmbralBajoStock(productoReq.getUmbralBajoStock());
+        productoDB.setImageUrl(productoReq.getImageUrl());
+        productoDB.setImageId(productoReq.getImageId());
 
         productoRepository.save(productoDB);
     }

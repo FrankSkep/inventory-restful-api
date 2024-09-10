@@ -9,9 +9,11 @@ import com.fran.Sistema_Inventario.Service.Impl.CloudinaryServiceImpl;
 import com.fran.Sistema_Inventario.Service.Impl.ProductoServiceImpl;
 import com.fran.Sistema_Inventario.Utils.FileValidator;
 import jakarta.validation.Valid;
+
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -48,31 +50,40 @@ public class ProductoController {
     @PostMapping("/agregar")
     public ResponseEntity<?> crearProducto(
             @Valid @ModelAttribute ProductoDTO productoRequest,
-            @RequestPart("file") MultipartFile file,
+            @RequestPart(value = "file", required = false) MultipartFile file,
             BindingResult result) {
 
         if (result.hasErrors()) {
             return ResponseEntity.badRequest().body(result.getAllErrors());
         }
 
-        // Verificar si el archivo es valido
-        if (!FileValidator.isValidFile(file)) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Archivo no válido");
-        }
-
         try {
-            if (!file.isEmpty()) {
+            // Guardar el producto en la base de datos primero
+            Producto producto = productoService.guardarProducto(productoRequest);
+
+            // Si hay archivo, intenta subir la imagen
+            if (file != null && !file.isEmpty()) {
+                // Verificar si el archivo es válido
+                if (!FileValidator.isValidFile(file)) {
+                    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Archivo no válido");
+                }
+
                 // Subir la imagen y obtener la URL y el public_id
                 Map uploadResult = cloudinaryService.uploadFile(file);
                 String imageUrl = (String) uploadResult.get("url");
                 String imageId = (String) uploadResult.get("public_id");
 
-                productoRequest.setImageUrl(imageUrl);
-                productoRequest.setImageId(imageId);
+                // Actualizar el producto con la información de la imagen
+                producto.setImageUrl(imageUrl);
+                producto.setImageId(imageId);
+
+                // Actualizar el producto en la base de datos con la URL de la imagen
+                productoService.actualizarProducto(productoMapper.toDTO(producto));
             }
-            // Guardar el producto en la base de datos
-            Producto producto = productoService.guardarProducto(productoRequest);
+
+            // Retornar la respuesta exitosa con el producto
             return ResponseEntity.ok(productoMapper.toDTO(producto));
+
         } catch (IOException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("Error al subir la imagen: " + e.getMessage());
@@ -82,22 +93,31 @@ public class ProductoController {
     // Editar datos de un producto
     @PutMapping("/editar/{id}")
     public ResponseEntity<?> editarProducto(@PathVariable Long id, @ModelAttribute ProductoDTO productoRequest,
-            @RequestPart(value = "file", required = false) MultipartFile nuevaImagenOpcional,
-            BindingResult result) throws IOException {
+                                            @RequestPart(value = "file", required = false) MultipartFile nuevaImagenOpcional,
+                                            BindingResult result) throws IOException {
 
         if (result.hasErrors()) {
             return ResponseEntity.badRequest().body(result.getAllErrors());
         }
 
         if (nuevaImagenOpcional != null) {
+
             try {
-                productoService.updateFile(productoRequest.getId(), nuevaImagenOpcional);
+                // Si ya existe una imagen, la actualiza
+                if (productoRequest.getImageUrl() != null) {
+                    productoService.updateFile(productoRequest.getId(), nuevaImagenOpcional);
+                }
+                else { // Si no existe imagen, la sube
+                    Map uploadResult = cloudinaryService.uploadFile(nuevaImagenOpcional);
+                    productoRequest.setImageUrl(uploadResult.get("url").toString());
+                    productoRequest.setImageId(uploadResult.get("public_id").toString());
+                }
             } catch (Exception e) {
                 System.out.println("Error al subir la imagen: " + e.getMessage());
             }
         }
 
-        productoService.editarProducto(id, productoRequest);
+        productoService.actualizarProducto(productoRequest);
         return ResponseEntity.ok().body("Producto Editado");
     }
 
