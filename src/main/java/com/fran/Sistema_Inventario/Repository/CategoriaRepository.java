@@ -8,7 +8,9 @@ import java.util.List;
 public interface CategoriaRepository extends JpaRepository<Categoria, Long> {
 
     public Categoria findByNombre(String nombre);
+
     public Categoria findById(long id);
+
     public List<Categoria> findByNombreContaining(String nombre);
 
 }

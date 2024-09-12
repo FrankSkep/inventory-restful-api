@@ -18,11 +18,11 @@ public class CategoriaController {
 
     @GetMapping("/")
     public List<Categoria> getAllCategorias() {
-        return categoriaService.getAllCategorias();
+        return categoriaService.obtenerTodas();
     }
 
     @PostMapping("/agregar")
     public Categoria addCategoria(@RequestBody Categoria categoria) {
-        return categoriaService.saveCategoria(categoria);
+        return categoriaService.guardarCategoria(categoria);
     }
 }

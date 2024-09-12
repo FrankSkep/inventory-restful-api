@@ -9,29 +9,35 @@ import java.util.List;
 
 @Service
 public class CategoriaServiceImpl implements CategoriaService {
-    private CategoriaRepository categoriaRepository;
+
+    private final CategoriaRepository categoriaRepository;
 
     public CategoriaServiceImpl(CategoriaRepository categoriaRepository) {
         this.categoriaRepository = categoriaRepository;
     }
 
-    public Categoria getCategoriaByNombre(String nombre) {
+    @Override
+    public Categoria obtenerPorNombre(String nombre) {
         return categoriaRepository.findByNombre(nombre);
     }
 
-    public Categoria getCategoriaById(int id) {
+    @Override
+    public Categoria obtenerPorId(int id) {
         return categoriaRepository.findById(id);
     }
 
-    public List<Categoria> getAllCategorias() {
+    @Override
+    public List<Categoria> obtenerTodas() {
         return categoriaRepository.findAll();
     }
 
-    public Categoria saveCategoria(Categoria categoria) {
+    @Override
+    public Categoria guardarCategoria(Categoria categoria) {
         return categoriaRepository.save(categoria);
     }
 
-    public void deleteCategoria(Categoria categoria) {
+    @Override
+    public void eliminarCategoria(Categoria categoria) {
         categoriaRepository.delete(categoria);
     }
 }

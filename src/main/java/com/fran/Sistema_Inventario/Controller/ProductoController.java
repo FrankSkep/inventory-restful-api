@@ -7,15 +7,11 @@ import com.fran.Sistema_Inventario.Entity.Producto;
 import com.fran.Sistema_Inventario.MapperDTO.ProductoMapperDTO;
 import com.fran.Sistema_Inventario.Service.Impl.CloudinaryServiceImpl;
 import com.fran.Sistema_Inventario.Service.Impl.ProductoServiceImpl;
-import com.fran.Sistema_Inventario.Service.ProductoService;
 import com.fran.Sistema_Inventario.Utils.FileValidator;
 import jakarta.validation.Valid;
-
 import java.io.IOException;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -28,13 +24,10 @@ public class ProductoController {
 
     private final ProductoServiceImpl productoService;
     private final ProductoServiceImpl productoServiceImpl;
-    private CloudinaryServiceImpl cloudinaryService;
     private final ProductoMapperDTO productoMapper;
 
-    public ProductoController(ProductoServiceImpl productoService,
-                              CloudinaryServiceImpl cloudinaryService, ProductoMapperDTO productoMapper, ProductoServiceImpl productoServiceImpl) {
+    public ProductoController(ProductoServiceImpl productoService, ProductoMapperDTO productoMapper, ProductoServiceImpl productoServiceImpl) {
         this.productoService = productoService;
-        this.cloudinaryService = cloudinaryService;
         this.productoMapper = productoMapper;
         this.productoServiceImpl = productoServiceImpl;
     }
@@ -84,8 +77,8 @@ public class ProductoController {
     // Editar datos de un producto
     @PutMapping("/editar/{id}")
     public ResponseEntity<?> editarProducto(@PathVariable Long id, @ModelAttribute ProductoDTO productoRequest,
-                                            @RequestPart(value = "file", required = false) MultipartFile nuevaImagenOpcional,
-                                            BindingResult result) throws IOException {
+            @RequestPart(value = "file", required = false) MultipartFile nuevaImagenOpcional,
+            BindingResult result) throws IOException {
 
         if (result.hasErrors()) {
             return ResponseEntity.badRequest().body(result.getAllErrors());

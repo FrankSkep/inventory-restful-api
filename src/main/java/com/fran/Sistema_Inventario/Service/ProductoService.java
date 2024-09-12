@@ -1,7 +1,6 @@
 package com.fran.Sistema_Inventario.Service;
 
 import com.fran.Sistema_Inventario.DTO.ProductoDTOs.ProductoBasicoDTO;
-import com.fran.Sistema_Inventario.DTO.ProductoDTOs.ProductoDTO;
 import com.fran.Sistema_Inventario.DTO.ProductoDTOs.ProductoDetalladoDTO;
 import com.fran.Sistema_Inventario.Entity.MovimientoStock;
 import com.fran.Sistema_Inventario.Entity.Producto;

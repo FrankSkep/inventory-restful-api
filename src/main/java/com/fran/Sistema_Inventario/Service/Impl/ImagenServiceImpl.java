@@ -11,6 +11,7 @@ import java.util.Map;
 
 @Service
 public class ImagenServiceImpl implements ImagenService {
+
     private final CloudinaryService cloudinaryService;
     private final ImagenRepository imagenRepository;
 

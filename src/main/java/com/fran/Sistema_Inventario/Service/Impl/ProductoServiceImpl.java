@@ -1,7 +1,6 @@
 package com.fran.Sistema_Inventario.Service.Impl;
 
 import com.fran.Sistema_Inventario.DTO.ProductoDTOs.ProductoBasicoDTO;
-import com.fran.Sistema_Inventario.DTO.ProductoDTOs.ProductoDTO;
 import com.fran.Sistema_Inventario.DTO.ProductoDTOs.ProductoDetalladoDTO;
 import com.fran.Sistema_Inventario.Entity.Imagen;
 import com.fran.Sistema_Inventario.Entity.MovimientoStock;
@@ -13,7 +12,6 @@ import com.fran.Sistema_Inventario.Service.ProductoService;
 import com.fran.Sistema_Inventario.Service.ProveedorService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
-
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -32,8 +30,8 @@ public class ProductoServiceImpl implements ProductoService {
     private final ImagenServiceImpl imagenService;
 
     public ProductoServiceImpl(ProductoRepository productoRepository, MovimientoStockRepository movimientoStockRepository,
-                               ProveedorService proveedorService, ProductoMapperDTO productoMapper, ImagenServiceImpl imagenService,
-                               CategoriaServiceImpl categoriaService) {
+            ProveedorService proveedorService, ProductoMapperDTO productoMapper, ImagenServiceImpl imagenService,
+            CategoriaServiceImpl categoriaService) {
         this.productoRepository = productoRepository;
         this.movimientoStockRepository = movimientoStockRepository;
         this.productoMapper = productoMapper;

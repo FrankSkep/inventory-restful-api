@@ -5,7 +5,14 @@ import com.fran.Sistema_Inventario.Entity.Categoria;
 import java.util.List;
 
 public interface CategoriaService {
-    public Categoria getCategoriaByNombre(String nombre);
-    public Categoria getCategoriaById(int id);
-    public List<Categoria> getAllCategorias();
+
+    public Categoria obtenerPorNombre(String nombre);
+
+    public Categoria obtenerPorId(int id);
+
+    public List<Categoria> obtenerTodas();
+
+    public Categoria guardarCategoria(Categoria categoria);
+
+    public void eliminarCategoria(Categoria categoria);
 }
