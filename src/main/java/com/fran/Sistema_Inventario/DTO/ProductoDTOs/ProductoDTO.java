@@ -28,31 +28,10 @@ public class ProductoDTO {
 
     private String imageUrl;
 
-    private String imageId;
-
     @NotNull(message = "Debe seleccionar un proveedor")
     private Long proveedorId;
 
     @NotNull(message = "Debe especificar el umbral de alerta de stock")
     @Min(value = 0, message = "El umbral de alerta debe ser mayor o igual a 0")
     private Integer umbralBajoStock;
-
-//    public ProductoDTO(String nombre, String descripcion, Double precio, Long cantidadStock, String categoria, Long proveedorId) {
-//        this.nombre = nombre;
-//        this.descripcion = descripcion;
-//        this.precio = precio;
-//        this.cantidadStock = cantidadStock;
-//        this.categoria = categoria;
-//        this.proveedorId = proveedorId;
-//    }
-
-//    public ProductoDTO(Long id, String nombre, String descripcion, Double precio, Long cantidadStock, String categoria, Long proveedorId) {
-//        this.id = id;
-//        this.nombre = nombre;
-//        this.descripcion = descripcion;
-//        this.precio = precio;
-//        this.cantidadStock = cantidadStock;
-//        this.categoria = categoria;
-//        this.proveedorId = proveedorId;
-//    }
 }

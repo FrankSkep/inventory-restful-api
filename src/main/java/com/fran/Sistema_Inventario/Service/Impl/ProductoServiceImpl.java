@@ -3,6 +3,7 @@ package com.fran.Sistema_Inventario.Service.Impl;
 import com.fran.Sistema_Inventario.DTO.ProductoDTOs.ProductoBasicoDTO;
 import com.fran.Sistema_Inventario.DTO.ProductoDTOs.ProductoDTO;
 import com.fran.Sistema_Inventario.DTO.ProductoDTOs.ProductoDetalladoDTO;
+import com.fran.Sistema_Inventario.Entity.Imagen;
 import com.fran.Sistema_Inventario.Entity.MovimientoStock;
 import com.fran.Sistema_Inventario.Entity.Producto;
 import com.fran.Sistema_Inventario.MapperDTO.ProductoMapperDTO;
@@ -13,9 +14,10 @@ import com.fran.Sistema_Inventario.Service.ProveedorService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
@@ -26,20 +28,16 @@ public class ProductoServiceImpl implements ProductoService {
 
     private final ProductoRepository productoRepository;
     private final MovimientoStockRepository movimientoStockRepository;
-    private final ProveedorService proveedorService;
     private final ProductoMapperDTO productoMapper;
-    private CloudinaryServiceImpl cloudinaryService;
-    private CategoriaServiceImpl categoriaService;
+    private final ImagenServiceImpl imagenService;
 
     public ProductoServiceImpl(ProductoRepository productoRepository, MovimientoStockRepository movimientoStockRepository,
-                               ProveedorService proveedorService, ProductoMapperDTO productoMapper, CloudinaryServiceImpl cloudinaryService,
+                               ProveedorService proveedorService, ProductoMapperDTO productoMapper, ImagenServiceImpl imagenService,
                                CategoriaServiceImpl categoriaService) {
         this.productoRepository = productoRepository;
         this.movimientoStockRepository = movimientoStockRepository;
-        this.proveedorService = proveedorService;
         this.productoMapper = productoMapper;
-        this.cloudinaryService = cloudinaryService;
-        this.categoriaService = categoriaService;
+        this.imagenService = imagenService;
     }
 
     @Override
@@ -49,7 +47,7 @@ public class ProductoServiceImpl implements ProductoService {
         return productos.stream().map(productoMapper::toDTObasic).collect(Collectors.toList());
     }
 
-    // Obtener producto por su ID
+    // Obtener detalles de un producto
     @Override
     public ProductoDetalladoDTO detallesProducto(Long id) {
 
@@ -59,69 +57,56 @@ public class ProductoServiceImpl implements ProductoService {
         return productoMapper.toDTOdetailed(producto);
     }
 
+    @Override
+    public Optional<Producto> obtenerPorID(Long id) throws IOException {
+        return productoRepository.findById(id);
+    }
+
     // Guardar un nuevo producto
     @Override
-    public Producto guardarProducto(ProductoDTO productoReq) {
+    public Producto guardarProducto(Producto producto, MultipartFile file) throws IOException {
 
-        Producto producto = productoMapper.toEntity(productoReq);
-
+        if (file != null) {
+            Imagen imagen = imagenService.uploadImage(file);
+            producto.setImagen(imagen);
+        }
         return productoRepository.save(producto);
     }
 
     // Editar datos de un producto existente
     @Override
-    public void actualizarProducto(ProductoDTO productoReq) {
-
+    public void actualizarProducto(Producto productoReq) {
+        System.out.println("ID del prod: " + productoReq.getId());
         Producto productoDB = productoRepository.getReferenceById(productoReq.getId());
 
         productoDB.setNombre(productoReq.getNombre());
         productoDB.setDescripcion(productoReq.getDescripcion());
         productoDB.setPrecio(productoReq.getPrecio());
-        productoDB.setCategoria(categoriaService.getCategoriaByNombre(productoReq.getCategoria()));
-        productoDB.setProveedor(proveedorService.obtenerPorID(productoReq.getProveedorId()));
+        productoDB.setCategoria(productoReq.getCategoria());
+        productoDB.setProveedor(productoReq.getProveedor());
         productoDB.setUmbralBajoStock(productoReq.getUmbralBajoStock());
-        productoDB.setImageUrl(productoReq.getImageUrl());
-        productoDB.setImageId(productoReq.getImageId());
-
         productoRepository.save(productoDB);
     }
 
     @Override
-    public void updateFile(Long productoId, MultipartFile file) {
-        try {
-            Producto producto = productoRepository.getReferenceById(productoId);
-            cloudinaryService.deleteFile(producto.getImageId());
-            Map uploadResult = cloudinaryService.uploadFile(file);
-            String imageUrl = (String) uploadResult.get("url");
-            String newImageId = (String) uploadResult.get("public_id");
-            producto.setImageId(newImageId);
-            producto.setImageUrl(imageUrl);
-            productoRepository.save(producto);
-        } catch (Exception e) {
-            System.out.println("Error al actualizar la imagen: " + e.getMessage());
+    public void actualizarImagenProducto(MultipartFile file, Producto producto) throws IOException {
+        if (producto.getImagen() != null) {
+            imagenService.deleteImage(producto.getImagen());
         }
+        Imagen newImage = imagenService.uploadImage(file);
+        producto.setImagen(newImage);
+        productoRepository.save(producto);
     }
 
     // Eliminar un producto
     @Override
-    public boolean eliminarProducto(Long id) {
+    public void eliminarProducto(Producto producto) throws IOException {
 
-        Producto producto = productoRepository.getReferenceById(id);
+        // Eliminar la imagen
+        imagenService.deleteImage(producto.getImagen());
 
-        if (producto != null) {
-            String publicId = producto.getImageId();
-
-            if (publicId != null && !publicId.isEmpty()) {
-                // Eliminar la imagen de Cloudinary usando el public_id
-                cloudinaryService.deleteFile(publicId);
-            }
-
-            // Eliminar el producto de la base de datos
-            productoRepository.delete(producto);
-            return true;
-        } else {
-            return false;
-        }
+        // Eliminar el producto
+        productoRepository.deleteById(producto.getId());
     }
 
     // Actualiza el stock y registra el movimiento

@@ -7,23 +7,27 @@ import com.fran.Sistema_Inventario.Entity.MovimientoStock;
 import com.fran.Sistema_Inventario.Entity.Producto;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 public interface ProductoService {
 
-    public List<ProductoBasicoDTO> obtenerProductos();
+    List<ProductoBasicoDTO> obtenerProductos();
 
-    public ProductoDetalladoDTO detallesProducto(Long id);
+    ProductoDetalladoDTO detallesProducto(Long id);
 
-    public Producto guardarProducto(ProductoDTO producto);
+    Optional<Producto> obtenerPorID(Long id) throws IOException;
 
-    public void actualizarProducto(ProductoDTO productoReq);
+    Producto guardarProducto(Producto productoReq, MultipartFile file) throws IOException;
 
-    public void updateFile(Long productoId, MultipartFile file);
+    void actualizarProducto(Producto productoReq);
 
-    public boolean eliminarProducto(Long id);
+    void actualizarImagenProducto(MultipartFile file, Producto producto) throws IOException;
 
-    public MovimientoStock actualizarStock(MovimientoStock movimiento);
+    void eliminarProducto(Producto producto) throws IOException;
 
-    public void enviarAlertaStock();
+    MovimientoStock actualizarStock(MovimientoStock movimiento);
+
+    void enviarAlertaStock();
 }

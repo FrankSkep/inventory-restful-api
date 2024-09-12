@@ -7,12 +7,14 @@ import com.fran.Sistema_Inventario.Entity.Producto;
 import com.fran.Sistema_Inventario.MapperDTO.ProductoMapperDTO;
 import com.fran.Sistema_Inventario.Service.Impl.CloudinaryServiceImpl;
 import com.fran.Sistema_Inventario.Service.Impl.ProductoServiceImpl;
+import com.fran.Sistema_Inventario.Service.ProductoService;
 import com.fran.Sistema_Inventario.Utils.FileValidator;
 import jakarta.validation.Valid;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,13 +27,16 @@ import org.springframework.web.multipart.MultipartFile;
 public class ProductoController {
 
     private final ProductoServiceImpl productoService;
+    private final ProductoServiceImpl productoServiceImpl;
     private CloudinaryServiceImpl cloudinaryService;
     private final ProductoMapperDTO productoMapper;
 
-    public ProductoController(ProductoServiceImpl productoService, CloudinaryServiceImpl cloudinaryService, ProductoMapperDTO productoMapper) {
+    public ProductoController(ProductoServiceImpl productoService,
+                              CloudinaryServiceImpl cloudinaryService, ProductoMapperDTO productoMapper, ProductoServiceImpl productoServiceImpl) {
         this.productoService = productoService;
         this.cloudinaryService = cloudinaryService;
         this.productoMapper = productoMapper;
+        this.productoServiceImpl = productoServiceImpl;
     }
 
     // Obtener todos los productos del inventario
@@ -58,32 +63,18 @@ public class ProductoController {
         }
 
         try {
-            // Guardar el producto en la base de datos primero
-            Producto producto = productoService.guardarProducto(productoRequest);
-
-            // Si hay archivo, intenta subir la imagen
-            if (file != null && !file.isEmpty()) {
-                // Verificar si el archivo es válido
-                if (!FileValidator.isValidFile(file)) {
-                    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Archivo no válido");
-                }
-
-                // Subir la imagen y obtener la URL y el public_id
-                Map uploadResult = cloudinaryService.uploadFile(file);
-                String imageUrl = (String) uploadResult.get("url");
-                String imageId = (String) uploadResult.get("public_id");
-
-                // Actualizar el producto con la información de la imagen
-                producto.setImageUrl(imageUrl);
-                producto.setImageId(imageId);
-
-                // Actualizar el producto en la base de datos con la URL de la imagen
-                productoService.actualizarProducto(productoMapper.toDTO(producto));
-            }
-
-            // Retornar la respuesta exitosa con el producto
+            // Guardar el producto en la base de datos
+            Producto producto = productoService.guardarProducto(productoMapper.toEntity(productoRequest), FileValidator.isValidFile(file) ? file : null);
             return ResponseEntity.ok(productoMapper.toDTO(producto));
-
+//            // Verificar si el archivo es válido
+//            if (FileValidator.isValidFile(file)) {
+//                // Guardar el producto en la base de datos
+//                Producto producto = productoService.guardarProducto(productoMapper.toEntity(productoRequest), file);
+//                return ResponseEntity.ok(productoMapper.toDTO(producto));
+//            } else {
+//                Producto producto = productoService.guardarProducto(productoMapper.toEntity(productoRequest), file);
+//                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Archivo no válido");
+//            }
         } catch (IOException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("Error al subir la imagen: " + e.getMessage());
@@ -100,35 +91,35 @@ public class ProductoController {
             return ResponseEntity.badRequest().body(result.getAllErrors());
         }
 
-        if (nuevaImagenOpcional != null) {
+        productoService.actualizarProducto(productoMapper.toEntityWithId(productoRequest));
 
-            try {
-                // Si ya existe una imagen, la actualiza
-                if (productoRequest.getImageUrl() != null) {
-                    productoService.updateFile(productoRequest.getId(), nuevaImagenOpcional);
+        System.out.println("Paso de actualizar producto");
+
+        if (nuevaImagenOpcional != null) {
+            Optional<Producto> productoEntity = productoService.obtenerPorID(productoRequest.getId());
+
+            if (FileValidator.isValidFile(nuevaImagenOpcional)) {
+                try {
+                    productoService.actualizarImagenProducto(nuevaImagenOpcional, productoEntity.get());
+                } catch (Exception e) {
+                    return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
                 }
-                else { // Si no existe imagen, la sube
-                    Map uploadResult = cloudinaryService.uploadFile(nuevaImagenOpcional);
-                    productoRequest.setImageUrl(uploadResult.get("url").toString());
-                    productoRequest.setImageId(uploadResult.get("public_id").toString());
-                }
-            } catch (Exception e) {
-                System.out.println("Error al subir la imagen: " + e.getMessage());
             }
         }
 
-        productoService.actualizarProducto(productoRequest);
         return ResponseEntity.ok().body("Producto Editado");
     }
 
     // Eliminar un producto por su ID
     @DeleteMapping("/eliminar/{id}")
-    public ResponseEntity<?> eliminarProducto(@PathVariable Long id) {
+    public ResponseEntity<?> eliminarProducto(@PathVariable Long id) throws IOException {
 
-        if (productoService.eliminarProducto(id)) {
-            return ResponseEntity.ok("Producto eliminado correctamente.");
+        Optional<Producto> producto = productoServiceImpl.obtenerPorID(id);
+        if (producto.isPresent()) {
+            productoServiceImpl.eliminarProducto(producto.get());
+            return ResponseEntity.ok("Producto eliminado");
         } else {
-            return ResponseEntity.badRequest().body("No se encontro el producto con id " + id);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 }

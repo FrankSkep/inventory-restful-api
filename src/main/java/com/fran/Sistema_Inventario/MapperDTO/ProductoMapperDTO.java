@@ -5,22 +5,22 @@ import com.fran.Sistema_Inventario.DTO.ProductoDTOs.ProductoDTO;
 import com.fran.Sistema_Inventario.DTO.ProductoDTOs.ProductoDetalladoDTO;
 import com.fran.Sistema_Inventario.Entity.Producto;
 import com.fran.Sistema_Inventario.Service.Impl.CategoriaServiceImpl;
-import com.fran.Sistema_Inventario.Service.ProveedorService;
+import com.fran.Sistema_Inventario.Service.Impl.ProveedorServiceImpl;
 import org.springframework.stereotype.Component;
 
 @Component
 public class ProductoMapperDTO {
 
-    private ProveedorService proveedorService;
-    private ProveedorMapperDTO proveedorMapper;
-    private CategoriaServiceImpl categoriaService;
+    private final ProveedorMapperDTO proveedorMapper;
+    private final CategoriaServiceImpl categoriaService;
+    private final ProveedorServiceImpl proveedorService;
 
-    public ProductoMapperDTO(ProveedorService proveedorService, ProveedorMapperDTO proveedorMapper, CategoriaServiceImpl categoriaService) {
-        this.proveedorService = proveedorService;
+    public ProductoMapperDTO(ProveedorMapperDTO proveedorMapper, CategoriaServiceImpl categoriaService, ProveedorServiceImpl proveedorService) {
         this.proveedorMapper = proveedorMapper;
         this.categoriaService = categoriaService;
+        this.proveedorService = proveedorService;
     }
-    
+
     public ProductoDTO toDTO(Producto producto) {
         return new ProductoDTO(
                 producto.getId(),
@@ -29,8 +29,7 @@ public class ProductoMapperDTO {
                 producto.getPrecio(),
                 producto.getCantidadStock(),
                 producto.getCategoria().getNombre(),
-                producto.getImageUrl(),
-                producto.getImageId(),
+                producto.getImagen().getUrl(),
                 producto.getProveedor().getId(),
                 producto.getUmbralBajoStock());
     }
@@ -43,7 +42,7 @@ public class ProductoMapperDTO {
                 producto.getPrecio(),
                 producto.getCantidadStock(),
                 producto.getCategoria().getNombre(),
-                producto.getImageUrl()
+                producto.getImagen().getUrl()
         );
     }
 
@@ -52,7 +51,7 @@ public class ProductoMapperDTO {
         return new ProductoDetalladoDTO(
                 producto.getId(), producto.getNombre(), producto.getDescripcion(),
                 producto.getPrecio(), producto.getCantidadStock(),
-                producto.getCategoria().getNombre(), producto.getImageUrl(),
+                producto.getCategoria().getNombre(), producto.getImagen().getUrl(),
                 proveedorMapper.toDTObasic(producto.getProveedor()),
                 producto.getUmbralBajoStock(), producto.getMovimientosStock()
         );
@@ -65,9 +64,21 @@ public class ProductoMapperDTO {
                 productoDTO.getPrecio(),
                 productoDTO.getCantidadStock(),
                 categoriaService.getCategoriaByNombre(productoDTO.getCategoria()),
-                productoDTO.getImageUrl(),
-                productoDTO.getImageId(),
                 proveedorService.obtenerPorID(productoDTO.getProveedorId()),
-                productoDTO.getUmbralBajoStock());
+                productoDTO.getUmbralBajoStock()
+        );
+    }
+
+    public Producto toEntityWithId(ProductoDTO productoDTO) {
+        return new Producto(
+                productoDTO.getId(),
+                productoDTO.getNombre(),
+                productoDTO.getDescripcion(),
+                productoDTO.getPrecio(),
+                productoDTO.getCantidadStock(),
+                categoriaService.getCategoriaByNombre(productoDTO.getCategoria()),
+                proveedorService.obtenerPorID(productoDTO.getProveedorId()),
+                productoDTO.getUmbralBajoStock()
+        );
     }
 }
