@@ -38,9 +38,9 @@ public class ProveedorServiceImpl implements ProveedorService {
     }
 
     @Override
-    public Proveedor editarProveedor(Long id, ProveedorDTO proveedor) {
+    public Proveedor editarProveedor(Proveedor proveedor) {
 
-        Proveedor proveedorDB = proveedorRepository.getReferenceById(id);
+        Proveedor proveedorDB = proveedorRepository.getReferenceById(proveedor.getId());
 
         proveedorDB.setNombre(proveedor.getNombre());
         proveedorDB.setDireccion(proveedor.getDireccion());

@@ -12,7 +12,7 @@ public interface ProveedorService {
 
     Proveedor registrarProveedor(Proveedor proveedor);
 
-    Proveedor editarProveedor(Long id, ProveedorDTO proveedor);
+    Proveedor editarProveedor(Proveedor proveedor);
 
     Proveedor obtenerPorID(Long id);
 

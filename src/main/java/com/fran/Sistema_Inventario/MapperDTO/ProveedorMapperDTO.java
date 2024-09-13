@@ -64,6 +64,7 @@ public class ProveedorMapperDTO {
         );
     }
 
+    // Mapeo para agregacion de nuevo proveedor
     public Proveedor toEntityFromDTO(ProveedorDTO dto) {
         return new Proveedor(
                 dto.getNombre(),
@@ -73,4 +74,18 @@ public class ProveedorMapperDTO {
                 dto.getIdentificacionFiscal()
         );
     }
+
+    // Mapeo para edicion de proveedor
+    public Proveedor toEntityFromDTOWithId(ProveedorDTO dto) {
+        return new Proveedor(
+                dto.getId(),
+                dto.getNombre(),
+                dto.getDireccion(),
+                dto.getEmail(),
+                dto.getTelefono(),
+                dto.getIdentificacionFiscal()
+        );
+    }
+
+
 }

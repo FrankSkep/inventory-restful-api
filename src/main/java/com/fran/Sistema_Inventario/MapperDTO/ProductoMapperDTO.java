@@ -61,6 +61,7 @@ public class ProductoMapperDTO {
         );
     }
 
+    // Mapeo para agregar nuevo producto
     public Producto toEntity(ProductoDTO productoDTO) {
         return new Producto(
                 productoDTO.getNombre(),
@@ -73,6 +74,7 @@ public class ProductoMapperDTO {
         );
     }
 
+    // Mapeo para editar un producto
     public Producto toEntityWithId(ProductoDTO productoDTO) {
         return new Producto(
                 productoDTO.getId(),

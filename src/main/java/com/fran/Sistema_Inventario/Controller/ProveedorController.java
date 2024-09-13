@@ -66,7 +66,7 @@ public class ProveedorController {
             return ResponseEntity.badRequest().body(result.getAllErrors());
         }
 
-        return ResponseEntity.ok(proveedorService.editarProveedor(id, proveedor));
+        return ResponseEntity.ok(proveedorService.editarProveedor(proveedorMapper.toEntityFromDTOWithId(proveedor)));
     }
 
     @DeleteMapping("/eliminar/{id}")
