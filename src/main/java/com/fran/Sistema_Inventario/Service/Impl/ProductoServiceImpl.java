@@ -12,6 +12,7 @@ import com.fran.Sistema_Inventario.Service.ProductoService;
 import com.fran.Sistema_Inventario.Service.ProveedorService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
+
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -30,8 +31,8 @@ public class ProductoServiceImpl implements ProductoService {
     private final ImagenServiceImpl imagenService;
 
     public ProductoServiceImpl(ProductoRepository productoRepository, MovimientoStockRepository movimientoStockRepository,
-            ProveedorService proveedorService, ProductoMapperDTO productoMapper, ImagenServiceImpl imagenService,
-            CategoriaServiceImpl categoriaService) {
+                               ProveedorService proveedorService, ProductoMapperDTO productoMapper, ImagenServiceImpl imagenService,
+                               CategoriaServiceImpl categoriaService) {
         this.productoRepository = productoRepository;
         this.movimientoStockRepository = movimientoStockRepository;
         this.productoMapper = productoMapper;
@@ -55,6 +56,7 @@ public class ProductoServiceImpl implements ProductoService {
         return productoMapper.toDTOdetailed(producto);
     }
 
+    // Obtener una entidad Producto por su id
     @Override
     public Optional<Producto> obtenerPorID(Long id) throws IOException {
         return productoRepository.findById(id);
@@ -73,19 +75,20 @@ public class ProductoServiceImpl implements ProductoService {
 
     // Editar datos de un producto existente
     @Override
-    public void actualizarProducto(Producto productoReq) {
-        System.out.println("ID del prod: " + productoReq.getId());
-        Producto productoDB = productoRepository.getReferenceById(productoReq.getId());
+    public void actualizarProducto(Producto producto) {
 
-        productoDB.setNombre(productoReq.getNombre());
-        productoDB.setDescripcion(productoReq.getDescripcion());
-        productoDB.setPrecio(productoReq.getPrecio());
-        productoDB.setCategoria(productoReq.getCategoria());
-        productoDB.setProveedor(productoReq.getProveedor());
-        productoDB.setUmbralBajoStock(productoReq.getUmbralBajoStock());
+        Producto productoDB = productoRepository.getReferenceById(producto.getId());
+
+        productoDB.setNombre(producto.getNombre());
+        productoDB.setDescripcion(producto.getDescripcion());
+        productoDB.setPrecio(producto.getPrecio());
+        productoDB.setCategoria(producto.getCategoria());
+        productoDB.setProveedor(producto.getProveedor());
+        productoDB.setUmbralBajoStock(producto.getUmbralBajoStock());
         productoRepository.save(productoDB);
     }
 
+    // Actualizar la imagen de un producto
     @Override
     public void actualizarImagenProducto(MultipartFile file, Producto producto) throws IOException {
         if (producto.getImagen() != null) {
@@ -100,8 +103,10 @@ public class ProductoServiceImpl implements ProductoService {
     @Override
     public void eliminarProducto(Producto producto) throws IOException {
 
-        // Eliminar la imagen
-        imagenService.deleteImage(producto.getImagen());
+        // Eliminar la imagen (Si existe una)
+        if (producto.getImagen() != null) {
+            imagenService.deleteImage(producto.getImagen());
+        }
 
         // Eliminar el producto
         productoRepository.deleteById(producto.getId());

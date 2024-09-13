@@ -5,13 +5,14 @@ import com.fran.Sistema_Inventario.DTO.ProductoDTOs.ProductoDTO;
 import com.fran.Sistema_Inventario.DTO.ProductoDTOs.ProductoDetalladoDTO;
 import com.fran.Sistema_Inventario.Entity.Producto;
 import com.fran.Sistema_Inventario.MapperDTO.ProductoMapperDTO;
-import com.fran.Sistema_Inventario.Service.Impl.CloudinaryServiceImpl;
 import com.fran.Sistema_Inventario.Service.Impl.ProductoServiceImpl;
 import com.fran.Sistema_Inventario.Utils.FileValidator;
 import jakarta.validation.Valid;
+
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -38,7 +39,7 @@ public class ProductoController {
         return productoService.obtenerProductos();
     }
 
-    // Ver detalles de un producto
+    // Obtener detalles de un producto
     @GetMapping("/detalles/{id}")
     public ResponseEntity<ProductoDetalladoDTO> detallesProducto(@PathVariable Long id) {
         return ResponseEntity.ok(productoService.detallesProducto(id));
@@ -56,18 +57,8 @@ public class ProductoController {
         }
 
         try {
-            // Guardar el producto en la base de datos
             Producto producto = productoService.guardarProducto(productoMapper.toEntity(productoRequest), FileValidator.isValidFile(file) ? file : null);
             return ResponseEntity.ok(productoMapper.toDTO(producto));
-//            // Verificar si el archivo es válido
-//            if (FileValidator.isValidFile(file)) {
-//                // Guardar el producto en la base de datos
-//                Producto producto = productoService.guardarProducto(productoMapper.toEntity(productoRequest), file);
-//                return ResponseEntity.ok(productoMapper.toDTO(producto));
-//            } else {
-//                Producto producto = productoService.guardarProducto(productoMapper.toEntity(productoRequest), file);
-//                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Archivo no válido");
-//            }
         } catch (IOException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("Error al subir la imagen: " + e.getMessage());
@@ -77,16 +68,14 @@ public class ProductoController {
     // Editar datos de un producto
     @PutMapping("/editar/{id}")
     public ResponseEntity<?> editarProducto(@PathVariable Long id, @ModelAttribute ProductoDTO productoRequest,
-            @RequestPart(value = "file", required = false) MultipartFile nuevaImagenOpcional,
-            BindingResult result) throws IOException {
+                                            @RequestPart(value = "file", required = false) MultipartFile nuevaImagenOpcional,
+                                            BindingResult result) throws IOException {
 
         if (result.hasErrors()) {
             return ResponseEntity.badRequest().body(result.getAllErrors());
         }
 
         productoService.actualizarProducto(productoMapper.toEntityWithId(productoRequest));
-
-        System.out.println("Paso de actualizar producto");
 
         if (nuevaImagenOpcional != null) {
             Optional<Producto> productoEntity = productoService.obtenerPorID(productoRequest.getId());

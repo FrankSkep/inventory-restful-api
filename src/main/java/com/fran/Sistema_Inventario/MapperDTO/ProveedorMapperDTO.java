@@ -1,13 +1,15 @@
 package com.fran.Sistema_Inventario.MapperDTO;
 
-import com.fran.Sistema_Inventario.DTO.ProductoDTOs.ProductoBasicoDTO;
+import com.fran.Sistema_Inventario.DTO.ProductoDTOs.ProductoProveedorDTO;
 import com.fran.Sistema_Inventario.DTO.ProveedorDTOs.ProveedorBasicoDTO;
 import com.fran.Sistema_Inventario.DTO.ProveedorDTOs.ProveedorDTO;
 import com.fran.Sistema_Inventario.DTO.ProveedorDTOs.ProveedorDetalladoDTO;
 import com.fran.Sistema_Inventario.Entity.Producto;
 import com.fran.Sistema_Inventario.Entity.Proveedor;
+
 import java.util.Set;
 import java.util.stream.Collectors;
+
 import org.springframework.stereotype.Component;
 
 @Component
@@ -26,7 +28,11 @@ public class ProveedorMapperDTO {
 
     public ProveedorDTO toDTO(Proveedor proveedor) {
         return new ProveedorDTO(
-                proveedor.getId(), proveedor.getNombre(), proveedor.getDireccion(), proveedor.getEmail(), proveedor.getTelefono(),
+                proveedor.getId(),
+                proveedor.getNombre(),
+                proveedor.getDireccion(),
+                proveedor.getEmail(),
+                proveedor.getTelefono(),
                 proveedor.getIdentificacionFiscal()
         );
     }
@@ -34,24 +40,27 @@ public class ProveedorMapperDTO {
     public ProveedorDetalladoDTO toDTOdetailed(Proveedor proveedor) {
 
         Set<Producto> productos = proveedor.getProductos();
-        Set<ProductoBasicoDTO> productosSet = productos.stream().map(this::productoToDTObasic).collect(Collectors.toSet());
+        Set<ProductoProveedorDTO> setDeProductos = productos.stream().map(this::productoToDTOminimo).collect(Collectors.toSet());
 
         return new ProveedorDetalladoDTO(
-                proveedor.getId(), proveedor.getNombre(), proveedor.getDireccion(),
-                proveedor.getEmail(), proveedor.getTelefono(), proveedor.getIdentificacionFiscal(),
-                productosSet
+                proveedor.getId(),
+                proveedor.getNombre(),
+                proveedor.getDireccion(),
+                proveedor.getEmail(),
+                proveedor.getTelefono(),
+                proveedor.getIdentificacionFiscal(),
+                setDeProductos
         );
     }
 
-    public ProductoBasicoDTO productoToDTObasic(Producto producto) {
-        return new ProductoBasicoDTO(
+    public ProductoProveedorDTO productoToDTOminimo(Producto producto) {
+        return new ProductoProveedorDTO(
                 producto.getId(),
                 producto.getNombre(),
                 producto.getDescripcion(),
                 producto.getPrecio(),
-                producto.getCantidadStock(),
                 producto.getCategoria().getNombre(),
-                producto.getImagen().getUrl()
+                producto.getImagen() != null ? producto.getImagen().getUrl() : null
         );
     }
 

@@ -29,7 +29,7 @@ public class ProductoMapperDTO {
                 producto.getPrecio(),
                 producto.getCantidadStock(),
                 producto.getCategoria().getNombre(),
-                producto.getImagen().getUrl(),
+                producto.getImagen() != null ? producto.getImagen().getUrl() : null,
                 producto.getProveedor().getId(),
                 producto.getUmbralBajoStock());
     }
@@ -42,7 +42,7 @@ public class ProductoMapperDTO {
                 producto.getPrecio(),
                 producto.getCantidadStock(),
                 producto.getCategoria().getNombre(),
-                producto.getImagen().getUrl()
+                producto.getImagen() != null ? producto.getImagen().getUrl() : null
         );
     }
 
@@ -51,7 +51,7 @@ public class ProductoMapperDTO {
         return new ProductoDetalladoDTO(
                 producto.getId(), producto.getNombre(), producto.getDescripcion(),
                 producto.getPrecio(), producto.getCantidadStock(),
-                producto.getCategoria().getNombre(), producto.getImagen().getUrl(),
+                producto.getCategoria().getNombre(), producto.getImagen() != null ? producto.getImagen().getUrl() : null,
                 proveedorMapper.toDTObasic(producto.getProveedor()),
                 producto.getUmbralBajoStock(), producto.getMovimientosStock()
         );

@@ -6,12 +6,12 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Data
-@NoArgsConstructor
 @Table(name = "imagenes")
 public class Imagen {
 
@@ -29,4 +29,6 @@ public class Imagen {
         this.url = url;
         this.imageId = imageId;
     }
+
+    public Imagen() {}
 }
