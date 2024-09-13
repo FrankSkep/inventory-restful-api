@@ -6,9 +6,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
-import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Entity
 @Data
@@ -30,5 +28,6 @@ public class Imagen {
         this.imageId = imageId;
     }
 
-    public Imagen() {}
+    public Imagen() {
+    }
 }

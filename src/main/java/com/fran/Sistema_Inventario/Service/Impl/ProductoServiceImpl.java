@@ -39,6 +39,7 @@ public class ProductoServiceImpl implements ProductoService {
         this.imagenService = imagenService;
     }
 
+    // Obtener todos los productos y sus datos basicos
     @Override
     public List<ProductoBasicoDTO> obtenerProductos() {
 
@@ -90,12 +91,14 @@ public class ProductoServiceImpl implements ProductoService {
 
     // Actualizar la imagen de un producto
     @Override
+    @Transactional
     public void actualizarImagenProducto(MultipartFile file, Producto producto) throws IOException {
-        if (producto.getImagen() != null) {
-            imagenService.deleteImage(producto.getImagen());
+        Imagen imagenActual = producto.getImagen();
+        if (imagenActual != null) {
+            imagenService.deleteImage(imagenActual);
         }
-        Imagen newImage = imagenService.uploadImage(file);
-        producto.setImagen(newImage);
+        Imagen imagenNueva = imagenService.uploadImage(file);
+        producto.setImagen(imagenNueva);
         productoRepository.save(producto);
     }
 
@@ -103,13 +106,13 @@ public class ProductoServiceImpl implements ProductoService {
     @Override
     public void eliminarProducto(Producto producto) throws IOException {
 
+        // Eliminar el producto
+        productoRepository.deleteById(producto.getId());
+
         // Eliminar la imagen (Si existe una)
         if (producto.getImagen() != null) {
             imagenService.deleteImage(producto.getImagen());
         }
-
-        // Eliminar el producto
-        productoRepository.deleteById(producto.getId());
     }
 
     // Actualiza el stock y registra el movimiento

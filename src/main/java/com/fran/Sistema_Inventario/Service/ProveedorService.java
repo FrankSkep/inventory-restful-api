@@ -8,15 +8,15 @@ import java.util.List;
 
 public interface ProveedorService {
 
-    public List<ProveedorBasicoDTO> obtenerProveedores();
+    List<ProveedorBasicoDTO> obtenerProveedores();
 
-    public Proveedor registrarProveedor(Proveedor proveedor);
+    Proveedor registrarProveedor(Proveedor proveedor);
 
-    public Proveedor editarProveedor(Long id, ProveedorDTO proveedor);
+    Proveedor editarProveedor(Long id, ProveedorDTO proveedor);
 
-    public Proveedor obtenerPorID(Long id);
+    Proveedor obtenerPorID(Long id);
 
-    public boolean eliminarProveedor(Long id);
+    void eliminarProveedor(Long id);
 
-    public ProveedorDetalladoDTO detallesProveedor(Proveedor provedor);
+    ProveedorDetalladoDTO detallesProveedor(Proveedor provedor);
 }

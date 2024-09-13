@@ -8,15 +8,17 @@ import com.fran.Sistema_Inventario.MapperDTO.ProveedorMapperDTO;
 import com.fran.Sistema_Inventario.Repository.ProveedorRepository;
 import com.fran.Sistema_Inventario.Service.ProveedorService;
 import jakarta.persistence.EntityNotFoundException;
+
 import java.util.List;
 import java.util.stream.Collectors;
+
 import org.springframework.stereotype.Service;
 
 @Service
 public class ProveedorServiceImpl implements ProveedorService {
 
-    private ProveedorRepository proveedorRepository;
-    private ProveedorMapperDTO proveedorMapper;
+    private final ProveedorRepository proveedorRepository;
+    private final ProveedorMapperDTO proveedorMapper;
 
     public ProveedorServiceImpl(ProveedorRepository proveedorRepository, ProveedorMapperDTO proveedorMapper) {
         this.proveedorRepository = proveedorRepository;
@@ -50,16 +52,12 @@ public class ProveedorServiceImpl implements ProveedorService {
     }
 
     @Override
-    public boolean eliminarProveedor(Long id) {
+    public void eliminarProveedor(Long id) {
 
-        Proveedor proveedor = proveedorRepository.getReferenceById(id);
-
-        if (proveedor == null) {
-            return false;
-        }
+        Proveedor proveedor = proveedorRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Proveedor no encontrado"));
 
         proveedorRepository.delete(proveedor);
-        return true;
     }
 
     @Override

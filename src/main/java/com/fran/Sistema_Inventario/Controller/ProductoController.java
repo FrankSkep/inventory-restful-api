@@ -24,13 +24,11 @@ import org.springframework.web.multipart.MultipartFile;
 public class ProductoController {
 
     private final ProductoServiceImpl productoService;
-    private final ProductoServiceImpl productoServiceImpl;
     private final ProductoMapperDTO productoMapper;
 
-    public ProductoController(ProductoServiceImpl productoService, ProductoMapperDTO productoMapper, ProductoServiceImpl productoServiceImpl) {
+    public ProductoController(ProductoServiceImpl productoService, ProductoMapperDTO productoMapper) {
         this.productoService = productoService;
         this.productoMapper = productoMapper;
-        this.productoServiceImpl = productoServiceImpl;
     }
 
     // Obtener todos los productos del inventario
@@ -75,8 +73,10 @@ public class ProductoController {
             return ResponseEntity.badRequest().body(result.getAllErrors());
         }
 
+        // Actualiza datos del producto
         productoService.actualizarProducto(productoMapper.toEntityWithId(productoRequest));
 
+        // Si se recibe una imagen, la actualiza
         if (nuevaImagenOpcional != null) {
             Optional<Producto> productoEntity = productoService.obtenerPorID(productoRequest.getId());
 
@@ -96,9 +96,11 @@ public class ProductoController {
     @DeleteMapping("/eliminar/{id}")
     public ResponseEntity<?> eliminarProducto(@PathVariable Long id) throws IOException {
 
-        Optional<Producto> producto = productoServiceImpl.obtenerPorID(id);
+        Optional<Producto> producto = productoService.obtenerPorID(id);
+
+        System.out.println(producto);
         if (producto.isPresent()) {
-            productoServiceImpl.eliminarProducto(producto.get());
+            productoService.eliminarProducto(producto.get());
             return ResponseEntity.ok("Producto eliminado");
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

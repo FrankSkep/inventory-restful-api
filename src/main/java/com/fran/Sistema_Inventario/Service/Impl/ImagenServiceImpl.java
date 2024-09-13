@@ -33,6 +33,7 @@ public class ImagenServiceImpl implements ImagenService {
 
     @Override
     public void deleteImage(Imagen image) throws IOException {
+        System.out.println("Imagen en deleteImage  : imagenservice" + image);
         cloudinaryService.delete(image.getImageId());
         imagenRepository.deleteById(image.getId());
     }

@@ -17,12 +17,12 @@ public class CategoriaController {
     }
 
     @GetMapping("/")
-    public List<Categoria> getAllCategorias() {
+    public List<Categoria> obtenerCategorias() {
         return categoriaService.obtenerTodas();
     }
 
     @PostMapping("/agregar")
-    public Categoria addCategoria(@RequestBody Categoria categoria) {
+    public Categoria agregarCategoria(@RequestBody Categoria categoria) {
         return categoriaService.guardarCategoria(categoria);
     }
 }

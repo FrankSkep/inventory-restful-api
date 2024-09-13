@@ -5,7 +5,7 @@ import java.util.List;
 
 public interface MovimientoService {
 
-    public List<MovimientoStock> obtenerMovimientosProducto(Long id);
+    List<MovimientoStock> obtenerMovimientosProducto(Long id);
 
-    public List<MovimientoStock> obtenerTodosLosMovimientos();
+    List<MovimientoStock> obtenerTodosLosMovimientos();
 }

@@ -3,8 +3,8 @@ package com.fran.Sistema_Inventario.DTO.ProveedorDTOs;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
-@AllArgsConstructor
 @Data
+@AllArgsConstructor
 public class ProveedorBasicoDTO {
 
     private Long id;

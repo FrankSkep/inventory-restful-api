@@ -6,13 +6,13 @@ import java.util.List;
 
 public interface CategoriaService {
 
-    public Categoria obtenerPorNombre(String nombre);
+    Categoria obtenerPorNombre(String nombre);
 
-    public Categoria obtenerPorId(int id);
+    Categoria obtenerPorId(int id);
 
-    public List<Categoria> obtenerTodas();
+    List<Categoria> obtenerTodas();
 
-    public Categoria guardarCategoria(Categoria categoria);
+    Categoria guardarCategoria(Categoria categoria);
 
-    public void eliminarCategoria(Categoria categoria);
+    void eliminarCategoria(Categoria categoria);
 }

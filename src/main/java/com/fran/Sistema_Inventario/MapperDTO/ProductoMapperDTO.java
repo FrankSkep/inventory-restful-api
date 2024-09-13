@@ -49,9 +49,13 @@ public class ProductoMapperDTO {
     public ProductoDetalladoDTO toDTOdetailed(Producto producto) {
 
         return new ProductoDetalladoDTO(
-                producto.getId(), producto.getNombre(), producto.getDescripcion(),
-                producto.getPrecio(), producto.getCantidadStock(),
-                producto.getCategoria().getNombre(), producto.getImagen() != null ? producto.getImagen().getUrl() : null,
+                producto.getId(),
+                producto.getNombre(),
+                producto.getDescripcion(),
+                producto.getPrecio(),
+                producto.getCantidadStock(),
+                producto.getCategoria().getNombre(),
+                producto.getImagen() != null ? producto.getImagen().getUrl() : null,
                 proveedorMapper.toDTObasic(producto.getProveedor()),
                 producto.getUmbralBajoStock(), producto.getMovimientosStock()
         );

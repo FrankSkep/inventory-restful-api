@@ -72,10 +72,7 @@ public class ProveedorController {
     @DeleteMapping("/eliminar/{id}")
     public ResponseEntity<?> eliminarProveedor(@PathVariable Long id) {
 
-        if (proveedorService.eliminarProveedor(id)) {
-            return ResponseEntity.ok("Proveedor eliminado correctamente.");
-        } else {
-            return ResponseEntity.badRequest().body("No se encontro el producto con id " + id);
-        }
+        proveedorService.eliminarProveedor(id);
+        return ResponseEntity.ok().body("Producto eliminado correctamente.");
     }
 }

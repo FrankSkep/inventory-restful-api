@@ -29,15 +29,15 @@ public class Producto {
     private Long cantidadStock;
 
     @ManyToOne(fetch = FetchType.LAZY) // Lazy loading, para cargar la categoría solo cuando se necesita
-    @JoinColumn(name = "categoria_id", nullable = false)
+    @JoinColumn(name = "categoria_id", referencedColumnName = "id", nullable = false)
     private Categoria categoria;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "image_id", referencedColumnName = "id")
     private Imagen imagen;
 
     @ManyToOne
-    @JoinColumn(name = "proveedor_id", nullable = false)
+    @JoinColumn(name = "proveedor_id", referencedColumnName = "id", nullable = false)
     @JsonBackReference
     private Proveedor proveedor;
 
@@ -47,16 +47,7 @@ public class Producto {
     @JsonManagedReference
     private List<MovimientoStock> movimientosStock = new ArrayList<>();
 
-    public Producto(Long id, String nombre, String descripcion, Double precio, Long cantidadStock, Categoria categoria, Proveedor proveedor) {
-        this.id = id;
-        this.nombre = nombre;
-        this.descripcion = descripcion;
-        this.precio = precio;
-        this.cantidadStock = cantidadStock;
-        this.categoria = categoria;
-        this.proveedor = proveedor;
-    }
-
+    // Constructor para agregar nuevo producto
     public Producto(String nombre, String descripcion, Double precio, Long cantidadStock, Categoria categoria, Proveedor proveedor, Integer umbralBajoStock) {
         this.nombre = nombre;
         this.descripcion = descripcion;
@@ -67,6 +58,7 @@ public class Producto {
         this.umbralBajoStock = umbralBajoStock;
     }
 
+    // Constructor para mapear DTO a Entidad
     public Producto(Long id, String nombre, String descripcion, Double precio, Long cantidadStock, Categoria categoria, Proveedor proveedor, Integer umbralBajoStock) {
         this.id = id;
         this.nombre = nombre;

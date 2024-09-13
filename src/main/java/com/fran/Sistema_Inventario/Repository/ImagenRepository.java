@@ -4,6 +4,4 @@ import com.fran.Sistema_Inventario.Entity.Imagen;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ImagenRepository extends JpaRepository<Imagen, Long> {
-
-    Imagen findByUrl(String url);
 }

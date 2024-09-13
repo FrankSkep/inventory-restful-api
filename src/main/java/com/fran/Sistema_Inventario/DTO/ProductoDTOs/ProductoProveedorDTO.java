@@ -3,8 +3,8 @@ package com.fran.Sistema_Inventario.DTO.ProductoDTOs;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
-@AllArgsConstructor
 @Data
+@AllArgsConstructor
 public class ProductoProveedorDTO {
 
     Long id;
@@ -15,3 +15,4 @@ public class ProductoProveedorDTO {
     String imagenUrl;
 
 }
+
