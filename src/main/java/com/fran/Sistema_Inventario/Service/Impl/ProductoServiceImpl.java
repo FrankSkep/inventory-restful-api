@@ -16,6 +16,7 @@ import jakarta.transaction.Transactional;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -64,6 +65,7 @@ public class ProductoServiceImpl implements ProductoService {
     }
 
     // Guardar un nuevo producto
+    @Transactional
     @Override
     public Producto guardarProducto(Producto producto, MultipartFile file) throws IOException {
 
@@ -89,31 +91,51 @@ public class ProductoServiceImpl implements ProductoService {
         productoRepository.save(productoDB);
     }
 
-    // Actualizar la imagen de un producto
+    // Actualizar la imagen de un producto o la agrega si no existe
     @Override
     @Transactional
-    public void actualizarImagenProducto(MultipartFile file, Producto producto) throws IOException {
-        Imagen imagenActual = producto.getImagen();
+    public void actualizarImagenProducto(MultipartFile file, Long productoId) throws IOException {
+
+        Producto productoDB = productoRepository.getReferenceById(productoId);
+        Imagen imagenActual = productoDB.getImagen();
+
         if (imagenActual != null) {
-            imagenService.deleteImage(imagenActual);
+            imagenService.eliminarImagenCloudinary(imagenActual.getImageId());
+            imagenActual = imagenService.actualizarImagen(file, imagenActual);
+//            productoDB.setImagen(imagenActual);
+        } else {
+            Imagen imagenNueva = imagenService.uploadImage(file);
+            productoDB.setImagen(imagenNueva);
         }
-        Imagen imagenNueva = imagenService.uploadImage(file);
-        producto.setImagen(imagenNueva);
-        productoRepository.save(producto);
+        productoRepository.save(productoDB);
     }
 
     // Eliminar un producto
     @Override
-    public void eliminarProducto(Producto producto) throws IOException {
+    public void eliminarProducto(Long id) throws IOException {
+        Producto producto = productoRepository.findById(id)
+                .orElseThrow(() -> new NoSuchElementException("Producto no encontrado"));
+
+        // Eliminar la imagen si existe
+        if (producto.getImagen() != null) {
+            imagenService.eliminarImagenCompleta(producto.getImagen());
+        }
 
         // Eliminar el producto
-        productoRepository.deleteById(producto.getId());
-
-        // Eliminar la imagen (Si existe una)
-        if (producto.getImagen() != null) {
-            imagenService.deleteImage(producto.getImagen());
-        }
+        productoRepository.delete(producto);
     }
+//    public void eliminarProducto(Long id) throws IOException {
+//
+//        Producto producto = productoRepository.getReferenceById(id);
+//
+//        // Eliminar la imagen (Si existe una)
+//        if (producto.getImagen() != null) {
+//            imagenService.eliminarImagenCompleta(producto.getImagen());
+//        }
+//
+//        // Eliminar el producto
+//        productoRepository.delete(producto);
+//    }
 
     // Actualiza el stock y registra el movimiento
     @Override

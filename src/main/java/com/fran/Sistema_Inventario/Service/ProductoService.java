@@ -22,9 +22,9 @@ public interface ProductoService {
 
     void actualizarProducto(Producto productoReq);
 
-    void actualizarImagenProducto(MultipartFile file, Producto producto) throws IOException;
+    void actualizarImagenProducto(MultipartFile file, Long productoId) throws IOException;
 
-    void eliminarProducto(Producto producto) throws IOException;
+    void eliminarProducto(Long id) throws IOException;
 
     MovimientoStock actualizarStock(MovimientoStock movimiento);
 

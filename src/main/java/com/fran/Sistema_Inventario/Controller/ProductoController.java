@@ -11,6 +11,7 @@ import jakarta.validation.Valid;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
@@ -55,8 +56,12 @@ public class ProductoController {
         }
 
         try {
-            Producto producto = productoService.guardarProducto(productoMapper.toEntity(productoRequest), FileValidator.isValidFile(file) ? file : null);
+            Producto producto = productoService.guardarProducto(
+                    productoMapper.toEntity(productoRequest),
+                    FileValidator.isValidFile(file) ? file : null);
+
             return ResponseEntity.ok(productoMapper.toDTO(producto));
+
         } catch (IOException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("Error al subir la imagen: " + e.getMessage());
@@ -77,16 +82,8 @@ public class ProductoController {
         productoService.actualizarProducto(productoMapper.toEntityWithId(productoRequest));
 
         // Si se recibe una imagen, la actualiza
-        if (nuevaImagenOpcional != null) {
-            Optional<Producto> productoEntity = productoService.obtenerPorID(productoRequest.getId());
-
-            if (FileValidator.isValidFile(nuevaImagenOpcional)) {
-                try {
-                    productoService.actualizarImagenProducto(nuevaImagenOpcional, productoEntity.get());
-                } catch (Exception e) {
-                    return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-                }
-            }
+        if (FileValidator.isValidFile(nuevaImagenOpcional)) {
+            productoService.actualizarImagenProducto(nuevaImagenOpcional, productoRequest.getId());
         }
 
         return ResponseEntity.ok().body("Producto Editado");
@@ -94,16 +91,29 @@ public class ProductoController {
 
     // Eliminar un producto por su ID
     @DeleteMapping("/eliminar/{id}")
-    public ResponseEntity<?> eliminarProducto(@PathVariable Long id) throws IOException {
-
-        Optional<Producto> producto = productoService.obtenerPorID(id);
-
-        System.out.println(producto);
-        if (producto.isPresent()) {
-            productoService.eliminarProducto(producto.get());
-            return ResponseEntity.ok("Producto eliminado");
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    public ResponseEntity<?> eliminarProducto(@PathVariable Long id) {
+        try {
+            productoService.eliminarProducto(id);
+            return ResponseEntity.ok("Producto eliminado exitosamente");
+        } catch (NoSuchElementException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("Producto con ID " + id + " no encontrado.");
+        } catch (IOException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Ocurrió un error al eliminar la imagen del producto.");
         }
     }
+//    // Eliminar un producto por su ID
+//    @DeleteMapping("/eliminar/{id}")
+//    public ResponseEntity<?> eliminarProducto(@PathVariable Long id) throws IOException {
+//
+//        if (productoService.obtenerPorID(id).isPresent()) {
+//
+//            productoService.eliminarProducto(id);
+//            return ResponseEntity.ok("Producto eliminado");
+//
+//        } else {
+//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//        }
+//    }
 }

@@ -1,6 +1,7 @@
 package com.fran.Sistema_Inventario.Utils;
 
 import java.util.Set;
+
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -16,10 +17,16 @@ public class FileValidator {
     private static final long MAX_FILE_SIZE = 5 * 1024 * 1024;
 
     public static boolean isValidFile(MultipartFile file) {
+        // Verificar si es null
+        if (file == null) {
+            return false;
+        }
+
         // Verificar si el archivo está vacío
         if (file.isEmpty()) {
             return false;
         }
+
         // Verificar la extensión del archivo
         String extension = getFileExtension(file);
         if (extension == null || !ALLOWED_EXTENSIONS.contains(extension.toLowerCase())) {

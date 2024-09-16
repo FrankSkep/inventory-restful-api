@@ -31,10 +31,32 @@ public class ImagenServiceImpl implements ImagenService {
         return imagenRepository.save(image);
     }
 
+    // Actualiza la imagen de un producto
     @Override
-    public void deleteImage(Imagen image) throws IOException {
-        System.out.println("Imagen en deleteImage  : imagenservice" + image);
+    public Imagen actualizarImagen(MultipartFile file, Imagen imagen) throws IOException {
+        Imagen imagenDB = imagenRepository.getReferenceById(imagen.getId());
+
+        // Subir la nueva imagen
+        Map uploadResult = cloudinaryService.upload(file);
+        String imageUrl = (String) uploadResult.get("url");
+        String imageId = (String) uploadResult.get("public_id");
+
+        // Actualizar url e identificador
+        imagenDB.setUrl(imageUrl);
+        imagenDB.setImageId(imageId);
+        return imagenRepository.save(imagenDB);
+    }
+
+    // Elimina la imagen de cloudinary y de la base de datos
+    @Override
+    public void eliminarImagenCompleta(Imagen image) throws IOException {
         cloudinaryService.delete(image.getImageId());
         imagenRepository.deleteById(image.getId());
+    }
+
+    // Elimina la imagen de cloudinary
+    @Override
+    public void eliminarImagenCloudinary(String imageId) throws IOException {
+        cloudinaryService.delete(imageId);
     }
 }
