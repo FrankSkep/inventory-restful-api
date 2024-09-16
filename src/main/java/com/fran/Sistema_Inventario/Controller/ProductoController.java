@@ -12,7 +12,6 @@ import jakarta.validation.Valid;
 import java.io.IOException;
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -71,8 +70,8 @@ public class ProductoController {
     // Editar datos de un producto
     @PutMapping("/editar/{id}")
     public ResponseEntity<?> editarProducto(@PathVariable Long id, @ModelAttribute ProductoDTO productoRequest,
-                                            @RequestPart(value = "file", required = false) MultipartFile nuevaImagenOpcional,
-                                            BindingResult result) throws IOException {
+            @RequestPart(value = "file", required = false) MultipartFile nuevaImagenOpcional,
+            BindingResult result) throws IOException {
 
         if (result.hasErrors()) {
             return ResponseEntity.badRequest().body(result.getAllErrors());
@@ -103,17 +102,4 @@ public class ProductoController {
                     .body("Ocurrió un error al eliminar la imagen del producto.");
         }
     }
-//    // Eliminar un producto por su ID
-//    @DeleteMapping("/eliminar/{id}")
-//    public ResponseEntity<?> eliminarProducto(@PathVariable Long id) throws IOException {
-//
-//        if (productoService.obtenerPorID(id).isPresent()) {
-//
-//            productoService.eliminarProducto(id);
-//            return ResponseEntity.ok("Producto eliminado");
-//
-//        } else {
-//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-//        }
-//    }
 }

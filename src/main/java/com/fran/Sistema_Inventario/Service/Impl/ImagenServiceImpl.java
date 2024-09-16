@@ -4,7 +4,6 @@ import com.fran.Sistema_Inventario.Entity.Imagen;
 import com.fran.Sistema_Inventario.Repository.ImagenRepository;
 import com.fran.Sistema_Inventario.Service.CloudinaryService;
 import com.fran.Sistema_Inventario.Service.ImagenService;
-import lombok.Builder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 

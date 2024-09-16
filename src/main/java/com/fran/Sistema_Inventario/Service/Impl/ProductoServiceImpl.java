@@ -32,8 +32,8 @@ public class ProductoServiceImpl implements ProductoService {
     private final ImagenServiceImpl imagenService;
 
     public ProductoServiceImpl(ProductoRepository productoRepository, MovimientoStockRepository movimientoStockRepository,
-                               ProveedorService proveedorService, ProductoMapperDTO productoMapper, ImagenServiceImpl imagenService,
-                               CategoriaServiceImpl categoriaService) {
+            ProveedorService proveedorService, ProductoMapperDTO productoMapper, ImagenServiceImpl imagenService,
+            CategoriaServiceImpl categoriaService) {
         this.productoRepository = productoRepository;
         this.movimientoStockRepository = movimientoStockRepository;
         this.productoMapper = productoMapper;
@@ -124,18 +124,6 @@ public class ProductoServiceImpl implements ProductoService {
         // Eliminar el producto
         productoRepository.delete(producto);
     }
-//    public void eliminarProducto(Long id) throws IOException {
-//
-//        Producto producto = productoRepository.getReferenceById(id);
-//
-//        // Eliminar la imagen (Si existe una)
-//        if (producto.getImagen() != null) {
-//            imagenService.eliminarImagenCompleta(producto.getImagen());
-//        }
-//
-//        // Eliminar el producto
-//        productoRepository.delete(producto);
-//    }
 
     // Actualiza el stock y registra el movimiento
     @Override

@@ -1,7 +1,6 @@
 package com.fran.Sistema_Inventario.Service.Impl;
 
 import com.fran.Sistema_Inventario.DTO.ProveedorDTOs.ProveedorBasicoDTO;
-import com.fran.Sistema_Inventario.DTO.ProveedorDTOs.ProveedorDTO;
 import com.fran.Sistema_Inventario.DTO.ProveedorDTOs.ProveedorDetalladoDTO;
 import com.fran.Sistema_Inventario.Entity.Proveedor;
 import com.fran.Sistema_Inventario.MapperDTO.ProveedorMapperDTO;

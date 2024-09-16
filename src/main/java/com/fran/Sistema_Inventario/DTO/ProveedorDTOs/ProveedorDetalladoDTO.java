@@ -1,6 +1,5 @@
 package com.fran.Sistema_Inventario.DTO.ProveedorDTOs;
 
-import com.fran.Sistema_Inventario.DTO.ProductoDTOs.ProductoBasicoDTO;
 import com.fran.Sistema_Inventario.DTO.ProductoDTOs.ProductoProveedorDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
