@@ -22,7 +22,7 @@ public class Producto {
 
     private String descripcion;
 
-    @Column(nullable = false)
+    @Column(name = "precio_venta", nullable = false)
     private Double precio;
 
     @Column(name = "cantidad_stock", nullable = false)
@@ -41,6 +41,7 @@ public class Producto {
     @JsonBackReference
     private Proveedor proveedor;
 
+    @Column(name = "stock_minimo", nullable = false)
     private Integer umbralBajoStock;
 
     @OneToMany(mappedBy = "producto", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -70,5 +71,6 @@ public class Producto {
         this.umbralBajoStock = umbralBajoStock;
     }
 
-    public Producto() {}
+    public Producto() {
+    }
 }
