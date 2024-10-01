@@ -1,5 +1,6 @@
 package com.fran.Sistema_Inventario.Controller;
 
+import com.fran.Sistema_Inventario.DTO.MovimientoDTO;
 import com.fran.Sistema_Inventario.Entity.MovimientoStock;
 
 import java.util.List;
@@ -33,12 +34,16 @@ public class MovimientosController {
     }
 
     @GetMapping("/entradas")
-    public List<MovimientoStock> mostrarEntradas() {
+    public List<MovimientoDTO> mostrarEntradas() {
         return movimientoService.obtenerEntradas();
     }
 
-    @GetMapping("salidas")
-    public List<MovimientoStock> mostrarSalidas() {
+    @GetMapping("/salidas")
+    public List<MovimientoDTO> mostrarSalidas() {
+        System.out.println("Mostrando salidas");
+        for (MovimientoDTO movimiento : movimientoService.obtenerSalidas()) {
+            System.out.println(movimiento);
+        }
         return movimientoService.obtenerSalidas();
     }
 
