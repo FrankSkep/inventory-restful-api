@@ -20,5 +20,5 @@ public class ProductoDetalladoDTO {
     private String imageUrl;
     private ProveedorBasicoDTO proveedor;
     private Integer umbralBajoStock;
-    private List<MovimientoStock> movimientosStock = new ArrayList<>();
+    private List<MovimientoStock> movimientosStock;
 }

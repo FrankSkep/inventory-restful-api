@@ -70,6 +70,5 @@ public class Producto {
         this.umbralBajoStock = umbralBajoStock;
     }
 
-    public Producto() {
-    }
+    public Producto() {}
 }

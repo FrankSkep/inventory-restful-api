@@ -139,8 +139,12 @@ public class ProductoServiceImpl implements ProductoService {
             if (stockActual < stockMovimiento) {
                 throw new IllegalArgumentException("No hay suficiente stock para realizar esta operación");
             }
+            movimiento.setCostoAdquisicion(null);
             producto.setCantidadStock(stockActual - stockMovimiento);
         } else {
+            if (movimiento.getCostoAdquisicion() == null || movimiento.getCostoAdquisicion() <= 0) {
+                throw new IllegalArgumentException("El costo de adquisición es obligatorio para entradas de stock.");
+            }
             producto.setCantidadStock(stockActual + stockMovimiento);
         }
 

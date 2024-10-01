@@ -28,6 +28,5 @@ public class Imagen {
         this.imageId = imageId;
     }
 
-    public Imagen() {
-    }
+    public Imagen() {}
 }

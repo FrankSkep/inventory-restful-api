@@ -11,6 +11,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import lombok.Data;
@@ -39,6 +40,9 @@ public class MovimientoStock {
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonBackReference
     private Producto producto;
+
+    @Min(value = 0, message = "El costo de adquisición debe ser mayor o igual a 0")
+    private Double costoAdquisicion;
 
     public enum TipoMovimiento {
         ENTRADA, SALIDA
