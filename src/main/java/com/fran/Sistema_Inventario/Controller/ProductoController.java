@@ -54,17 +54,11 @@ public class ProductoController {
             return ResponseEntity.badRequest().body(result.getAllErrors());
         }
 
-        try {
-            Producto producto = productoService.guardarProducto(
-                    productoMapper.toEntity(productoRequest),
-                    FileValidator.isValidFile(file) ? file : null);
+        Producto producto = productoService.guardarProducto(
+                productoMapper.toEntity(productoRequest),
+                FileValidator.isValidFile(file) ? file : null);
 
-            return ResponseEntity.ok(productoMapper.toDTO(producto));
-
-        } catch (IOException e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("Error al subir la imagen: " + e.getMessage());
-        }
+        return ResponseEntity.ok(productoMapper.toDTO(producto));
     }
 
     // Editar datos de un producto

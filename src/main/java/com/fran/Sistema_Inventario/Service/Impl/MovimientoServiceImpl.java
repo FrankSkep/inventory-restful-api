@@ -30,6 +30,16 @@ public class MovimientoServiceImpl implements MovimientoService {
     }
 
     @Override
+    public List<MovimientoStock> obtenerEntradas() {
+        return movimientoRepository.findByTipoMovimiento(MovimientoStock.TipoMovimiento.ENTRADA);
+    }
+
+    @Override
+    public List<MovimientoStock> obtenerSalidas() {
+        return movimientoRepository.findByTipoMovimiento(MovimientoStock.TipoMovimiento.SALIDA);
+    }
+
+    @Override
     public List<MovimientoStock> obtenerTodosLosMovimientos() {
         return movimientoRepository.findAll();
     }

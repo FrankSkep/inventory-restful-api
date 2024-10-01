@@ -32,9 +32,23 @@ public class MovimientosController {
         return movimientoService.obtenerTodosLosMovimientos();
     }
 
+    @GetMapping("/entradas")
+    public List<MovimientoStock> mostrarEntradas() {
+        return movimientoService.obtenerEntradas();
+    }
+
+    @GetMapping("salidas")
+    public List<MovimientoStock> mostrarSalidas() {
+        return movimientoService.obtenerSalidas();
+    }
+
     @PostMapping("/registrar")
     public ResponseEntity<?> registrar(@RequestBody MovimientoStock movimiento) {
-        MovimientoStock movimientoRegistrado = productoService.actualizarStock(movimiento);
-        return ResponseEntity.status(HttpStatus.CREATED).body(movimientoRegistrado);
+        try {
+            MovimientoStock movimientoRegistrado = productoService.actualizarStock(movimiento);
+            return ResponseEntity.status(HttpStatus.CREATED).body(movimientoRegistrado);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
     }
 }
