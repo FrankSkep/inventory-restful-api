@@ -40,10 +40,6 @@ public class MovimientosController {
 
     @GetMapping("/salidas")
     public List<MovimientoDTO> mostrarSalidas() {
-        System.out.println("Mostrando salidas");
-        for (MovimientoDTO movimiento : movimientoService.obtenerSalidas()) {
-            System.out.println(movimiento);
-        }
         return movimientoService.obtenerSalidas();
     }
 
