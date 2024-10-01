@@ -7,11 +7,11 @@ import java.io.IOException;
 
 public interface ImagenService {
 
-    Imagen uploadImage(MultipartFile file) throws IOException;
+    Imagen uploadImage(MultipartFile file);
 
-    public Imagen actualizarImagen(MultipartFile file, Imagen imagen) throws IOException;
+    public Imagen actualizarImagen(MultipartFile file, Imagen imagen);
 
-    void eliminarImagenCompleta(Imagen image) throws IOException;
+    void eliminarImagenCompleta(Imagen image);
 
-    public void eliminarImagenCloudinary(String imageId) throws IOException;
+    public void eliminarImagenCloudinary(String imageId);
 }

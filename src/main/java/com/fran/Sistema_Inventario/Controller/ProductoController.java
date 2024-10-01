@@ -5,7 +5,7 @@ import com.fran.Sistema_Inventario.DTO.ProductoDTOs.ProductoDTO;
 import com.fran.Sistema_Inventario.DTO.ProductoDTOs.ProductoDetalladoDTO;
 import com.fran.Sistema_Inventario.Entity.Producto;
 import com.fran.Sistema_Inventario.MapperDTO.ProductoMapperDTO;
-import com.fran.Sistema_Inventario.Service.Impl.ProductoServiceImpl;
+import com.fran.Sistema_Inventario.Service.ProductoService;
 import com.fran.Sistema_Inventario.Utils.FileValidator;
 import jakarta.validation.Valid;
 
@@ -23,10 +23,10 @@ import org.springframework.web.multipart.MultipartFile;
 @RequestMapping("/inventario")
 public class ProductoController {
 
-    private final ProductoServiceImpl productoService;
+    private final ProductoService productoService;
     private final ProductoMapperDTO productoMapper;
 
-    public ProductoController(ProductoServiceImpl productoService, ProductoMapperDTO productoMapper) {
+    public ProductoController(ProductoService productoService, ProductoMapperDTO productoMapper) {
         this.productoService = productoService;
         this.productoMapper = productoMapper;
     }
@@ -70,8 +70,8 @@ public class ProductoController {
     // Editar datos de un producto
     @PutMapping("/editar/{id}")
     public ResponseEntity<?> editarProducto(@PathVariable Long id, @ModelAttribute ProductoDTO productoRequest,
-            @RequestPart(value = "file", required = false) MultipartFile nuevaImagenOpcional,
-            BindingResult result) throws IOException {
+                                            @RequestPart(value = "file", required = false) MultipartFile nuevaImagenOpcional,
+                                            BindingResult result) throws IOException {
 
         if (result.hasErrors()) {
             return ResponseEntity.badRequest().body(result.getAllErrors());

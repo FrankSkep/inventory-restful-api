@@ -16,13 +16,13 @@ public interface ProductoService {
 
     ProductoDetalladoDTO detallesProducto(Long id);
 
-    Optional<Producto> obtenerPorID(Long id) throws IOException;
+    Optional<Producto> obtenerPorID(Long id);
 
-    Producto guardarProducto(Producto productoReq, MultipartFile file) throws IOException;
+    Producto guardarProducto(Producto productoReq, MultipartFile file);
 
     void actualizarProducto(Producto productoReq);
 
-    void actualizarImagenProducto(MultipartFile file, Long productoId) throws IOException;
+    void actualizarImagenProducto(MultipartFile file, Long productoId);
 
     void eliminarProducto(Long id) throws IOException;
 

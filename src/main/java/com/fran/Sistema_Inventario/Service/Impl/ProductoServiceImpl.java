@@ -32,8 +32,8 @@ public class ProductoServiceImpl implements ProductoService {
     private final ImagenServiceImpl imagenService;
 
     public ProductoServiceImpl(ProductoRepository productoRepository, MovimientoStockRepository movimientoStockRepository,
-            ProveedorService proveedorService, ProductoMapperDTO productoMapper, ImagenServiceImpl imagenService,
-            CategoriaServiceImpl categoriaService) {
+                               ProveedorService proveedorService, ProductoMapperDTO productoMapper, ImagenServiceImpl imagenService,
+                               CategoriaServiceImpl categoriaService) {
         this.productoRepository = productoRepository;
         this.movimientoStockRepository = movimientoStockRepository;
         this.productoMapper = productoMapper;
@@ -60,14 +60,14 @@ public class ProductoServiceImpl implements ProductoService {
 
     // Obtener una entidad Producto por su id
     @Override
-    public Optional<Producto> obtenerPorID(Long id) throws IOException {
+    public Optional<Producto> obtenerPorID(Long id) {
         return productoRepository.findById(id);
     }
 
     // Guardar un nuevo producto
     @Transactional
     @Override
-    public Producto guardarProducto(Producto producto, MultipartFile file) throws IOException {
+    public Producto guardarProducto(Producto producto, MultipartFile file) {
 
         if (file != null) {
             Imagen imagen = imagenService.uploadImage(file);
@@ -94,7 +94,7 @@ public class ProductoServiceImpl implements ProductoService {
     // Actualizar la imagen de un producto o la agrega si no existe
     @Override
     @Transactional
-    public void actualizarImagenProducto(MultipartFile file, Long productoId) throws IOException {
+    public void actualizarImagenProducto(MultipartFile file, Long productoId) {
 
         Producto productoDB = productoRepository.getReferenceById(productoId);
         Imagen imagenActual = productoDB.getImagen();
@@ -112,7 +112,7 @@ public class ProductoServiceImpl implements ProductoService {
 
     // Eliminar un producto
     @Override
-    public void eliminarProducto(Long id) throws IOException {
+    public void eliminarProducto(Long id) {
         Producto producto = productoRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("Producto no encontrado"));
 

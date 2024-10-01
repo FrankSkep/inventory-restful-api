@@ -13,9 +13,9 @@ import java.util.Map;
 public class CloudinaryServiceImpl implements CloudinaryService {
 
     private final Cloudinary cloudinary;
-    private final Dotenv env = Dotenv.load();
 
     public CloudinaryServiceImpl() {
+        Dotenv env = Dotenv.load();
         cloudinary = new Cloudinary(ObjectUtils.asMap(
                 "cloud_name", env.get("CLOUDINARY_CLOUD_NAME"),
                 "api_key", env.get("CLOUDINARY_API_KEY"),

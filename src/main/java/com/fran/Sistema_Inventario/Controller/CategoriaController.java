@@ -1,7 +1,8 @@
 package com.fran.Sistema_Inventario.Controller;
 
 import com.fran.Sistema_Inventario.Entity.Categoria;
-import com.fran.Sistema_Inventario.Service.Impl.CategoriaServiceImpl;
+import com.fran.Sistema_Inventario.Service.CategoriaService;
+
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -10,9 +11,9 @@ import java.util.List;
 @RequestMapping("/categorias")
 public class CategoriaController {
 
-    private CategoriaServiceImpl categoriaService;
+    private final CategoriaService categoriaService;
 
-    public CategoriaController(CategoriaServiceImpl categoriaService) {
+    public CategoriaController(CategoriaService categoriaService) {
         this.categoriaService = categoriaService;
     }
 

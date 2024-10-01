@@ -5,14 +5,16 @@ import com.fran.Sistema_Inventario.Repository.MovimientoStockRepository;
 import com.fran.Sistema_Inventario.Repository.ProductoRepository;
 import com.fran.Sistema_Inventario.Service.MovimientoService;
 import jakarta.persistence.EntityNotFoundException;
+
 import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 @Service
 public class MovimientoServiceImpl implements MovimientoService {
 
-    private MovimientoStockRepository movimientoRepository;
-    private ProductoRepository productoRepository;
+    private final MovimientoStockRepository movimientoRepository;
+    private final ProductoRepository productoRepository;
 
     public MovimientoServiceImpl(MovimientoStockRepository movimientoRepository, ProductoRepository productoRepository) {
         this.movimientoRepository = movimientoRepository;

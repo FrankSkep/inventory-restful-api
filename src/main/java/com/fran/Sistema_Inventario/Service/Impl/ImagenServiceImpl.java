@@ -22,8 +22,13 @@ public class ImagenServiceImpl implements ImagenService {
     }
 
     @Override
-    public Imagen uploadImage(MultipartFile file) throws IOException {
-        Map uploadResult = cloudinaryService.upload(file);
+    public Imagen uploadImage(MultipartFile file) {
+        Map uploadResult = null;
+        try {
+            uploadResult = cloudinaryService.upload(file);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         String imageUrl = (String) uploadResult.get("url");
         String imageId = (String) uploadResult.get("public_id");
         Imagen image = new Imagen(imageUrl, imageId);
@@ -32,30 +37,47 @@ public class ImagenServiceImpl implements ImagenService {
 
     // Actualiza la imagen de un producto
     @Override
-    public Imagen actualizarImagen(MultipartFile file, Imagen imagen) throws IOException {
+    public Imagen actualizarImagen(MultipartFile file, Imagen imagen) {
+
         Imagen imagenDB = imagenRepository.getReferenceById(imagen.getId());
+        Map uploadResult = null;
 
-        // Subir la nueva imagen
-        Map uploadResult = cloudinaryService.upload(file);
-        String imageUrl = (String) uploadResult.get("url");
-        String imageId = (String) uploadResult.get("public_id");
+        try {
+            // Subir la nueva imagen
+            uploadResult = cloudinaryService.upload(file);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
-        // Actualizar url e identificador
-        imagenDB.setUrl(imageUrl);
-        imagenDB.setImageId(imageId);
+        if (uploadResult != null) {
+            // Obtener url e id de la nueva imagen
+            String imageUrl = (String) uploadResult.get("url");
+            String imageId = (String) uploadResult.get("public_id");
+            // Actualizar url e id de imagen
+            imagenDB.setUrl(imageUrl);
+            imagenDB.setImageId(imageId);
+        }
         return imagenRepository.save(imagenDB);
     }
 
     // Elimina la imagen de cloudinary y de la base de datos
     @Override
-    public void eliminarImagenCompleta(Imagen image) throws IOException {
-        cloudinaryService.delete(image.getImageId());
+    public void eliminarImagenCompleta(Imagen image) {
+        try {
+            cloudinaryService.delete(image.getImageId());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         imagenRepository.deleteById(image.getId());
     }
 
     // Elimina la imagen de cloudinary
     @Override
-    public void eliminarImagenCloudinary(String imageId) throws IOException {
-        cloudinaryService.delete(imageId);
+    public void eliminarImagenCloudinary(String imageId) {
+        try {
+            cloudinaryService.delete(imageId);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
