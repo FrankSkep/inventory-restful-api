@@ -6,12 +6,16 @@ import com.fran.Sistema_Inventario.DTO.ProductoDTOs.ProductoDetalladoDTO;
 import com.fran.Sistema_Inventario.Entity.Producto;
 import com.fran.Sistema_Inventario.MapperDTO.ProductoMapperDTO;
 import com.fran.Sistema_Inventario.Service.ProductoService;
+import com.fran.Sistema_Inventario.Service.ReporteService;
 import com.fran.Sistema_Inventario.Utils.FileValidator;
 import jakarta.validation.Valid;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.NoSuchElementException;
+import org.springframework.http.HttpHeaders;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,10 +29,12 @@ public class ProductoController {
 
     private final ProductoService productoService;
     private final ProductoMapperDTO productoMapper;
+    private final ReporteService reporteService;
 
-    public ProductoController(ProductoService productoService, ProductoMapperDTO productoMapper) {
+    public ProductoController(ProductoService productoService, ProductoMapperDTO productoMapper, ReporteService reporteService) {
         this.productoService = productoService;
         this.productoMapper = productoMapper;
+        this.reporteService = reporteService;
     }
 
     // Obtener todos los productos del inventario
@@ -64,14 +70,15 @@ public class ProductoController {
     // Editar datos de un producto
     @PutMapping("/editar/{id}")
     public ResponseEntity<?> editarProducto(@PathVariable Long id, @ModelAttribute ProductoDTO productoRequest,
-                                            @RequestPart(value = "file", required = false) MultipartFile nuevaImagenOpcional,
-                                            BindingResult result) {
+            @RequestPart(value = "file", required = false) MultipartFile nuevaImagenOpcional,
+            BindingResult result) {
 
         if (result.hasErrors()) {
             return ResponseEntity.badRequest().body(result.getAllErrors());
         }
 
         // Actualiza datos del producto
+        productoRequest.setId(id);
         productoService.actualizarProducto(productoMapper.toEntityWithId(productoRequest));
 
         // Si se recibe una imagen, la actualiza
@@ -79,7 +86,7 @@ public class ProductoController {
             productoService.actualizarImagenProducto(nuevaImagenOpcional, productoRequest.getId());
         }
 
-        return ResponseEntity.ok().body("Producto Editado");
+        return ResponseEntity.ok().body("Producto editado exitosamente");
     }
 
     // Eliminar un producto por su ID
@@ -88,14 +95,30 @@ public class ProductoController {
         try {
             productoService.eliminarProducto(id);
             return ResponseEntity.ok("Producto eliminado exitosamente");
-        } catch (
-                NoSuchElementException e) {
+        } catch (NoSuchElementException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body("Producto con ID " + id + " no encontrado.");
-        } catch (
-                IOException e) {
+        } catch (IOException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("Ocurrió un error al eliminar la imagen del producto.");
+        }
+    }
+
+    @GetMapping("/reporte")
+    public ResponseEntity<byte[]> generarReporteInventario() {
+        try {
+            byte[] pdfBytes = reporteService.generarReporteInventario();
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(org.springframework.http.MediaType.APPLICATION_PDF);
+
+            String filename = "reporte_inventario-" + LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+            headers.setContentDispositionFormData("filename", filename);
+
+            return new ResponseEntity<>(pdfBytes, headers, HttpStatus.OK);
+
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }
