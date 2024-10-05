@@ -65,7 +65,7 @@ public class ProductoController {
     @PutMapping("/editar/{id}")
     public ResponseEntity<?> editarProducto(@PathVariable Long id, @ModelAttribute ProductoDTO productoRequest,
                                             @RequestPart(value = "file", required = false) MultipartFile nuevaImagenOpcional,
-                                            BindingResult result) throws IOException {
+                                            BindingResult result) {
 
         if (result.hasErrors()) {
             return ResponseEntity.badRequest().body(result.getAllErrors());
@@ -88,10 +88,12 @@ public class ProductoController {
         try {
             productoService.eliminarProducto(id);
             return ResponseEntity.ok("Producto eliminado exitosamente");
-        } catch (NoSuchElementException e) {
+        } catch (
+                NoSuchElementException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body("Producto con ID " + id + " no encontrado.");
-        } catch (IOException e) {
+        } catch (
+                IOException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("Ocurrió un error al eliminar la imagen del producto.");
         }
