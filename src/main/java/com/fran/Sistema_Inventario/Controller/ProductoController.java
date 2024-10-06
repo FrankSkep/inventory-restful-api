@@ -15,6 +15,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.NoSuchElementException;
+
 import org.springframework.http.HttpHeaders;
 
 import org.springframework.http.HttpStatus;
@@ -70,8 +71,8 @@ public class ProductoController {
     // Editar datos de un producto
     @PutMapping("/editar/{id}")
     public ResponseEntity<?> editarProducto(@PathVariable Long id, @ModelAttribute ProductoDTO productoRequest,
-            @RequestPart(value = "file", required = false) MultipartFile nuevaImagenOpcional,
-            BindingResult result) {
+                                            @RequestPart(value = "file", required = false) MultipartFile nuevaImagenOpcional,
+                                            BindingResult result) {
 
         if (result.hasErrors()) {
             return ResponseEntity.badRequest().body(result.getAllErrors());
@@ -95,10 +96,12 @@ public class ProductoController {
         try {
             productoService.eliminarProducto(id);
             return ResponseEntity.ok("Producto eliminado exitosamente");
-        } catch (NoSuchElementException e) {
+        } catch (
+                NoSuchElementException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body("Producto con ID " + id + " no encontrado.");
-        } catch (IOException e) {
+        } catch (
+                IOException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("Ocurrió un error al eliminar la imagen del producto.");
         }
@@ -112,12 +115,13 @@ public class ProductoController {
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(org.springframework.http.MediaType.APPLICATION_PDF);
 
-            String filename = "reporte_inventario-" + LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) + ".pdf";
+            String filename = "reporte_inventario_" + LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) + ".pdf";
             headers.setContentDispositionFormData("filename", filename);
 
             return new ResponseEntity<>(pdfBytes, headers, HttpStatus.OK);
 
-        } catch (Exception e) {
+        } catch (
+                Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

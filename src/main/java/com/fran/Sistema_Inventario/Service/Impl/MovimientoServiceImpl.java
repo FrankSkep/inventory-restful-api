@@ -48,7 +48,8 @@ public class MovimientoServiceImpl implements MovimientoService {
     }
 
     @Override
-    public List<MovimientoStock> obtenerTodosLosMovimientos() {
-        return movimientoRepository.findAll();
+    public List<MovimientoDTO> obtenerTodosLosMovimientos() {
+        List<MovimientoStock> movimientos = movimientoRepository.findAll();
+        return movimientos.stream().map(movimientoMapperDTO::toMovimientoDTO).collect(Collectors.toList());
     }
 }

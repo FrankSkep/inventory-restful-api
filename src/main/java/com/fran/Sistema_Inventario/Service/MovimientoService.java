@@ -13,5 +13,5 @@ public interface MovimientoService {
 
     List<MovimientoDTO> obtenerSalidas();
 
-    List<MovimientoStock> obtenerTodosLosMovimientos();
+    List<MovimientoDTO> obtenerTodosLosMovimientos();
 }
