@@ -9,7 +9,7 @@ import java.util.List;
 
 import com.fran.Sistema_Inventario.Service.MovimientoService;
 import com.fran.Sistema_Inventario.Service.ProductoService;
-import com.fran.Sistema_Inventario.Service.ReporteService;
+import com.fran.Sistema_Inventario.Service.Impl.ReporteService;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,20 +35,23 @@ public class MovimientosController {
         return movimientoService.obtenerTodosLosMovimientos();
     }
 
+    // Obtener las entradas de stock
     @GetMapping("/entradas")
     public List<MovimientoDTO> mostrarEntradas() {
         return movimientoService.obtenerEntradas();
     }
 
+    // Obtener las salidas de stock
     @GetMapping("/salidas")
     public List<MovimientoDTO> mostrarSalidas() {
         return movimientoService.obtenerSalidas();
     }
 
+    // Registrar un movimiento de stock
     @PostMapping("/registrar")
     public ResponseEntity<?> registrar(@RequestBody MovimientoStock movimiento) {
         try {
-            MovimientoStock movimientoRegistrado = productoService.actualizarStock(movimiento);
+            MovimientoStock movimientoRegistrado = productoService.updateStock(movimiento);
             return ResponseEntity.status(HttpStatus.CREATED).body(movimientoRegistrado);
         } catch (
                 IllegalArgumentException e) {
@@ -56,6 +59,7 @@ public class MovimientosController {
         }
     }
 
+    // Generar reporte de movimientos
     @GetMapping("/reporte/{tipo}")
     public ResponseEntity<byte[]> generarReporteInventario(@PathVariable String tipo) {
         // tipo = "general" o "entrada" o "salida"

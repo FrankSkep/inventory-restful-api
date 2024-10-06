@@ -4,29 +4,30 @@ import com.fran.Sistema_Inventario.DTO.ProductoDTOs.ProductoBasicoDTO;
 import com.fran.Sistema_Inventario.DTO.ProductoDTOs.ProductoDetalladoDTO;
 import com.fran.Sistema_Inventario.Entity.MovimientoStock;
 import com.fran.Sistema_Inventario.Entity.Producto;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Optional;
 
 public interface ProductoService {
 
-    List<ProductoBasicoDTO> obtenerProductos();
+    Page<ProductoBasicoDTO> getProductsPage(Pageable pageable);
 
-    ProductoDetalladoDTO detallesProducto(Long id);
+    List<ProductoBasicoDTO> getAllProducts();
 
-    Optional<Producto> obtenerPorID(Long id);
+    ProductoDetalladoDTO productDetails(Long id);
 
-    Producto guardarProducto(Producto productoReq, MultipartFile file);
+    Producto saveProduct(Producto productoReq, MultipartFile file);
 
-    void actualizarProducto(Producto productoReq);
+    void updateProduct(Producto productoReq);
 
-    void actualizarImagenProducto(MultipartFile file, Long productoId);
+    void updateProductImage(MultipartFile file, Long productoId);
 
-    void eliminarProducto(Long id) throws IOException;
+    void deleteProduct(Long id) throws IOException;
 
-    MovimientoStock actualizarStock(MovimientoStock movimiento);
+    MovimientoStock updateStock(MovimientoStock movimiento);
 
-    void enviarAlertaStock();
+    void sendEmail();
 }

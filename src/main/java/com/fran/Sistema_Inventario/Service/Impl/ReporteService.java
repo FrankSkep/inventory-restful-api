@@ -1,8 +1,7 @@
-package com.fran.Sistema_Inventario.Service;
+package com.fran.Sistema_Inventario.Service.Impl;
 
 import com.fran.Sistema_Inventario.DTO.MovimientoDTO;
 import com.fran.Sistema_Inventario.DTO.ProductoDTOs.ProductoBasicoDTO;
-import com.fran.Sistema_Inventario.Entity.MovimientoStock;
 import com.itextpdf.io.image.ImageData;
 import com.itextpdf.io.image.ImageDataFactory;
 import com.itextpdf.kernel.pdf.PdfDocument;
@@ -17,23 +16,13 @@ import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayOutputStream;
 import java.net.URL;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Service
 public class ReporteService {
 
-    private final ProductoService productoService;
-
-    public ReporteService(ProductoService productoService) {
-        this.productoService = productoService;
-    }
-
-    public byte[] generarReporteInventario() {
-        // Obtener la lista de productos
-        List<ProductoBasicoDTO> productos = productoService.obtenerProductos();
-
+    public byte[] generarReporteInventario(List<ProductoBasicoDTO> productos) {
         // ByteArrayOutputStream para generar el PDF en memoria
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         PdfWriter writer = new PdfWriter(baos);

@@ -13,13 +13,13 @@ import com.fran.Sistema_Inventario.Service.ProveedorService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 
-import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -42,15 +42,19 @@ public class ProductoServiceImpl implements ProductoService {
 
     // Obtener todos los productos y sus datos basicos
     @Override
-    public List<ProductoBasicoDTO> obtenerProductos() {
-
+    public List<ProductoBasicoDTO> getAllProducts() {
         List<Producto> productos = productoRepository.findAll();
         return productos.stream().map(productoMapper::toDTObasic).collect(Collectors.toList());
     }
 
+    @Override
+    public Page<ProductoBasicoDTO> getProductsPage(Pageable pageable) {
+        return productoRepository.findAll(pageable).map(productoMapper::toDTObasic);
+    }
+
     // Obtener detalles de un producto
     @Override
-    public ProductoDetalladoDTO detallesProducto(Long id) {
+    public ProductoDetalladoDTO productDetails(Long id) {
 
         Producto producto = productoRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Producto no encontrado"));
@@ -58,16 +62,10 @@ public class ProductoServiceImpl implements ProductoService {
         return productoMapper.toDTOdetailed(producto);
     }
 
-    // Obtener una entidad Producto por su id
-    @Override
-    public Optional<Producto> obtenerPorID(Long id) {
-        return productoRepository.findById(id);
-    }
-
     // Guardar un nuevo producto
     @Transactional
     @Override
-    public Producto guardarProducto(Producto producto, MultipartFile file) {
+    public Producto saveProduct(Producto producto, MultipartFile file) {
 
         if (file != null) {
             Imagen imagen = imagenService.uploadImage(file);
@@ -78,7 +76,7 @@ public class ProductoServiceImpl implements ProductoService {
 
     // Editar datos de un producto existente
     @Override
-    public void actualizarProducto(Producto producto) {
+    public void updateProduct(Producto producto) {
 
         Producto productoDB = productoRepository.getReferenceById(producto.getId());
 
@@ -94,7 +92,7 @@ public class ProductoServiceImpl implements ProductoService {
     // Actualizar la imagen de un producto o la agrega si no existe
     @Override
     @Transactional
-    public void actualizarImagenProducto(MultipartFile file, Long productoId) {
+    public void updateProductImage(MultipartFile file, Long productoId) {
 
         Producto productoDB = productoRepository.getReferenceById(productoId);
         Imagen imagenActual = productoDB.getImagen();
@@ -102,7 +100,6 @@ public class ProductoServiceImpl implements ProductoService {
         if (imagenActual != null) {
             imagenService.eliminarImagenCloudinary(imagenActual.getImageId());
             imagenActual = imagenService.actualizarImagen(file, imagenActual);
-//            productoDB.setImagen(imagenActual);
         } else {
             Imagen imagenNueva = imagenService.uploadImage(file);
             productoDB.setImagen(imagenNueva);
@@ -112,9 +109,9 @@ public class ProductoServiceImpl implements ProductoService {
 
     // Eliminar un producto
     @Override
-    public void eliminarProducto(Long id) {
+    public void deleteProduct(Long id) {
         Producto producto = productoRepository.findById(id)
-                .orElseThrow(() -> new NoSuchElementException("Producto no encontrado"));
+                .orElseThrow(() -> new EntityNotFoundException("Producto no encontrado"));
 
         // Eliminar la imagen si existe
         if (producto.getImagen() != null) {
@@ -128,7 +125,7 @@ public class ProductoServiceImpl implements ProductoService {
     // Actualiza el stock y registra el movimiento
     @Override
     @Transactional
-    public MovimientoStock actualizarStock(MovimientoStock movimiento) {
+    public MovimientoStock updateStock(MovimientoStock movimiento) {
 
         Producto producto = productoRepository.getReferenceById(movimiento.getProducto().getId());
 
@@ -149,7 +146,7 @@ public class ProductoServiceImpl implements ProductoService {
         }
 
         if (producto.getCantidadStock() <= producto.getUmbralBajoStock()) {
-            enviarAlertaStock();
+            sendEmail();
         }
 
         movimiento.setProducto(producto);
@@ -159,7 +156,7 @@ public class ProductoServiceImpl implements ProductoService {
         return movimientoStockRepository.save(movimiento);
     }
 
-    public void enviarAlertaStock() {
+    public void sendEmail() {
         // Aqui implementare la notificacion por correo
 
     }

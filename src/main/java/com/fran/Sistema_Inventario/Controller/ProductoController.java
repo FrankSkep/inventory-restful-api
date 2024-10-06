@@ -6,16 +6,19 @@ import com.fran.Sistema_Inventario.DTO.ProductoDTOs.ProductoDetalladoDTO;
 import com.fran.Sistema_Inventario.Entity.Producto;
 import com.fran.Sistema_Inventario.MapperDTO.ProductoMapperDTO;
 import com.fran.Sistema_Inventario.Service.ProductoService;
-import com.fran.Sistema_Inventario.Service.ReporteService;
+import com.fran.Sistema_Inventario.Service.Impl.ReporteService;
 import com.fran.Sistema_Inventario.Utils.FileValidator;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
 import java.util.NoSuchElementException;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 
 import org.springframework.http.HttpStatus;
@@ -40,19 +43,27 @@ public class ProductoController {
 
     // Obtener todos los productos del inventario
     @GetMapping("/")
-    public List<ProductoBasicoDTO> listaProductos() {
-        return productoService.obtenerProductos();
+    public Page<ProductoBasicoDTO> getProducts(@RequestParam(defaultValue = "0") int page,
+                                               @RequestParam(defaultValue = "10") int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return productoService.getProductsPage(pageable);
     }
 
     // Obtener detalles de un producto
     @GetMapping("/detalles/{id}")
-    public ResponseEntity<ProductoDetalladoDTO> detallesProducto(@PathVariable Long id) {
-        return ResponseEntity.ok(productoService.detallesProducto(id));
+    public ResponseEntity<?> getProductDetails(@PathVariable Long id) {
+        try {
+            return ResponseEntity.ok(productoService.productDetails(id));
+        } catch (
+                EntityNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(e.getMessage());
+        }
     }
 
     // Agregar nuevo producto al inventario
-    @PostMapping("/agregar")
-    public ResponseEntity<?> crearProducto(
+    @PostMapping("/nuevo")
+    public ResponseEntity<?> createProduct(
             @Valid @ModelAttribute ProductoDTO productoRequest,
             @RequestPart(value = "file", required = false) MultipartFile file,
             BindingResult result) {
@@ -61,7 +72,7 @@ public class ProductoController {
             return ResponseEntity.badRequest().body(result.getAllErrors());
         }
 
-        Producto producto = productoService.guardarProducto(
+        Producto producto = productoService.saveProduct(
                 productoMapper.toEntity(productoRequest),
                 FileValidator.isValidFile(file) ? file : null);
 
@@ -80,11 +91,11 @@ public class ProductoController {
 
         // Actualiza datos del producto
         productoRequest.setId(id);
-        productoService.actualizarProducto(productoMapper.toEntityWithId(productoRequest));
+        productoService.updateProduct(productoMapper.toEntityWithId(productoRequest));
 
         // Si se recibe una imagen, la actualiza
         if (FileValidator.isValidFile(nuevaImagenOpcional)) {
-            productoService.actualizarImagenProducto(nuevaImagenOpcional, productoRequest.getId());
+            productoService.updateProductImage(nuevaImagenOpcional, productoRequest.getId());
         }
 
         return ResponseEntity.ok().body("Producto editado exitosamente");
@@ -94,7 +105,7 @@ public class ProductoController {
     @DeleteMapping("/eliminar/{id}")
     public ResponseEntity<?> eliminarProducto(@PathVariable Long id) {
         try {
-            productoService.eliminarProducto(id);
+            productoService.deleteProduct(id);
             return ResponseEntity.ok("Producto eliminado exitosamente");
         } catch (
                 NoSuchElementException e) {
@@ -110,7 +121,7 @@ public class ProductoController {
     @GetMapping("/reporte")
     public ResponseEntity<byte[]> generarReporteInventario() {
         try {
-            byte[] pdfBytes = reporteService.generarReporteInventario();
+            byte[] pdfBytes = reporteService.generarReporteInventario(productoService.getAllProducts());
 
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(org.springframework.http.MediaType.APPLICATION_PDF);
