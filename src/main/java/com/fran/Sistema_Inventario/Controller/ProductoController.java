@@ -112,7 +112,7 @@ public class ProductoController {
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(org.springframework.http.MediaType.APPLICATION_PDF);
 
-            String filename = "reporte_inventario-" + LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+            String filename = "reporte_inventario-" + LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) + ".pdf";
             headers.setContentDispositionFormData("filename", filename);
 
             return new ResponseEntity<>(pdfBytes, headers, HttpStatus.OK);
