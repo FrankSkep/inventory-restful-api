@@ -2,7 +2,6 @@ package com.fran.Sistema_Inventario.Controller;
 
 import com.fran.Sistema_Inventario.DTO.ProductoDTOs.ProductoBasicoDTO;
 import com.fran.Sistema_Inventario.DTO.ProductoDTOs.ProductoDTO;
-import com.fran.Sistema_Inventario.DTO.ProductoDTOs.ProductoDetalladoDTO;
 import com.fran.Sistema_Inventario.Entity.Producto;
 import com.fran.Sistema_Inventario.MapperDTO.ProductoMapperDTO;
 import com.fran.Sistema_Inventario.Service.ProductoService;
@@ -20,7 +19,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -41,7 +39,7 @@ public class ProductoController {
         this.reporteService = reporteService;
     }
 
-    // Obtener todos los productos del inventario
+    // Obtener productos paginados
     @GetMapping("/")
     public Page<ProductoBasicoDTO> getProducts(@RequestParam(defaultValue = "0") int page,
                                                @RequestParam(defaultValue = "10") int size) {
@@ -72,18 +70,18 @@ public class ProductoController {
             return ResponseEntity.badRequest().body(result.getAllErrors());
         }
 
-        Producto producto = productoService.saveProduct(
+        Producto product = productoService.saveProduct(
                 productoMapper.toEntity(productoRequest),
                 FileValidator.isValidFile(file) ? file : null);
 
-        return ResponseEntity.ok(productoMapper.toDTO(producto));
+        return ResponseEntity.ok(productoMapper.toDTO(product));
     }
 
     // Editar datos de un producto
     @PutMapping("/editar/{id}")
-    public ResponseEntity<?> editarProducto(@PathVariable Long id, @ModelAttribute ProductoDTO productoRequest,
-                                            @RequestPart(value = "file", required = false) MultipartFile nuevaImagenOpcional,
-                                            BindingResult result) {
+    public ResponseEntity<?> updateProduct(@PathVariable Long id, @ModelAttribute ProductoDTO productoRequest,
+                                           @RequestPart(value = "file", required = false) MultipartFile newOptionalImage,
+                                           BindingResult result) {
 
         if (result.hasErrors()) {
             return ResponseEntity.badRequest().body(result.getAllErrors());
@@ -94,8 +92,8 @@ public class ProductoController {
         productoService.updateProduct(productoMapper.toEntityWithId(productoRequest));
 
         // Si se recibe una imagen, la actualiza
-        if (FileValidator.isValidFile(nuevaImagenOpcional)) {
-            productoService.updateProductImage(nuevaImagenOpcional, productoRequest.getId());
+        if (FileValidator.isValidFile(newOptionalImage)) {
+            productoService.updateProductImage(newOptionalImage, productoRequest.getId());
         }
 
         return ResponseEntity.ok().body("Producto editado exitosamente");
@@ -103,7 +101,7 @@ public class ProductoController {
 
     // Eliminar un producto por su ID
     @DeleteMapping("/eliminar/{id}")
-    public ResponseEntity<?> eliminarProducto(@PathVariable Long id) {
+    public ResponseEntity<?> deleteProduct(@PathVariable Long id) {
         try {
             productoService.deleteProduct(id);
             return ResponseEntity.ok("Producto eliminado exitosamente");

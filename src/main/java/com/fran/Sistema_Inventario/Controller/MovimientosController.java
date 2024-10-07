@@ -37,22 +37,22 @@ public class MovimientosController {
 
     // Obtener las entradas de stock
     @GetMapping("/entradas")
-    public List<MovimientoDTO> mostrarEntradas() {
+    public List<MovimientoDTO> getEntries() {
         return movimientoService.obtenerEntradas();
     }
 
     // Obtener las salidas de stock
     @GetMapping("/salidas")
-    public List<MovimientoDTO> mostrarSalidas() {
+    public List<MovimientoDTO> getOutputs() {
         return movimientoService.obtenerSalidas();
     }
 
     // Registrar un movimiento de stock
     @PostMapping("/registrar")
-    public ResponseEntity<?> registrar(@RequestBody MovimientoStock movimiento) {
+    public ResponseEntity<?> addMovement(@RequestBody MovimientoStock movimiento) {
         try {
-            MovimientoStock movimientoRegistrado = productoService.updateStock(movimiento);
-            return ResponseEntity.status(HttpStatus.CREATED).body(movimientoRegistrado);
+            MovimientoStock movement = productoService.updateStock(movimiento);
+            return ResponseEntity.status(HttpStatus.CREATED).body(movement);
         } catch (
                 IllegalArgumentException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
@@ -61,7 +61,7 @@ public class MovimientosController {
 
     // Generar reporte de movimientos
     @GetMapping("/reporte/{tipo}")
-    public ResponseEntity<byte[]> generarReporteInventario(@PathVariable String tipo) {
+    public ResponseEntity<byte[]> genInventoryReport(@PathVariable String tipo) {
         // tipo = "general" o "entrada" o "salida"
         try {
             byte[] pdfBytes;

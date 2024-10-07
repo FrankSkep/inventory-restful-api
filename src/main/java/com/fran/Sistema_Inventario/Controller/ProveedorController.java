@@ -35,44 +35,44 @@ public class ProveedorController {
 
     // Obtener lista de todos los proveedores
     @GetMapping({"", "/"})
-    public List<ProveedorBasicoDTO> obtenerProveedores() {
+    public List<ProveedorBasicoDTO> getSuppliers() {
         return proveedorService.obtenerProveedores();
     }
 
     // Detalles de un proveedor
     @GetMapping("/detalles/{id}")
-    public ProveedorDetalladoDTO detallesProveedor(@PathVariable Long id) {
+    public ProveedorDetalladoDTO supplierDetails(@PathVariable Long id) {
         return proveedorService.detallesProveedor(proveedorService.obtenerPorID(id));
     }
 
     // Registrar nuevo proveedor
     @PostMapping("/registrar")
-    public ResponseEntity<?> crearProveedor(@Valid @RequestBody ProveedorDTO proveedorDTO, BindingResult result) {
+    public ResponseEntity<?> createSupplier(@Valid @RequestBody ProveedorDTO supplierRequest, BindingResult result) {
 
         if (result.hasErrors()) {
             return ResponseEntity.badRequest().body(result.getAllErrors());
         }
 
-        Proveedor proveedor = proveedorMapper.toEntityFromDTO(proveedorDTO);
+        Proveedor supplier = proveedorMapper.toEntityFromDTO(supplierRequest);
 
-        proveedorService.registrarProveedor(proveedor);
-        return ResponseEntity.ok(proveedor);
+        proveedorService.registrarProveedor(supplier);
+        return ResponseEntity.ok(supplier);
     }
 
     @PutMapping("/editar/{id}")
-    public ResponseEntity<?> editarDatosProveedor(@PathVariable Long id, @Valid @RequestBody ProveedorDTO proveedor, BindingResult result) {
+    public ResponseEntity<?> updateSupplier(@PathVariable Long id, @Valid @RequestBody ProveedorDTO supplier, BindingResult result) {
 
         if (result.hasErrors()) {
             return ResponseEntity.badRequest().body(result.getAllErrors());
         }
 
-        return ResponseEntity.ok(proveedorService.editarProveedor(proveedorMapper.toEntityFromDTOWithId(proveedor)));
+        return ResponseEntity.ok(proveedorService.editarProveedor(proveedorMapper.toEntityFromDTOWithId(supplier)));
     }
 
     @DeleteMapping("/eliminar/{id}")
-    public ResponseEntity<?> eliminarProveedor(@PathVariable Long id) {
+    public ResponseEntity<?> deleteSupplier(@PathVariable Long id) {
 
-        proveedorService.eliminarProveedor(id);
+        proveedorService.delete(id);
         return ResponseEntity.ok().body("Producto eliminado correctamente.");
     }
 }

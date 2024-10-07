@@ -51,7 +51,7 @@ public class ProveedorServiceImpl implements ProveedorService {
     }
 
     @Override
-    public void eliminarProveedor(Long id) {
+    public void delete(Long id) {
 
         Proveedor proveedor = proveedorRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Proveedor no encontrado"));

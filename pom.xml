@@ -6,13 +6,13 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>3.2.8</version>
-        <relativePath/> <!-- lookup parent from repository -->
+        <relativePath/>
     </parent>
     <groupId>com.fran</groupId>
     <artifactId>Inventory_APIREST</artifactId>
     <version>0.1</version>
     <name>Inventory</name>
-    <description>Apirest sistema de gestion de inventario</description>
+    <description>Inventory management system REST Api</description>
     <url/>
     <licenses>
         <license/>
@@ -79,9 +79,6 @@
             <version>8.0.5</version>
             <type>pom</type>
         </dependency>
-
-
-
         <!--		<dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-security</artifactId>

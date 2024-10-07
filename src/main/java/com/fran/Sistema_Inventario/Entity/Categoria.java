@@ -9,6 +9,7 @@ import lombok.Data;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Table(name = "categorias")
 public class Categoria {
 
     @Id
