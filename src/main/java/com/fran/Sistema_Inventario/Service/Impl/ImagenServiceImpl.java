@@ -37,7 +37,7 @@ public class ImagenServiceImpl implements ImagenService {
 
     // Actualiza la imagen de un producto
     @Override
-    public Imagen actualizarImagen(MultipartFile file, Imagen imagen) {
+    public Imagen update(MultipartFile file, Imagen imagen) {
 
         Imagen imagenDB = imagenRepository.getReferenceById(imagen.getId());
         Map uploadResult = null;
@@ -62,7 +62,7 @@ public class ImagenServiceImpl implements ImagenService {
 
     // Elimina la imagen de cloudinary y de la base de datos
     @Override
-    public void eliminarImagenCompleta(Imagen image) {
+    public void completeDeletion(Imagen image) {
         try {
             cloudinaryService.delete(image.getImageId());
         } catch (IOException e) {
@@ -73,7 +73,7 @@ public class ImagenServiceImpl implements ImagenService {
 
     // Elimina la imagen de cloudinary
     @Override
-    public void eliminarImagenCloudinary(String imageId) {
+    public void deleteFromCloudinary(String imageId) {
         try {
             cloudinaryService.delete(imageId);
         } catch (IOException e) {

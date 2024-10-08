@@ -17,27 +17,27 @@ public class CategoriaServiceImpl implements CategoriaService {
     }
 
     @Override
-    public Categoria obtenerPorNombre(String nombre) {
+    public Categoria getByName(String nombre) {
         return categoriaRepository.findByNombre(nombre);
     }
 
     @Override
-    public Categoria obtenerPorId(int id) {
+    public Categoria getById(int id) {
         return categoriaRepository.findById(id);
     }
 
     @Override
-    public List<Categoria> obtenerTodas() {
+    public List<Categoria> getAll() {
         return categoriaRepository.findAll();
     }
 
     @Override
-    public Categoria guardarCategoria(Categoria categoria) {
+    public Categoria save(Categoria categoria) {
         return categoriaRepository.save(categoria);
     }
 
     @Override
-    public void eliminarCategoria(Categoria categoria) {
+    public void delete(Categoria categoria) {
         categoriaRepository.delete(categoria);
     }
 }

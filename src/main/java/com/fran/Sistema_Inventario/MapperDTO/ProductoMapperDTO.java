@@ -68,7 +68,7 @@ public class ProductoMapperDTO {
                 productoDTO.getDescripcion(),
                 productoDTO.getPrecio(),
                 productoDTO.getCantidadStock(),
-                categoriaService.obtenerPorNombre(productoDTO.getCategoria()),
+                categoriaService.getByName(productoDTO.getCategoria()),
                 proveedorService.obtenerPorID(productoDTO.getProveedorId()),
                 productoDTO.getUmbralBajoStock()
         );
@@ -82,7 +82,7 @@ public class ProductoMapperDTO {
                 productoDTO.getDescripcion(),
                 productoDTO.getPrecio(),
                 productoDTO.getCantidadStock(),
-                categoriaService.obtenerPorNombre(productoDTO.getCategoria()),
+                categoriaService.getByName(productoDTO.getCategoria()),
                 proveedorService.obtenerPorID(productoDTO.getProveedorId()),
                 productoDTO.getUmbralBajoStock()
         );

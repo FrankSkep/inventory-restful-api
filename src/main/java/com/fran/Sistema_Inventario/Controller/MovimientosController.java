@@ -32,19 +32,19 @@ public class MovimientosController {
     // Obtener todos los movimientos
     @GetMapping("/")
     public List<MovimientoDTO> todosLosMovimientos() {
-        return movimientoService.obtenerTodosLosMovimientos();
+        return movimientoService.getAll();
     }
 
     // Obtener las entradas de stock
     @GetMapping("/entradas")
     public List<MovimientoDTO> getEntries() {
-        return movimientoService.obtenerEntradas();
+        return movimientoService.getEntries();
     }
 
     // Obtener las salidas de stock
     @GetMapping("/salidas")
     public List<MovimientoDTO> getOutputs() {
-        return movimientoService.obtenerSalidas();
+        return movimientoService.getOutputs();
     }
 
     // Registrar un movimiento de stock
@@ -67,13 +67,13 @@ public class MovimientosController {
             byte[] pdfBytes;
             switch (tipo.toLowerCase()) {
                 case "general":
-                    pdfBytes = reporteService.generarReporteMovimientos(movimientoService.obtenerTodosLosMovimientos(), tipo.toLowerCase());
+                    pdfBytes = reporteService.generarReporteMovimientos(movimientoService.getAll(), tipo.toLowerCase());
                     break;
                 case "entrada":
-                    pdfBytes = reporteService.generarReporteMovimientos(movimientoService.obtenerEntradas(), tipo.toLowerCase());
+                    pdfBytes = reporteService.generarReporteMovimientos(movimientoService.getEntries(), tipo.toLowerCase());
                     break;
                 case "salida":
-                    pdfBytes = reporteService.generarReporteMovimientos(movimientoService.obtenerSalidas(), tipo.toLowerCase());
+                    pdfBytes = reporteService.generarReporteMovimientos(movimientoService.getOutputs(), tipo.toLowerCase());
                     break;
                 default:
                     return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

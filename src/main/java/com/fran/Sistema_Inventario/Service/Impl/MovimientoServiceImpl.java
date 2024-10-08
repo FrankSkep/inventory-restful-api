@@ -28,7 +28,7 @@ public class MovimientoServiceImpl implements MovimientoService {
     }
 
     @Override
-    public List<MovimientoStock> obtenerMovimientosProducto(Long id) {
+    public List<MovimientoStock> getByProduct(Long id) {
         if (!productoRepository.existsById(id)) {
             throw new EntityNotFoundException("Producto no encontrado");
         }
@@ -36,19 +36,19 @@ public class MovimientoServiceImpl implements MovimientoService {
     }
 
     @Override
-    public List<MovimientoDTO> obtenerEntradas() {
+    public List<MovimientoDTO> getEntries() {
         List<MovimientoStock> movimientos = movimientoRepository.findByTipoMovimiento(MovimientoStock.TipoMovimiento.ENTRADA);
         return movimientos.stream().map(movimientoMapperDTO::toMovimientoDTO).collect(Collectors.toList());
     }
 
     @Override
-    public List<MovimientoDTO> obtenerSalidas() {
+    public List<MovimientoDTO> getOutputs() {
         List<MovimientoStock> movimientos = movimientoRepository.findByTipoMovimiento(MovimientoStock.TipoMovimiento.SALIDA);
         return movimientos.stream().map(movimientoMapperDTO::toMovimientoDTO).collect(Collectors.toList());
     }
 
     @Override
-    public List<MovimientoDTO> obtenerTodosLosMovimientos() {
+    public List<MovimientoDTO> getAll() {
         List<MovimientoStock> movimientos = movimientoRepository.findAll();
         return movimientos.stream().map(movimientoMapperDTO::toMovimientoDTO).collect(Collectors.toList());
     }

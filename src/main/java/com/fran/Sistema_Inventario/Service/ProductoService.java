@@ -17,15 +17,15 @@ public interface ProductoService {
 
     List<ProductoBasicoDTO> getAllProducts();
 
-    ProductoDetalladoDTO productDetails(Long id);
+    ProductoDetalladoDTO getProductDetails(Long id);
 
-    Producto saveProduct(Producto productoReq, MultipartFile file);
+    Producto save(Producto productoReq, MultipartFile file);
 
-    void updateProduct(Producto productoReq);
+    void update(Producto productoReq);
 
-    void updateProductImage(MultipartFile file, Long productoId);
+    void updateImage(MultipartFile file, Long productoId);
 
-    void deleteProduct(Long id) throws IOException;
+    void delete(Long id) throws IOException;
 
     MovimientoStock updateStock(MovimientoStock movimiento);
 

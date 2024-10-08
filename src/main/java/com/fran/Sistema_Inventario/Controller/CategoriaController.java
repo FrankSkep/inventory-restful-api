@@ -19,11 +19,11 @@ public class CategoriaController {
 
     @GetMapping("/")
     public List<Categoria> getCategories() {
-        return categoriaService.obtenerTodas();
+        return categoriaService.getAll();
     }
 
     @PostMapping("/nueva")
     public Categoria addCategory(@RequestBody Categoria categoria) {
-        return categoriaService.guardarCategoria(categoria);
+        return categoriaService.save(categoria);
     }
 }

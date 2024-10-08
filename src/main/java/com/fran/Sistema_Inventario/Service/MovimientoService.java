@@ -7,11 +7,11 @@ import java.util.List;
 
 public interface MovimientoService {
 
-    List<MovimientoStock> obtenerMovimientosProducto(Long id);
+    List<MovimientoStock> getByProduct(Long id);
 
-    List<MovimientoDTO> obtenerEntradas();
+    List<MovimientoDTO> getEntries();
 
-    List<MovimientoDTO> obtenerSalidas();
+    List<MovimientoDTO> getOutputs();
 
-    List<MovimientoDTO> obtenerTodosLosMovimientos();
+    List<MovimientoDTO> getAll();
 }

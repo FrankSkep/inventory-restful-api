@@ -51,7 +51,7 @@ public class ProductoController {
     @GetMapping("/detalles/{id}")
     public ResponseEntity<?> getProductDetails(@PathVariable Long id) {
         try {
-            return ResponseEntity.ok(productoService.productDetails(id));
+            return ResponseEntity.ok(productoService.getProductDetails(id));
         } catch (
                 EntityNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
@@ -70,7 +70,7 @@ public class ProductoController {
             return ResponseEntity.badRequest().body(result.getAllErrors());
         }
 
-        Producto product = productoService.saveProduct(
+        Producto product = productoService.save(
                 productoMapper.toEntity(productoRequest),
                 FileValidator.isValidFile(file) ? file : null);
 
@@ -89,11 +89,11 @@ public class ProductoController {
 
         // Actualiza datos del producto
         productoRequest.setId(id);
-        productoService.updateProduct(productoMapper.toEntityWithId(productoRequest));
+        productoService.update(productoMapper.toEntityWithId(productoRequest));
 
         // Si se recibe una imagen, la actualiza
         if (FileValidator.isValidFile(newOptionalImage)) {
-            productoService.updateProductImage(newOptionalImage, productoRequest.getId());
+            productoService.updateImage(newOptionalImage, productoRequest.getId());
         }
 
         return ResponseEntity.ok().body("Producto editado exitosamente");
@@ -103,7 +103,7 @@ public class ProductoController {
     @DeleteMapping("/eliminar/{id}")
     public ResponseEntity<?> deleteProduct(@PathVariable Long id) {
         try {
-            productoService.deleteProduct(id);
+            productoService.delete(id);
             return ResponseEntity.ok("Producto eliminado exitosamente");
         } catch (
                 NoSuchElementException e) {

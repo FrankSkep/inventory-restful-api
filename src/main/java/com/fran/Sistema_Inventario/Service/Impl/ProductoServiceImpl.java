@@ -15,7 +15,6 @@ import jakarta.transaction.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 import org.springframework.data.domain.Page;
@@ -54,7 +53,7 @@ public class ProductoServiceImpl implements ProductoService {
 
     // Obtener detalles de un producto
     @Override
-    public ProductoDetalladoDTO productDetails(Long id) {
+    public ProductoDetalladoDTO getProductDetails(Long id) {
 
         Producto producto = productoRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Producto no encontrado"));
@@ -65,7 +64,7 @@ public class ProductoServiceImpl implements ProductoService {
     // Guardar un nuevo producto
     @Transactional
     @Override
-    public Producto saveProduct(Producto producto, MultipartFile file) {
+    public Producto save(Producto producto, MultipartFile file) {
 
         if (file != null) {
             Imagen imagen = imagenService.uploadImage(file);
@@ -76,7 +75,7 @@ public class ProductoServiceImpl implements ProductoService {
 
     // Editar datos de un producto existente
     @Override
-    public void updateProduct(Producto producto) {
+    public void update(Producto producto) {
 
         Producto productoDB = productoRepository.getReferenceById(producto.getId());
 
@@ -92,14 +91,14 @@ public class ProductoServiceImpl implements ProductoService {
     // Actualizar la imagen de un producto o la agrega si no existe
     @Override
     @Transactional
-    public void updateProductImage(MultipartFile file, Long productoId) {
+    public void updateImage(MultipartFile file, Long productoId) {
 
         Producto productoDB = productoRepository.getReferenceById(productoId);
         Imagen imagenActual = productoDB.getImagen();
 
         if (imagenActual != null) {
-            imagenService.eliminarImagenCloudinary(imagenActual.getImageId());
-            imagenActual = imagenService.actualizarImagen(file, imagenActual);
+            imagenService.deleteFromCloudinary(imagenActual.getImageId());
+            imagenActual = imagenService.update(file, imagenActual);
         } else {
             Imagen imagenNueva = imagenService.uploadImage(file);
             productoDB.setImagen(imagenNueva);
@@ -109,13 +108,13 @@ public class ProductoServiceImpl implements ProductoService {
 
     // Eliminar un producto
     @Override
-    public void deleteProduct(Long id) {
+    public void delete(Long id) {
         Producto producto = productoRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Producto no encontrado"));
 
         // Eliminar la imagen si existe
         if (producto.getImagen() != null) {
-            imagenService.eliminarImagenCompleta(producto.getImagen());
+            imagenService.completeDeletion(producto.getImagen());
         }
 
         // Eliminar el producto
