@@ -25,11 +25,11 @@ public class NotificacionServiceImpl implements NotificacionService {
     }
 
     @Override
-    public List<Notificacion> getUnreadNotifications() {
+    public List<Notificacion> getUnread() {
         return notificacionRepository.findByisReadFalse();
     }
 
-    public List<Notificacion> getAllNotifications() {
+    public List<Notificacion> getAll() {
         return notificacionRepository.findAll();
     }
 
@@ -41,12 +41,12 @@ public class NotificacionServiceImpl implements NotificacionService {
     }
 
     @Override
-    public void deleteNotification(Long id) {
+    public void delete(Long id) {
         notificacionRepository.deleteById(id);
     }
 
     @Override
-    public void deleteAllNotifications() {
+    public void deleteAll() {
         notificacionRepository.deleteAll();
     }
 }

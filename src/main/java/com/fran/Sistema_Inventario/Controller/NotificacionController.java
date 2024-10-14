@@ -20,12 +20,12 @@ public class NotificacionController {
 
     @GetMapping("/no-leidas")
     public List<Notificacion> getUnreadNotifications() {
-        return notificacionService.getUnreadNotifications();
+        return notificacionService.getUnread();
     }
 
     @GetMapping("/todas")
     public List<Notificacion> getAllNotifications() {
-        return notificacionService.getAllNotifications();
+        return notificacionService.getAll();
     }
 
     @PostMapping("/marcar-leida/{id}")
@@ -36,13 +36,13 @@ public class NotificacionController {
 
     @DeleteMapping("/eliminar/{id}")
     public ResponseEntity<?> deleteNotification(@PathVariable Long id) {
-        notificacionService.deleteNotification(id);
+        notificacionService.delete(id);
         return ResponseEntity.status(HttpStatus.OK).body("Notificación eliminada");
     }
 
     @DeleteMapping("/eliminar-todas")
     public ResponseEntity<?> deleteAllNotifications() {
-        notificacionService.deleteAllNotifications();
+        notificacionService.deleteAll();
         return ResponseEntity.status(HttpStatus.OK).body("Notificaciones eliminadas");
     }
 }

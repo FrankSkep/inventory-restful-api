@@ -9,13 +9,13 @@ public interface ProveedorService {
 
     List<ProveedorResponseBasic> obtenerProveedores();
 
-    Proveedor registrarProveedor(Proveedor proveedor);
+    Proveedor save(Proveedor proveedor);
 
-    Proveedor editarProveedor(Proveedor proveedor);
+    Proveedor update(Proveedor proveedor);
 
-    Proveedor obtenerPorID(Long id);
+    Proveedor getById(Long id);
 
     void delete(Long id);
 
-    ProveedorResponseDetailed detallesProveedor(Proveedor provedor);
+    ProveedorResponseDetailed getDetails(Proveedor provedor);
 }

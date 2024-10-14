@@ -7,13 +7,13 @@ import java.util.List;
 public interface NotificacionService {
     void sendNotification(String message);
 
-    List<Notificacion> getUnreadNotifications();
+    List<Notificacion> getUnread();
 
-    List<Notificacion> getAllNotifications();
+    List<Notificacion> getAll();
 
     void readed(Long id);
 
-    void deleteNotification(Long id);
+    void delete(Long id);
 
-    void deleteAllNotifications();
+    void deleteAll();
 }

@@ -32,12 +32,12 @@ public class ProveedorServiceImpl implements ProveedorService {
     }
 
     @Override
-    public Proveedor registrarProveedor(Proveedor proveedor) {
+    public Proveedor save(Proveedor proveedor) {
         return proveedorRepository.save(proveedor);
     }
 
     @Override
-    public Proveedor editarProveedor(Proveedor proveedor) {
+    public Proveedor update(Proveedor proveedor) {
 
         Proveedor proveedorDB = proveedorRepository.getReferenceById(proveedor.getId());
 
@@ -60,13 +60,13 @@ public class ProveedorServiceImpl implements ProveedorService {
     }
 
     @Override
-    public Proveedor obtenerPorID(Long id) {
+    public Proveedor getById(Long id) {
         return proveedorRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Proveedor no encontrado"));
     }
 
     @Override
-    public ProveedorResponseDetailed detallesProveedor(Proveedor provedor) {
+    public ProveedorResponseDetailed getDetails(Proveedor provedor) {
         return proveedorMapper.toDTOdetailed(provedor);
     }
 

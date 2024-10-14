@@ -42,7 +42,7 @@ public class ProveedorController {
     // Detalles de un proveedor
     @GetMapping("/detalles/{id}")
     public ProveedorResponseDetailed supplierDetails(@PathVariable Long id) {
-        return proveedorService.detallesProveedor(proveedorService.obtenerPorID(id));
+        return proveedorService.getDetails(proveedorService.getById(id));
     }
 
     // Registrar nuevo proveedor
@@ -55,7 +55,7 @@ public class ProveedorController {
 
         Proveedor supplier = proveedorMapper.toEntity(supplierRequest);
 
-        proveedorService.registrarProveedor(supplier);
+        proveedorService.save(supplier);
         return ResponseEntity.ok(supplier);
     }
 
@@ -66,7 +66,7 @@ public class ProveedorController {
             return ResponseEntity.badRequest().body(result.getAllErrors());
         }
 
-        return ResponseEntity.ok(proveedorService.editarProveedor(proveedorMapper.toEntityFromDTOWithId(supplier)));
+        return ResponseEntity.ok(proveedorService.update(proveedorMapper.toEntityFromDTOWithId(supplier)));
     }
 
     @DeleteMapping("/eliminar/{id}")
