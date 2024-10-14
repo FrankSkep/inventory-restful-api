@@ -1,6 +1,6 @@
 package com.fran.Sistema_Inventario.Controller;
 
-import com.fran.Sistema_Inventario.DTO.MovimientoDTO;
+import com.fran.Sistema_Inventario.DTO.MovimientoResponse;
 import com.fran.Sistema_Inventario.Entity.MovimientoStock;
 
 import java.time.LocalDateTime;
@@ -31,19 +31,19 @@ public class MovimientosController {
 
     // Obtener todos los movimientos
     @GetMapping("/")
-    public List<MovimientoDTO> todosLosMovimientos() {
+    public List<MovimientoResponse> todosLosMovimientos() {
         return movimientoService.getAll();
     }
 
     // Obtener las entradas de stock
     @GetMapping("/entradas")
-    public List<MovimientoDTO> getEntries() {
+    public List<MovimientoResponse> getEntries() {
         return movimientoService.getEntries();
     }
 
     // Obtener las salidas de stock
     @GetMapping("/salidas")
-    public List<MovimientoDTO> getOutputs() {
+    public List<MovimientoResponse> getOutputs() {
         return movimientoService.getOutputs();
     }
 
@@ -61,19 +61,19 @@ public class MovimientosController {
 
     // Generar reporte de movimientos
     @GetMapping("/reporte/{tipo}")
-    public ResponseEntity<byte[]> genInventoryReport(@PathVariable String tipo) {
+    public ResponseEntity<byte[]> generateReport(@PathVariable String tipo) {
         // tipo = "general" o "entrada" o "salida"
         try {
             byte[] pdfBytes;
             switch (tipo.toLowerCase()) {
                 case "general":
-                    pdfBytes = reporteService.generarReporteMovimientos(movimientoService.getAll(), tipo.toLowerCase());
+                    pdfBytes = reporteService.genMovementsReport(movimientoService.getAll(), tipo.toLowerCase());
                     break;
                 case "entrada":
-                    pdfBytes = reporteService.generarReporteMovimientos(movimientoService.getEntries(), tipo.toLowerCase());
+                    pdfBytes = reporteService.genMovementsReport(movimientoService.getEntries(), tipo.toLowerCase());
                     break;
                 case "salida":
-                    pdfBytes = reporteService.generarReporteMovimientos(movimientoService.getOutputs(), tipo.toLowerCase());
+                    pdfBytes = reporteService.genMovementsReport(movimientoService.getOutputs(), tipo.toLowerCase());
                     break;
                 default:
                     return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

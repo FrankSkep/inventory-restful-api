@@ -1,7 +1,7 @@
 package com.fran.Sistema_Inventario.Controller;
 
-import com.fran.Sistema_Inventario.DTO.ProductoDTOs.ProductoBasicoDTO;
-import com.fran.Sistema_Inventario.DTO.ProductoDTOs.ProductoDTO;
+import com.fran.Sistema_Inventario.DTO.Producto.ProductoResponseBasic;
+import com.fran.Sistema_Inventario.DTO.Producto.ProductoRequest;
 import com.fran.Sistema_Inventario.Entity.Producto;
 import com.fran.Sistema_Inventario.MapperDTO.ProductoMapperDTO;
 import com.fran.Sistema_Inventario.Service.ProductoService;
@@ -41,8 +41,8 @@ public class ProductoController {
 
     // Obtener productos paginados
     @GetMapping("/")
-    public Page<ProductoBasicoDTO> getProducts(@RequestParam(defaultValue = "0") int page,
-                                               @RequestParam(defaultValue = "10") int size) {
+    public Page<ProductoResponseBasic> getProducts(@RequestParam(defaultValue = "0") int page,
+                                                   @RequestParam(defaultValue = "10") int size) {
         Pageable pageable = PageRequest.of(page, size);
         return productoService.getProductsPage(pageable);
     }
@@ -62,7 +62,7 @@ public class ProductoController {
     // Agregar nuevo producto al inventario
     @PostMapping("/nuevo")
     public ResponseEntity<?> createProduct(
-            @Valid @ModelAttribute ProductoDTO productoRequest,
+            @Valid @ModelAttribute ProductoRequest productoRequest,
             @RequestPart(value = "file", required = false) MultipartFile file,
             BindingResult result) {
 
@@ -79,7 +79,7 @@ public class ProductoController {
 
     // Editar datos de un producto
     @PutMapping("/editar/{id}")
-    public ResponseEntity<?> updateProduct(@PathVariable Long id, @ModelAttribute ProductoDTO productoRequest,
+    public ResponseEntity<?> updateProduct(@PathVariable Long id, @ModelAttribute ProductoRequest productoRequest,
                                            @RequestPart(value = "file", required = false) MultipartFile newOptionalImage,
                                            BindingResult result) {
 
@@ -119,7 +119,7 @@ public class ProductoController {
     @GetMapping("/reporte")
     public ResponseEntity<byte[]> generarReporteInventario() {
         try {
-            byte[] pdfBytes = reporteService.generarReporteInventario(productoService.getAllProducts());
+            byte[] pdfBytes = reporteService.genInventoryReport(productoService.getAllProducts());
 
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(org.springframework.http.MediaType.APPLICATION_PDF);

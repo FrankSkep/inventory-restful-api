@@ -1,4 +1,4 @@
-package com.fran.Sistema_Inventario.DTO.ProveedorDTOs;
+package com.fran.Sistema_Inventario.DTO.Proveedor;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -9,7 +9,7 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class ProveedorDTO {
+public class ProveedorRequest {
 
     private Long id;
 

@@ -1,4 +1,4 @@
-package com.fran.Sistema_Inventario.DTO.ProductoDTOs;
+package com.fran.Sistema_Inventario.DTO.Producto;
 
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class ProductoDTO {
+public class ProductoRequest {
 
     private Long id;
 

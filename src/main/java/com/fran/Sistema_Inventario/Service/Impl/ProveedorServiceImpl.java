@@ -1,7 +1,7 @@
 package com.fran.Sistema_Inventario.Service.Impl;
 
-import com.fran.Sistema_Inventario.DTO.ProveedorDTOs.ProveedorBasicoDTO;
-import com.fran.Sistema_Inventario.DTO.ProveedorDTOs.ProveedorDetalladoDTO;
+import com.fran.Sistema_Inventario.DTO.Proveedor.ProveedorResponseBasic;
+import com.fran.Sistema_Inventario.DTO.Proveedor.ProveedorResponseDetailed;
 import com.fran.Sistema_Inventario.Entity.Proveedor;
 import com.fran.Sistema_Inventario.MapperDTO.ProveedorMapperDTO;
 import com.fran.Sistema_Inventario.Repository.ProveedorRepository;
@@ -25,7 +25,7 @@ public class ProveedorServiceImpl implements ProveedorService {
     }
 
     @Override
-    public List<ProveedorBasicoDTO> obtenerProveedores() {
+    public List<ProveedorResponseBasic> obtenerProveedores() {
         // ProveedorServiceImpl::convertirDTOrespuesta
         List<Proveedor> proveedores = proveedorRepository.findAll();
         return proveedores.stream().map(proveedorMapper::toDTObasic).collect(Collectors.toList());
@@ -66,7 +66,7 @@ public class ProveedorServiceImpl implements ProveedorService {
     }
 
     @Override
-    public ProveedorDetalladoDTO detallesProveedor(Proveedor provedor) {
+    public ProveedorResponseDetailed detallesProveedor(Proveedor provedor) {
         return proveedorMapper.toDTOdetailed(provedor);
     }
 

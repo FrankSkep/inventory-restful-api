@@ -1,6 +1,6 @@
-package com.fran.Sistema_Inventario.DTO.ProveedorDTOs;
+package com.fran.Sistema_Inventario.DTO.Proveedor;
 
-import com.fran.Sistema_Inventario.DTO.ProductoDTOs.ProductoProveedorDTO;
+import com.fran.Sistema_Inventario.DTO.Producto.ProductoResponseProv;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -8,7 +8,7 @@ import java.util.Set;
 
 @Data
 @AllArgsConstructor
-public class ProveedorDetalladoDTO {
+public class ProveedorResponseDetailed {
 
     private Long id;
     private String nombre;
@@ -16,5 +16,5 @@ public class ProveedorDetalladoDTO {
     private String email;
     private String telefono;
     private String identificacionFiscal;
-    private Set<ProductoProveedorDTO> productos;
+    private Set<ProductoResponseProv> productos;
 }

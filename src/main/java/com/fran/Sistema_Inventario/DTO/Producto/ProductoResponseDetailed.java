@@ -1,15 +1,15 @@
-package com.fran.Sistema_Inventario.DTO.ProductoDTOs;
+package com.fran.Sistema_Inventario.DTO.Producto;
 
-import com.fran.Sistema_Inventario.DTO.ProveedorDTOs.ProveedorBasicoDTO;
+import com.fran.Sistema_Inventario.DTO.Proveedor.ProveedorResponseBasic;
 import com.fran.Sistema_Inventario.Entity.MovimientoStock;
-import java.util.ArrayList;
+
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class ProductoDetalladoDTO {
+public class ProductoResponseDetailed {
 
     private Long id;
     private String nombre;
@@ -18,7 +18,7 @@ public class ProductoDetalladoDTO {
     private Long cantidadStock;
     private String categoria;
     private String imageUrl;
-    private ProveedorBasicoDTO proveedor;
+    private ProveedorResponseBasic proveedor;
     private Integer umbralBajoStock;
     private List<MovimientoStock> movimientosStock;
 }

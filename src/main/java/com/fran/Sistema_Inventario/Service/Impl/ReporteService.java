@@ -1,7 +1,7 @@
 package com.fran.Sistema_Inventario.Service.Impl;
 
-import com.fran.Sistema_Inventario.DTO.MovimientoDTO;
-import com.fran.Sistema_Inventario.DTO.ProductoDTOs.ProductoBasicoDTO;
+import com.fran.Sistema_Inventario.DTO.MovimientoResponse;
+import com.fran.Sistema_Inventario.DTO.Producto.ProductoResponseBasic;
 import com.itextpdf.io.image.ImageData;
 import com.itextpdf.io.image.ImageDataFactory;
 import com.itextpdf.kernel.pdf.PdfDocument;
@@ -22,7 +22,7 @@ import java.util.List;
 @Service
 public class ReporteService {
 
-    public byte[] generarReporteInventario(List<ProductoBasicoDTO> productos) {
+    public byte[] genInventoryReport(List<ProductoResponseBasic> productos) {
         // ByteArrayOutputStream para generar el PDF en memoria
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         PdfWriter writer = new PdfWriter(baos);
@@ -57,7 +57,7 @@ public class ReporteService {
         }
 
         // Llenado de tabla con los productos
-        for (ProductoBasicoDTO producto : productos) {
+        for (ProductoResponseBasic producto : productos) {
             table.addCell(producto.getId().toString());
             table.addCell(producto.getNombre());
             table.addCell(producto.getCategoria());
@@ -88,7 +88,7 @@ public class ReporteService {
         return baos.toByteArray();
     }
 
-    public byte[] generarReporteMovimientos(List<MovimientoDTO> movimientos, String tipoReporte) {
+    public byte[] genMovementsReport(List<MovimientoResponse> movimientos, String tipoReporte) {
         // ByteArrayOutputStream para generar el PDF en memoria
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         PdfWriter writer = new PdfWriter(baos);
@@ -98,7 +98,9 @@ public class ReporteService {
         Document document = new Document(pdfDoc);
 
         // Título del reporte
-        document.add(new Paragraph("Reporte de movimientos de inventario").setBold().setFontSize(20).setTextAlignment(TextAlignment.CENTER));
+        String reportTitle = tipoReporte.equals("general") ? "Reporte de movimientos de inventario" :
+                tipoReporte.equals("entrada") ? "Reporte de entradas de inventario" : "Reporte de salidas de inventario";
+        document.add(new Paragraph(reportTitle).setBold().setFontSize(20).setTextAlignment(TextAlignment.CENTER));
         document.add(new Paragraph("Fecha de generación: " + java.time.LocalDate.now()).setItalic().setFontSize(12).setTextAlignment(TextAlignment.CENTER));
 
         float pageWidth = 595; // Ancho de la página A4 en puntos
@@ -126,9 +128,8 @@ public class ReporteService {
             return baos.toByteArray();
         }
 
-
         // Llenado de tabla con los movimientos
-        for (MovimientoDTO mov : movimientos) {
+        for (MovimientoResponse mov : movimientos) {
             table.addCell(mov.getId().toString());
             table.addCell(mov.getProducto().getNombre());
             table.addCell(mov.getCantidad().toString());
@@ -138,10 +139,8 @@ public class ReporteService {
                 table.addCell(mov.getCostoAdquisicion() != null ? mov.getCostoAdquisicion().toString() : "N/A");
             }
         }
-
         document.add(table);
         document.close();
-
         // Se retorna el PDF como arreglo de bytes
         return baos.toByteArray();
     }

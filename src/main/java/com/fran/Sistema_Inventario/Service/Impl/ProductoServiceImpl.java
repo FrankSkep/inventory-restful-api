@@ -1,15 +1,16 @@
 package com.fran.Sistema_Inventario.Service.Impl;
 
-import com.fran.Sistema_Inventario.DTO.ProductoDTOs.ProductoBasicoDTO;
-import com.fran.Sistema_Inventario.DTO.ProductoDTOs.ProductoDetalladoDTO;
+import com.fran.Sistema_Inventario.DTO.Producto.ProductoResponseBasic;
+import com.fran.Sistema_Inventario.DTO.Producto.ProductoResponseDetailed;
 import com.fran.Sistema_Inventario.Entity.Imagen;
 import com.fran.Sistema_Inventario.Entity.MovimientoStock;
 import com.fran.Sistema_Inventario.Entity.Producto;
 import com.fran.Sistema_Inventario.MapperDTO.ProductoMapperDTO;
 import com.fran.Sistema_Inventario.Repository.MovimientoStockRepository;
 import com.fran.Sistema_Inventario.Repository.ProductoRepository;
+import com.fran.Sistema_Inventario.Service.ImagenService;
+import com.fran.Sistema_Inventario.Service.NotificacionService;
 import com.fran.Sistema_Inventario.Service.ProductoService;
-import com.fran.Sistema_Inventario.Service.ProveedorService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 
@@ -28,32 +29,34 @@ public class ProductoServiceImpl implements ProductoService {
     private final ProductoRepository productoRepository;
     private final MovimientoStockRepository movimientoStockRepository;
     private final ProductoMapperDTO productoMapper;
-    private final ImagenServiceImpl imagenService;
+    private final ImagenService imagenService;
+    private final NotificacionService notificacionService;
 
     public ProductoServiceImpl(ProductoRepository productoRepository, MovimientoStockRepository movimientoStockRepository,
-                               ProveedorService proveedorService, ProductoMapperDTO productoMapper, ImagenServiceImpl imagenService,
-                               CategoriaServiceImpl categoriaService) {
+                               ProductoMapperDTO productoMapper, ImagenService imagenService,
+                               NotificacionService notificacionService) {
         this.productoRepository = productoRepository;
         this.movimientoStockRepository = movimientoStockRepository;
         this.productoMapper = productoMapper;
         this.imagenService = imagenService;
+        this.notificacionService = notificacionService;
     }
 
     // Obtener todos los productos y sus datos basicos
     @Override
-    public List<ProductoBasicoDTO> getAllProducts() {
+    public List<ProductoResponseBasic> getAllProducts() {
         List<Producto> productos = productoRepository.findAll();
         return productos.stream().map(productoMapper::toDTObasic).collect(Collectors.toList());
     }
 
     @Override
-    public Page<ProductoBasicoDTO> getProductsPage(Pageable pageable) {
+    public Page<ProductoResponseBasic> getProductsPage(Pageable pageable) {
         return productoRepository.findAll(pageable).map(productoMapper::toDTObasic);
     }
 
     // Obtener detalles de un producto
     @Override
-    public ProductoDetalladoDTO getProductDetails(Long id) {
+    public ProductoResponseDetailed getProductDetails(Long id) {
 
         Producto producto = productoRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Producto no encontrado"));
@@ -145,7 +148,7 @@ public class ProductoServiceImpl implements ProductoService {
         }
 
         if (producto.getCantidadStock() <= producto.getUmbralBajoStock()) {
-            sendEmail();
+            sendNotification("El producto " + producto.getNombre() + " está bajo de stock");
         }
 
         movimiento.setProducto(producto);
@@ -155,8 +158,8 @@ public class ProductoServiceImpl implements ProductoService {
         return movimientoStockRepository.save(movimiento);
     }
 
-    public void sendEmail() {
-        // Aqui implementare la notificacion por correo
-
+    @Override
+    public void sendNotification(String message) {
+        notificacionService.sendNotification(message);
     }
 }

@@ -1,8 +1,8 @@
 package com.fran.Sistema_Inventario.Controller;
 
-import com.fran.Sistema_Inventario.DTO.ProveedorDTOs.ProveedorBasicoDTO;
-import com.fran.Sistema_Inventario.DTO.ProveedorDTOs.ProveedorDTO;
-import com.fran.Sistema_Inventario.DTO.ProveedorDTOs.ProveedorDetalladoDTO;
+import com.fran.Sistema_Inventario.DTO.Proveedor.ProveedorResponseBasic;
+import com.fran.Sistema_Inventario.DTO.Proveedor.ProveedorRequest;
+import com.fran.Sistema_Inventario.DTO.Proveedor.ProveedorResponseDetailed;
 import com.fran.Sistema_Inventario.Entity.Proveedor;
 import com.fran.Sistema_Inventario.MapperDTO.ProveedorMapperDTO;
 import com.fran.Sistema_Inventario.Service.ProveedorService;
@@ -35,32 +35,32 @@ public class ProveedorController {
 
     // Obtener lista de todos los proveedores
     @GetMapping({"", "/"})
-    public List<ProveedorBasicoDTO> getSuppliers() {
+    public List<ProveedorResponseBasic> getSuppliers() {
         return proveedorService.obtenerProveedores();
     }
 
     // Detalles de un proveedor
     @GetMapping("/detalles/{id}")
-    public ProveedorDetalladoDTO supplierDetails(@PathVariable Long id) {
+    public ProveedorResponseDetailed supplierDetails(@PathVariable Long id) {
         return proveedorService.detallesProveedor(proveedorService.obtenerPorID(id));
     }
 
     // Registrar nuevo proveedor
     @PostMapping("/registrar")
-    public ResponseEntity<?> createSupplier(@Valid @RequestBody ProveedorDTO supplierRequest, BindingResult result) {
+    public ResponseEntity<?> createSupplier(@Valid @RequestBody ProveedorRequest supplierRequest, BindingResult result) {
 
         if (result.hasErrors()) {
             return ResponseEntity.badRequest().body(result.getAllErrors());
         }
 
-        Proveedor supplier = proveedorMapper.toEntityFromDTO(supplierRequest);
+        Proveedor supplier = proveedorMapper.toEntity(supplierRequest);
 
         proveedorService.registrarProveedor(supplier);
         return ResponseEntity.ok(supplier);
     }
 
     @PutMapping("/editar/{id}")
-    public ResponseEntity<?> updateSupplier(@PathVariable Long id, @Valid @RequestBody ProveedorDTO supplier, BindingResult result) {
+    public ResponseEntity<?> updateSupplier(@PathVariable Long id, @Valid @RequestBody ProveedorRequest supplier, BindingResult result) {
 
         if (result.hasErrors()) {
             return ResponseEntity.badRequest().body(result.getAllErrors());

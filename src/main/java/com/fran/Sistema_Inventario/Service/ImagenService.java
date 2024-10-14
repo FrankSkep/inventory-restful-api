@@ -7,9 +7,9 @@ public interface ImagenService {
 
     Imagen uploadImage(MultipartFile file);
 
-    public Imagen update(MultipartFile file, Imagen imagen);
+    Imagen update(MultipartFile file, Imagen imagen);
 
     void completeDeletion(Imagen image);
 
-    public void deleteFromCloudinary(String imageId);
+    void deleteFromCloudinary(String imageId);
 }

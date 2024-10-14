@@ -1,9 +1,9 @@
 package com.fran.Sistema_Inventario.MapperDTO;
 
-import com.fran.Sistema_Inventario.DTO.ProductoDTOs.ProductoProveedorDTO;
-import com.fran.Sistema_Inventario.DTO.ProveedorDTOs.ProveedorBasicoDTO;
-import com.fran.Sistema_Inventario.DTO.ProveedorDTOs.ProveedorDTO;
-import com.fran.Sistema_Inventario.DTO.ProveedorDTOs.ProveedorDetalladoDTO;
+import com.fran.Sistema_Inventario.DTO.Producto.ProductoResponseProv;
+import com.fran.Sistema_Inventario.DTO.Proveedor.ProveedorResponseBasic;
+import com.fran.Sistema_Inventario.DTO.Proveedor.ProveedorRequest;
+import com.fran.Sistema_Inventario.DTO.Proveedor.ProveedorResponseDetailed;
 import com.fran.Sistema_Inventario.Entity.Producto;
 import com.fran.Sistema_Inventario.Entity.Proveedor;
 
@@ -15,8 +15,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class ProveedorMapperDTO {
 
-    public ProveedorBasicoDTO toDTObasic(Proveedor proveedor) {
-        return new ProveedorBasicoDTO(
+    public ProveedorResponseBasic toDTObasic(Proveedor proveedor) {
+        return new ProveedorResponseBasic(
                 proveedor.getId(),
                 proveedor.getNombre(),
                 proveedor.getDireccion(),
@@ -26,8 +26,8 @@ public class ProveedorMapperDTO {
         );
     }
 
-    public ProveedorDTO toDTO(Proveedor proveedor) {
-        return new ProveedorDTO(
+    public ProveedorRequest toDTO(Proveedor proveedor) {
+        return new ProveedorRequest(
                 proveedor.getId(),
                 proveedor.getNombre(),
                 proveedor.getDireccion(),
@@ -37,12 +37,12 @@ public class ProveedorMapperDTO {
         );
     }
 
-    public ProveedorDetalladoDTO toDTOdetailed(Proveedor proveedor) {
+    public ProveedorResponseDetailed toDTOdetailed(Proveedor proveedor) {
 
         Set<Producto> productos = proveedor.getProductos();
-        Set<ProductoProveedorDTO> setDeProductos = productos.stream().map(this::productoToDTOminimo).collect(Collectors.toSet());
+        Set<ProductoResponseProv> setDeProductos = productos.stream().map(this::productoToDTOminimo).collect(Collectors.toSet());
 
-        return new ProveedorDetalladoDTO(
+        return new ProveedorResponseDetailed(
                 proveedor.getId(),
                 proveedor.getNombre(),
                 proveedor.getDireccion(),
@@ -53,8 +53,8 @@ public class ProveedorMapperDTO {
         );
     }
 
-    public ProductoProveedorDTO productoToDTOminimo(Producto producto) {
-        return new ProductoProveedorDTO(
+    public ProductoResponseProv productoToDTOminimo(Producto producto) {
+        return new ProductoResponseProv(
                 producto.getId(),
                 producto.getNombre(),
                 producto.getDescripcion(),
@@ -65,7 +65,7 @@ public class ProveedorMapperDTO {
     }
 
     // Mapeo para agregacion de nuevo proveedor
-    public Proveedor toEntityFromDTO(ProveedorDTO dto) {
+    public Proveedor toEntity(ProveedorRequest dto) {
         return new Proveedor(
                 dto.getNombre(),
                 dto.getDireccion(),
@@ -76,7 +76,7 @@ public class ProveedorMapperDTO {
     }
 
     // Mapeo para edicion de proveedor
-    public Proveedor toEntityFromDTOWithId(ProveedorDTO dto) {
+    public Proveedor toEntityFromDTOWithId(ProveedorRequest dto) {
         return new Proveedor(
                 dto.getId(),
                 dto.getNombre(),

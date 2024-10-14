@@ -1,28 +1,28 @@
 package com.fran.Sistema_Inventario.MapperDTO;
 
-import com.fran.Sistema_Inventario.DTO.ProductoDTOs.ProductoBasicoDTO;
-import com.fran.Sistema_Inventario.DTO.ProductoDTOs.ProductoDTO;
-import com.fran.Sistema_Inventario.DTO.ProductoDTOs.ProductoDetalladoDTO;
+import com.fran.Sistema_Inventario.DTO.Producto.ProductoResponseBasic;
+import com.fran.Sistema_Inventario.DTO.Producto.ProductoRequest;
+import com.fran.Sistema_Inventario.DTO.Producto.ProductoResponseDetailed;
 import com.fran.Sistema_Inventario.Entity.Producto;
-import com.fran.Sistema_Inventario.Service.Impl.CategoriaServiceImpl;
-import com.fran.Sistema_Inventario.Service.Impl.ProveedorServiceImpl;
+import com.fran.Sistema_Inventario.Service.CategoriaService;
+import com.fran.Sistema_Inventario.Service.ProveedorService;
 import org.springframework.stereotype.Component;
 
 @Component
 public class ProductoMapperDTO {
 
     private final ProveedorMapperDTO proveedorMapper;
-    private final CategoriaServiceImpl categoriaService;
-    private final ProveedorServiceImpl proveedorService;
+    private final CategoriaService categoriaService;
+    private final ProveedorService proveedorService;
 
-    public ProductoMapperDTO(ProveedorMapperDTO proveedorMapper, CategoriaServiceImpl categoriaService, ProveedorServiceImpl proveedorService) {
+    public ProductoMapperDTO(ProveedorMapperDTO proveedorMapper, CategoriaService categoriaService, ProveedorService proveedorService) {
         this.proveedorMapper = proveedorMapper;
         this.categoriaService = categoriaService;
         this.proveedorService = proveedorService;
     }
 
-    public ProductoDTO toDTO(Producto producto) {
-        return new ProductoDTO(
+    public ProductoRequest toDTO(Producto producto) {
+        return new ProductoRequest(
                 producto.getId(),
                 producto.getNombre(),
                 producto.getDescripcion(),
@@ -34,8 +34,8 @@ public class ProductoMapperDTO {
                 producto.getUmbralBajoStock());
     }
 
-    public ProductoBasicoDTO toDTObasic(Producto producto) {
-        return new ProductoBasicoDTO(
+    public ProductoResponseBasic toDTObasic(Producto producto) {
+        return new ProductoResponseBasic(
                 producto.getId(),
                 producto.getNombre(),
                 producto.getDescripcion(),
@@ -46,9 +46,9 @@ public class ProductoMapperDTO {
         );
     }
 
-    public ProductoDetalladoDTO toDTOdetailed(Producto producto) {
+    public ProductoResponseDetailed toDTOdetailed(Producto producto) {
 
-        return new ProductoDetalladoDTO(
+        return new ProductoResponseDetailed(
                 producto.getId(),
                 producto.getNombre(),
                 producto.getDescripcion(),
@@ -62,7 +62,7 @@ public class ProductoMapperDTO {
     }
 
     // Mapeo para agregar nuevo producto
-    public Producto toEntity(ProductoDTO productoDTO) {
+    public Producto toEntity(ProductoRequest productoDTO) {
         return new Producto(
                 productoDTO.getNombre(),
                 productoDTO.getDescripcion(),
@@ -75,7 +75,7 @@ public class ProductoMapperDTO {
     }
 
     // Mapeo para editar un producto
-    public Producto toEntityWithId(ProductoDTO productoDTO) {
+    public Producto toEntityWithId(ProductoRequest productoDTO) {
         return new Producto(
                 productoDTO.getId(),
                 productoDTO.getNombre(),

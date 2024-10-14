@@ -1,11 +1,11 @@
-package com.fran.Sistema_Inventario.DTO.ProveedorDTOs;
+package com.fran.Sistema_Inventario.DTO.Proveedor;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class ProveedorBasicoDTO {
+public class ProveedorResponseBasic {
 
     private Long id;
     private String nombre;

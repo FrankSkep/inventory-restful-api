@@ -1,6 +1,6 @@
 package com.fran.Sistema_Inventario.MapperDTO;
 
-import com.fran.Sistema_Inventario.DTO.MovimientoDTO;
+import com.fran.Sistema_Inventario.DTO.MovimientoResponse;
 import com.fran.Sistema_Inventario.Entity.MovimientoStock;
 import org.springframework.stereotype.Component;
 
@@ -13,8 +13,8 @@ public class MovimientoMapperDTO {
         this.productoMapper = productoMapper;
     }
 
-    public MovimientoDTO toMovimientoDTO(MovimientoStock movimiento) {
-        return new MovimientoDTO(
+    public MovimientoResponse toDTO(MovimientoStock movimiento) {
+        return new MovimientoResponse(
                 movimiento.getId(),
                 movimiento.getTipoMovimiento(),
                 movimiento.getFechaMovimiento(),
