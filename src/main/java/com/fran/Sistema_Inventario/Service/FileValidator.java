@@ -1,4 +1,4 @@
-package com.fran.Sistema_Inventario.Utils;
+package com.fran.Sistema_Inventario.Service;
 
 import java.util.Set;
 
