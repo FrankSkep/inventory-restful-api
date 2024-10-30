@@ -1,6 +1,6 @@
 package com.fran.Sistema_Inventario.Service.Impl;
 
-import com.fran.Sistema_Inventario.DTO.MovimientoResponse;
+import com.fran.Sistema_Inventario.DTO.App.MovimientoResponse;
 import com.fran.Sistema_Inventario.Entity.MovimientoStock;
 import com.fran.Sistema_Inventario.MapperDTO.MovimientoMapperDTO;
 import com.fran.Sistema_Inventario.Repository.MovimientoStockRepository;

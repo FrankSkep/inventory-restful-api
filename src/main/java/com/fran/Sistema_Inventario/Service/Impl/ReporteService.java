@@ -1,7 +1,7 @@
 package com.fran.Sistema_Inventario.Service.Impl;
 
-import com.fran.Sistema_Inventario.DTO.MovimientoResponse;
-import com.fran.Sistema_Inventario.DTO.Producto.ProductoResponseBasic;
+import com.fran.Sistema_Inventario.DTO.App.MovimientoResponse;
+import com.fran.Sistema_Inventario.DTO.App.Producto.ProductoResponseBasic;
 import com.itextpdf.io.image.ImageData;
 import com.itextpdf.io.image.ImageDataFactory;
 import com.itextpdf.kernel.pdf.PdfDocument;

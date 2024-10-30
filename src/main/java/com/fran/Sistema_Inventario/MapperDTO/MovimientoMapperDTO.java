@@ -1,6 +1,6 @@
 package com.fran.Sistema_Inventario.MapperDTO;
 
-import com.fran.Sistema_Inventario.DTO.MovimientoResponse;
+import com.fran.Sistema_Inventario.DTO.App.MovimientoResponse;
 import com.fran.Sistema_Inventario.Entity.MovimientoStock;
 import org.springframework.stereotype.Component;
 

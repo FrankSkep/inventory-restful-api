@@ -39,7 +39,7 @@ public class ImagenServiceImpl implements ImagenService {
     @Override
     public Imagen update(MultipartFile file, Imagen imagen) {
 
-        Imagen imagenDB = imagenRepository.getReferenceById(imagen.getId());
+        Imagen imageDB = imagenRepository.getReferenceById(imagen.getId());
         Map uploadResult = null;
 
         try {
@@ -54,10 +54,10 @@ public class ImagenServiceImpl implements ImagenService {
             String imageUrl = (String) uploadResult.get("url");
             String imageId = (String) uploadResult.get("public_id");
             // Actualizar url e id de imagen
-            imagenDB.setUrl(imageUrl);
-            imagenDB.setImageId(imageId);
+            imageDB.setUrl(imageUrl);
+            imageDB.setImageId(imageId);
         }
-        return imagenRepository.save(imagenDB);
+        return imagenRepository.save(imageDB);
     }
 
     // Elimina la imagen de cloudinary y de la base de datos

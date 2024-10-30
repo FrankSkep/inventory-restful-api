@@ -1,6 +1,6 @@
-package com.fran.Sistema_Inventario.DTO;
+package com.fran.Sistema_Inventario.DTO.App;
 
-import com.fran.Sistema_Inventario.DTO.Producto.ProductoResponseBasic;
+import com.fran.Sistema_Inventario.DTO.App.Producto.ProductoResponseBasic;
 import com.fran.Sistema_Inventario.Entity.MovimientoStock;
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -1,6 +1,6 @@
-package com.fran.Sistema_Inventario.DTO.Producto;
+package com.fran.Sistema_Inventario.DTO.App.Producto;
 
-import com.fran.Sistema_Inventario.DTO.Proveedor.ProveedorResponseBasic;
+import com.fran.Sistema_Inventario.DTO.App.Proveedor.ProveedorResponseBasic;
 import com.fran.Sistema_Inventario.Entity.MovimientoStock;
 
 import java.util.List;

@@ -9,10 +9,10 @@
         <relativePath/>
     </parent>
     <groupId>com.fran</groupId>
-    <artifactId>Inventory_APIREST</artifactId>
+    <artifactId>Inventory_REST_API</artifactId>
     <version>0.1</version>
     <name>Inventory</name>
-    <description>Inventory management system REST Api</description>
+    <description>Rest API for inventory management</description>
     <url/>
     <licenses>
         <license/>
@@ -79,15 +79,32 @@
             <version>8.0.5</version>
             <type>pom</type>
         </dependency>
-        <!--		<dependency>
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-api</artifactId>
+            <version>0.11.5</version>
+        </dependency>
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-impl</artifactId>
+            <version>0.11.5</version>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-jackson</artifactId>
+            <version>0.11.5</version>
+        </dependency>
+
+        <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-security</artifactId>
-        </dependency>-->
-        <!--		<dependency>
+        </dependency>
+        <dependency>
                 <groupId>org.springframework.security</groupId>
                 <artifactId>spring-security-test</artifactId>
                 <scope>test</scope>
-        </dependency>-->
+        </dependency>
     </dependencies>
 
     <build>

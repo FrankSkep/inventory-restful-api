@@ -1,6 +1,6 @@
 package com.fran.Sistema_Inventario.Controller;
 
-import com.fran.Sistema_Inventario.DTO.MovimientoResponse;
+import com.fran.Sistema_Inventario.DTO.App.MovimientoResponse;
 import com.fran.Sistema_Inventario.Entity.MovimientoStock;
 
 import java.time.LocalDateTime;

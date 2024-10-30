@@ -1,7 +1,7 @@
 package com.fran.Sistema_Inventario.Service;
 
-import com.fran.Sistema_Inventario.DTO.Proveedor.ProveedorResponseBasic;
-import com.fran.Sistema_Inventario.DTO.Proveedor.ProveedorResponseDetailed;
+import com.fran.Sistema_Inventario.DTO.App.Proveedor.ProveedorResponseBasic;
+import com.fran.Sistema_Inventario.DTO.App.Proveedor.ProveedorResponseDetailed;
 import com.fran.Sistema_Inventario.Entity.Proveedor;
 import java.util.List;
 
