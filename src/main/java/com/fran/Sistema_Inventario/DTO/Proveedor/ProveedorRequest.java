@@ -1,4 +1,4 @@
-package com.fran.Sistema_Inventario.DTO.App.Proveedor;
+package com.fran.Sistema_Inventario.DTO.Proveedor;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;

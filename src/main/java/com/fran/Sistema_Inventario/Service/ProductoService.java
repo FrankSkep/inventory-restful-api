@@ -1,7 +1,7 @@
 package com.fran.Sistema_Inventario.Service;
 
-import com.fran.Sistema_Inventario.DTO.App.Producto.ProductoResponseBasic;
-import com.fran.Sistema_Inventario.DTO.App.Producto.ProductoResponseDetailed;
+import com.fran.Sistema_Inventario.DTO.Producto.ProductoResponseBasic;
+import com.fran.Sistema_Inventario.DTO.Producto.ProductoResponseDetailed;
 import com.fran.Sistema_Inventario.Entity.MovimientoStock;
 import com.fran.Sistema_Inventario.Entity.Producto;
 import org.springframework.data.domain.Page;

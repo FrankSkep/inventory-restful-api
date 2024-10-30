@@ -5,6 +5,7 @@ import com.fran.Sistema_Inventario.Auth.DTO.LoginRequest;
 import com.fran.Sistema_Inventario.Auth.DTO.RegisterRequest;
 import com.fran.Sistema_Inventario.Auth.Entity.Role;
 import com.fran.Sistema_Inventario.Auth.Entity.User;
+import com.fran.Sistema_Inventario.Auth.Exception.AuthenticationException;
 import com.fran.Sistema_Inventario.Auth.JWT.JwtService;
 import com.fran.Sistema_Inventario.Auth.Repository.UserRepository;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -25,13 +26,17 @@ public class AuthService {
     private final AuthenticationManager authenticationManager;
 
     public AuthResponse login(LoginRequest request) {
-        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
-        UserDetails user = userRepository.findByUsername(request.getUsername()).orElseThrow();
-        String token = jwtService.getToken(user);
-        return AuthResponse.builder()
-                .token(token)
-                .build();
-
+        try {
+            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
+            UserDetails user = userRepository.findByUsername(request.getUsername()).orElseThrow();
+            String token = jwtService.getToken(user);
+            return AuthResponse.builder()
+                    .token(token)
+                    .build();
+        } catch (
+                Exception e) {
+            throw new AuthenticationException("Usuario o contraseña incorrectos");
+        }
     }
 
     public AuthResponse register(RegisterRequest request) {
@@ -49,7 +54,5 @@ public class AuthService {
         return AuthResponse.builder()
                 .token(jwtService.getToken(user))
                 .build();
-
     }
-
 }

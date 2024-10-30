@@ -1,9 +1,9 @@
 package com.fran.Sistema_Inventario.MapperDTO;
 
-import com.fran.Sistema_Inventario.DTO.App.Producto.ProductoResponseProv;
-import com.fran.Sistema_Inventario.DTO.App.Proveedor.ProveedorResponseBasic;
-import com.fran.Sistema_Inventario.DTO.App.Proveedor.ProveedorRequest;
-import com.fran.Sistema_Inventario.DTO.App.Proveedor.ProveedorResponseDetailed;
+import com.fran.Sistema_Inventario.DTO.Producto.ProductoResponseProv;
+import com.fran.Sistema_Inventario.DTO.Proveedor.ProveedorResponseBasic;
+import com.fran.Sistema_Inventario.DTO.Proveedor.ProveedorRequest;
+import com.fran.Sistema_Inventario.DTO.Proveedor.ProveedorResponseDetailed;
 import com.fran.Sistema_Inventario.Entity.Producto;
 import com.fran.Sistema_Inventario.Entity.Proveedor;
 

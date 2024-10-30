@@ -1,7 +1,7 @@
 package com.fran.Sistema_Inventario.Controller;
 
-import com.fran.Sistema_Inventario.DTO.App.Producto.ProductoResponseBasic;
-import com.fran.Sistema_Inventario.DTO.App.Producto.ProductoRequest;
+import com.fran.Sistema_Inventario.DTO.Producto.ProductoResponseBasic;
+import com.fran.Sistema_Inventario.DTO.Producto.ProductoRequest;
 import com.fran.Sistema_Inventario.Entity.Producto;
 import com.fran.Sistema_Inventario.MapperDTO.ProductoMapperDTO;
 import com.fran.Sistema_Inventario.Service.ProductoService;

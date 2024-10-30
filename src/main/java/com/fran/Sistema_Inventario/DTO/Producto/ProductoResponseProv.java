@@ -1,4 +1,4 @@
-package com.fran.Sistema_Inventario.DTO.App.Producto;
+package com.fran.Sistema_Inventario.DTO.Producto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
