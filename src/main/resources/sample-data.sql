@@ -84,7 +84,7 @@ CREATE TABLE `movimientos` (
   KEY `FK114r6r1i2sn7g9i8qtou9ui8s` (`producto_id`),
   CONSTRAINT `FK114r6r1i2sn7g9i8qtou9ui8s` FOREIGN KEY (`producto_id`) REFERENCES `productos` (`id`),
   CONSTRAINT `movimientos_chk_1` CHECK ((`costo_adquisicion` >= 0))
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -93,8 +93,33 @@ CREATE TABLE `movimientos` (
 
 LOCK TABLES `movimientos` WRITE;
 /*!40000 ALTER TABLE `movimientos` DISABLE KEYS */;
-INSERT INTO `movimientos` VALUES (1,45,'2024-10-01 12:53:21.086131','Venta','SALIDA',1,NULL),(2,20,'2024-10-01 12:53:26.093067','Venta','SALIDA',1,NULL),(3,700,'2024-10-01 12:53:31.650256','Venta','SALIDA',1,NULL),(4,100,'2024-10-01 13:21:23.039846','Venta','SALIDA',1,NULL),(5,13,'2024-10-01 13:27:49.047620','Venta','ENTRADA',1,490);
+INSERT INTO `movimientos` VALUES (1,45,'2024-10-01 12:53:21.086131','Venta','SALIDA',1,NULL),(2,20,'2024-10-01 12:53:26.093067','Venta','SALIDA',1,NULL),(3,700,'2024-10-01 12:53:31.650256','Venta','SALIDA',1,NULL),(4,100,'2024-10-01 13:21:23.039846','Venta','SALIDA',1,NULL),(5,13,'2024-10-01 13:27:49.047620','Venta','ENTRADA',1,490),(6,2150,'2024-10-13 21:08:50.233220','Venta','SALIDA',1,NULL);
 /*!40000 ALTER TABLE `movimientos` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `notificaciones`
+--
+
+DROP TABLE IF EXISTS `notificaciones`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `notificaciones` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `create_date` datetime(6) DEFAULT NULL,
+  `is_read` bit(1) NOT NULL,
+  `message` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `notificaciones`
+--
+
+LOCK TABLES `notificaciones` WRITE;
+/*!40000 ALTER TABLE `notificaciones` DISABLE KEYS */;
+/*!40000 ALTER TABLE `notificaciones` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -130,7 +155,7 @@ CREATE TABLE `productos` (
 
 LOCK TABLES `productos` WRITE;
 /*!40000 ALTER TABLE `productos` DISABLE KEYS */;
-INSERT INTO `productos` VALUES (8900,222,2334,1,1,2,1,'8 GB RAM, 512GB SSD, ANDROID 12','Poco M6 Pro'),(8900,109,3231,1,8,11,1,'8 GB RAM, 512GB SSD, ANDROID 12','Poco M5 Pro');
+INSERT INTO `productos` VALUES (8900,222,184,1,1,2,1,'8 GB RAM, 512GB SSD, ANDROID 12','Poco M6 Pro'),(8900,109,3231,1,8,11,1,'8 GB RAM, 512GB SSD, ANDROID 12','Poco M5 Pro');
 /*!40000 ALTER TABLE `productos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -161,6 +186,58 @@ LOCK TABLES `proveedores` WRITE;
 INSERT INTO `proveedores` VALUES (1,'14124','xiaomi@gmail.com','Xiaomi','China','8547415269');
 /*!40000 ALTER TABLE `proveedores` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Table structure for table `user`
+--
+
+DROP TABLE IF EXISTS `user`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `user` (
+  `id` int NOT NULL,
+  `country` varchar(255) DEFAULT NULL,
+  `firstname` varchar(255) DEFAULT NULL,
+  `lastname` varchar(255) NOT NULL,
+  `password` varchar(255) DEFAULT NULL,
+  `role` enum('ADMIN','USER') DEFAULT NULL,
+  `username` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UKsb8bbouer5wak8vyiiy4pf2bx` (`username`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `user`
+--
+
+LOCK TABLES `user` WRITE;
+/*!40000 ALTER TABLE `user` DISABLE KEYS */;
+INSERT INTO `user` VALUES (1,'Ensenada','Francisco','Cornejo','$2a$10$3niTgKY9pcua3qoS3bvEHu2r.A6rFzJHZ3B3UiZlCPCvcoIwmiRf6','USER','FrankSkep');
+/*!40000 ALTER TABLE `user` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `user_seq`
+--
+
+DROP TABLE IF EXISTS `user_seq`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `user_seq` (
+  `next_val` bigint DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `user_seq`
+--
+
+LOCK TABLES `user_seq` WRITE;
+/*!40000 ALTER TABLE `user_seq` DISABLE KEYS */;
+INSERT INTO `user_seq` VALUES (51);
+/*!40000 ALTER TABLE `user_seq` ENABLE KEYS */;
+UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -171,4 +248,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-10-06 20:00:17
+-- Dump completed on 2024-10-29 19:45:34
