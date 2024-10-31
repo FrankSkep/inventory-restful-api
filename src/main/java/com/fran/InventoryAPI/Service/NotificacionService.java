@@ -1,0 +1,19 @@
+package com.fran.InventoryAPI.Service;
+
+import com.fran.InventoryAPI.Entity.Notificacion;
+
+import java.util.List;
+
+public interface NotificacionService {
+    void sendNotification(String message);
+
+    List<Notificacion> getUnread();
+
+    List<Notificacion> getAll();
+
+    void readed(Long id);
+
+    void delete(Long id);
+
+    void deleteAll();
+}
