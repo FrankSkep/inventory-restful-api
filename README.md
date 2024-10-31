@@ -20,8 +20,8 @@ Esta API RESTful de Inventario permite gestionar productos, proveedores, entrada
 
 - Registrar entradas y salidas de stock.
 - Visualizar el historial general de movimientos de stock.
-- Alertas por correo electrónico para stock bajo.
-- Exportar reporte PDF de movimientos de stock.
+- Notificación para stock bajo.
+- Exportar reporte PDF de movimientos de stock(Entrada / Salida / General).
 
 ### Proveedores
 
