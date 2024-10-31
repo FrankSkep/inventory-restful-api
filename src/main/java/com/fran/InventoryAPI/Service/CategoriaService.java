@@ -8,11 +8,13 @@ public interface CategoriaService {
 
     Categoria getByName(String nombre);
 
-    Categoria getById(int id);
+    Categoria getById(Long id);
 
     List<Categoria> getAll();
 
     Categoria save(Categoria categoria);
 
-    void delete(Categoria categoria);
+    Categoria update(Categoria categoria);
+
+    void delete(Long id);
 }

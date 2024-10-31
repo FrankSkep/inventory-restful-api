@@ -3,6 +3,7 @@ package com.fran.InventoryAPI.Service.Impl;
 import com.fran.InventoryAPI.Entity.Categoria;
 import com.fran.InventoryAPI.Repository.CategoriaRepository;
 import com.fran.InventoryAPI.Service.CategoriaService;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,8 +23,9 @@ public class CategoriaServiceImpl implements CategoriaService {
     }
 
     @Override
-    public Categoria getById(int id) {
-        return categoriaRepository.findById(id);
+    public Categoria getById(Long id) {
+        return categoriaRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Categoría no encontrada"));
     }
 
     @Override
@@ -37,7 +39,20 @@ public class CategoriaServiceImpl implements CategoriaService {
     }
 
     @Override
-    public void delete(Categoria categoria) {
-        categoriaRepository.delete(categoria);
+    public Categoria update(Categoria categoria) {
+
+        Categoria dbCategory = categoriaRepository.findById(categoria.getId())
+                .orElseThrow(() -> new EntityNotFoundException("Categoría no encontrada"));
+
+        dbCategory.setNombre(categoria.getNombre());
+
+        return categoriaRepository.save(categoria);
+    }
+
+    @Override
+    public void delete(Long id) {
+        Categoria category = categoriaRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Categoría no encontrada"));
+        categoriaRepository.delete(category);
     }
 }

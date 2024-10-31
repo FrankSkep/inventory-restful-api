@@ -21,6 +21,8 @@ public class JwtService {
 
     @Value("${jwt.secret.key}")
     private String SECRET_KEY;
+    private static final long JWT_TOKEN_VALIDITY = 24 * 60 * 1000; // 24 minutes in milliseconds
+
 
     public String getToken(UserDetails user) {
         System.out.println("secret key: " + SECRET_KEY);
@@ -33,7 +35,7 @@ public class JwtService {
                 .setClaims(extraClaims)
                 .setSubject(user.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 24))
+                .setExpiration(new Date(System.currentTimeMillis() + JWT_TOKEN_VALIDITY))
                 .signWith(getKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
