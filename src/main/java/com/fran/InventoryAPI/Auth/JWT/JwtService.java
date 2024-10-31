@@ -20,9 +20,10 @@ import io.jsonwebtoken.security.Keys;
 public class JwtService {
 
     @Value("${jwt.secret.key}")
-    private static String SECRET_KEY;
+    private String SECRET_KEY;
 
     public String getToken(UserDetails user) {
+        System.out.println("secret key: " + SECRET_KEY);
         return getToken(new HashMap<>(), user);
     }
 
