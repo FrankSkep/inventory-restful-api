@@ -1,8 +1,8 @@
-package com.fran.InventoryAPI.auth.Repository;
+package com.fran.InventoryAPI.auth.repository;
 
 import java.util.Optional;
 
-import com.fran.InventoryAPI.auth.Entity.User;
+import com.fran.InventoryAPI.auth.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface UserRepository extends JpaRepository<User,Integer> {

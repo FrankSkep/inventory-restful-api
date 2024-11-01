@@ -1,4 +1,4 @@
-package com.fran.InventoryAPI.auth.DTO;
+package com.fran.InventoryAPI.auth.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -7,9 +7,8 @@ import lombok.NoArgsConstructor;
 
 @Data
 @Builder
-@AllArgsConstructor
 @NoArgsConstructor
-public class LoginRequest {
-    private String username;
-    private String password;
+@AllArgsConstructor
+public class AuthResponse {
+    String token;
 }

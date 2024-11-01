@@ -1,4 +1,4 @@
-package com.fran.InventoryAPI.auth.Exception;
+package com.fran.InventoryAPI.auth.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

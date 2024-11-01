@@ -1,6 +1,6 @@
-package com.fran.InventoryAPI.auth.Config;
+package com.fran.InventoryAPI.auth.config;
 
-import com.fran.InventoryAPI.auth.JWT.JwtAuthenticationFilter;
+import com.fran.InventoryAPI.auth.jwt.JwtAuthenticationFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;

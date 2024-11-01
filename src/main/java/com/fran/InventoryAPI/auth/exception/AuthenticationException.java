@@ -1,4 +1,4 @@
-package com.fran.InventoryAPI.auth.Exception;
+package com.fran.InventoryAPI.auth.exception;
 
 public class AuthenticationException extends RuntimeException {
     public AuthenticationException(String message) {

@@ -1,4 +1,4 @@
-package com.fran.InventoryAPI.auth.JWT;
+package com.fran.InventoryAPI.auth.jwt;
 
 import java.security.Key;
 import java.util.Date;

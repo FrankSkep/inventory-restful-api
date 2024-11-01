@@ -1,4 +1,4 @@
-package com.fran.InventoryAPI.auth.Entity;
+package com.fran.InventoryAPI.auth.entity;
 
 import java.util.Collection;
 import java.util.List;
