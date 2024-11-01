@@ -29,25 +29,21 @@ public class MovimientosController {
         this.reporteService = reporteService;
     }
 
-    // Obtener todos los movimientos
     @GetMapping
     public List<MovimientoResponse> todosLosMovimientos() {
         return movimientoService.getAll();
     }
 
-    // Obtener las entradas de stock
     @GetMapping("/entradas")
     public List<MovimientoResponse> getEntries() {
         return movimientoService.getEntries();
     }
 
-    // Obtener las salidas de stock
     @GetMapping("/salidas")
     public List<MovimientoResponse> getOutputs() {
         return movimientoService.getOutputs();
     }
 
-    // Registrar un movimiento de stock
     @PostMapping
     public ResponseEntity<?> addMovement(@RequestBody MovimientoStock movimiento) {
         try {
