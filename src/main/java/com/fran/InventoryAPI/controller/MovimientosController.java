@@ -16,7 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/movimientos")
+@RequestMapping("/api/movimientos")
 public class MovimientosController {
 
     private final MovimientoService movimientoService;
@@ -30,7 +30,7 @@ public class MovimientosController {
     }
 
     // Obtener todos los movimientos
-    @GetMapping("/")
+    @GetMapping
     public List<MovimientoResponse> todosLosMovimientos() {
         return movimientoService.getAll();
     }
@@ -48,7 +48,7 @@ public class MovimientosController {
     }
 
     // Registrar un movimiento de stock
-    @PostMapping("/registrar")
+    @PostMapping
     public ResponseEntity<?> addMovement(@RequestBody MovimientoStock movimiento) {
         try {
             MovimientoStock movement = productoService.updateStock(movimiento);
@@ -57,6 +57,24 @@ public class MovimientosController {
                 IllegalArgumentException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
+    }
+
+    @DeleteMapping
+    public ResponseEntity<?> deleteAllMovements() {
+        movimientoService.deleteAllMovements();
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+    @DeleteMapping("/salidas")
+    public ResponseEntity<?> deleteAllOutputs() {
+        movimientoService.deleteAllOutputs();
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+    @DeleteMapping("/entradas")
+    public ResponseEntity<?> deleteAllEntries() {
+        movimientoService.deleteAllEntries();
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 
     // Generar reporte de movimientos

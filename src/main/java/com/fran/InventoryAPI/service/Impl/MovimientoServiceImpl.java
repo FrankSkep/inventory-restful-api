@@ -3,7 +3,7 @@ package com.fran.InventoryAPI.service.Impl;
 import com.fran.InventoryAPI.dto.MovimientoResponse;
 import com.fran.InventoryAPI.entity.MovimientoStock;
 import com.fran.InventoryAPI.dto_mapper.MovimientoMapperDTO;
-import com.fran.InventoryAPI.repository.MovimientoStockRepository;
+import com.fran.InventoryAPI.repository.MovimientoRepository;
 import com.fran.InventoryAPI.repository.ProductoRepository;
 import com.fran.InventoryAPI.service.MovimientoService;
 import jakarta.persistence.EntityNotFoundException;
@@ -16,11 +16,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class MovimientoServiceImpl implements MovimientoService {
 
-    private final MovimientoStockRepository movimientoRepository;
+    private final MovimientoRepository movimientoRepository;
     private final ProductoRepository productoRepository;
     private final MovimientoMapperDTO movimientoMapperDTO;
 
-    public MovimientoServiceImpl(MovimientoStockRepository movimientoRepository, ProductoRepository productoRepository,
+    public MovimientoServiceImpl(MovimientoRepository movimientoRepository, ProductoRepository productoRepository,
                                  MovimientoMapperDTO movimientoMapperDTO) {
         this.movimientoRepository = movimientoRepository;
         this.productoRepository = productoRepository;
@@ -51,5 +51,20 @@ public class MovimientoServiceImpl implements MovimientoService {
     public List<MovimientoResponse> getAll() {
         List<MovimientoStock> movimientos = movimientoRepository.findAll();
         return movimientos.stream().map(movimientoMapperDTO::toDTO).collect(Collectors.toList());
+    }
+
+    @Override
+    public void deleteAllEntries() {
+        movimientoRepository.deleteByTipoMovimiento(MovimientoStock.TipoMovimiento.ENTRADA);
+    }
+
+    @Override
+    public void deleteAllOutputs() {
+        movimientoRepository.deleteByTipoMovimiento(MovimientoStock.TipoMovimiento.SALIDA);
+    }
+
+    @Override
+    public void deleteAllMovements() {
+        movimientoRepository.deleteAll();
     }
 }

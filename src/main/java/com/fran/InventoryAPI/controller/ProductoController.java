@@ -26,7 +26,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 @RestController
-@RequestMapping("/inventario")
+@RequestMapping("/api/productos")
 public class ProductoController {
 
     private final ProductoService productoService;
@@ -48,7 +48,7 @@ public class ProductoController {
     }
 
     // Obtener detalles de un producto
-    @GetMapping("/detalles/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<?> getProductDetails(@PathVariable Long id) {
         try {
             return ResponseEntity.ok(productoService.getProductDetails(id));
@@ -60,7 +60,7 @@ public class ProductoController {
     }
 
     // Agregar nuevo producto al inventario
-    @PostMapping("/nuevo")
+    @PostMapping
     public ResponseEntity<?> createProduct(
             @Valid @ModelAttribute ProductoRequest productoRequest,
             @RequestPart(value = "file", required = false) MultipartFile file,
@@ -78,7 +78,7 @@ public class ProductoController {
     }
 
     // Editar datos de un producto
-    @PutMapping("/editar/{id}")
+    @PutMapping
     public ResponseEntity<?> updateProduct(@PathVariable Long id, @ModelAttribute ProductoRequest productoRequest,
                                            @RequestPart(value = "file", required = false) MultipartFile newOptionalImage,
                                            BindingResult result) {
@@ -100,7 +100,7 @@ public class ProductoController {
     }
 
     // Eliminar un producto por su ID
-    @DeleteMapping("/eliminar/{id}")
+    @DeleteMapping
     public ResponseEntity<?> deleteProduct(@PathVariable Long id) {
         try {
             productoService.delete(id);

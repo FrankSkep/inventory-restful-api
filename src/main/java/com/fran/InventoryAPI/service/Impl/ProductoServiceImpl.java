@@ -6,7 +6,8 @@ import com.fran.InventoryAPI.entity.Imagen;
 import com.fran.InventoryAPI.entity.MovimientoStock;
 import com.fran.InventoryAPI.entity.Producto;
 import com.fran.InventoryAPI.dto_mapper.ProductoMapperDTO;
-import com.fran.InventoryAPI.repository.MovimientoStockRepository;
+import com.fran.InventoryAPI.exception.ProductNotFoundException;
+import com.fran.InventoryAPI.repository.MovimientoRepository;
 import com.fran.InventoryAPI.repository.ProductoRepository;
 import com.fran.InventoryAPI.service.ImagenService;
 import com.fran.InventoryAPI.service.NotificacionService;
@@ -27,12 +28,12 @@ import org.springframework.web.multipart.MultipartFile;
 public class ProductoServiceImpl implements ProductoService {
 
     private final ProductoRepository productoRepository;
-    private final MovimientoStockRepository movimientoStockRepository;
+    private final MovimientoRepository movimientoStockRepository;
     private final ProductoMapperDTO productoMapper;
     private final ImagenService imagenService;
     private final NotificacionService notificacionService;
 
-    public ProductoServiceImpl(ProductoRepository productoRepository, MovimientoStockRepository movimientoStockRepository,
+    public ProductoServiceImpl(ProductoRepository productoRepository, MovimientoRepository movimientoStockRepository,
                                ProductoMapperDTO productoMapper, ImagenService imagenService,
                                NotificacionService notificacionService) {
         this.productoRepository = productoRepository;
@@ -59,7 +60,7 @@ public class ProductoServiceImpl implements ProductoService {
     public ProductoResponseDetailed getProductDetails(Long id) {
 
         Producto producto = productoRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Producto no encontrado"));
+                .orElseThrow(() -> new ProductNotFoundException("Producto no encontrado"));
 
         return productoMapper.toDTOdetailed(producto);
     }

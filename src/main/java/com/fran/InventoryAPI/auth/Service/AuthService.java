@@ -33,8 +33,7 @@ public class AuthService {
             return AuthResponse.builder()
                     .token(token)
                     .build();
-        } catch (
-                Exception e) {
+        } catch (Exception e) {
             throw new AuthenticationException("Usuario o contraseña incorrectos");
         }
     }

@@ -14,4 +14,10 @@ public interface MovimientoService {
     List<MovimientoResponse> getOutputs();
 
     List<MovimientoResponse> getAll();
+
+    void deleteAllEntries();
+
+    void deleteAllOutputs();
+
+    void deleteAllMovements();
 }

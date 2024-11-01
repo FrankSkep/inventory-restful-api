@@ -20,12 +20,7 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest request) {
-        try {
-            return ResponseEntity.ok(authService.login(request));
-        } catch (
-                Exception e) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.toString());
-        }
+        return ResponseEntity.ok(authService.login(request));
     }
 
     @PostMapping("/register")
