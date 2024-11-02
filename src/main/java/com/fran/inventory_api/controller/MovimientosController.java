@@ -30,18 +30,18 @@ public class MovimientosController {
     }
 
     @GetMapping
-    public List<MovimientoResponse> todosLosMovimientos() {
-        return movimientoService.getAll();
+    public ResponseEntity<List<MovimientoResponse>> todosLosMovimientos() {
+        return ResponseEntity.ok(movimientoService.getAll());
     }
 
     @GetMapping("/entradas")
-    public List<MovimientoResponse> getEntries() {
-        return movimientoService.getEntries();
+    public ResponseEntity<List<MovimientoResponse>> getEntries() {
+        return ResponseEntity.ok(movimientoService.getEntries());
     }
 
     @GetMapping("/salidas")
-    public List<MovimientoResponse> getOutputs() {
-        return movimientoService.getOutputs();
+    public ResponseEntity<List<MovimientoResponse>> getOutputs() {
+        return ResponseEntity.ok(movimientoService.getOutputs());
     }
 
     @PostMapping
