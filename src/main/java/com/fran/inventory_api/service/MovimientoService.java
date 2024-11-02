@@ -1,13 +1,13 @@
 package com.fran.inventory_api.service;
 
 import com.fran.inventory_api.dto.MovimientoResponse;
-import com.fran.inventory_api.entity.MovimientoStock;
+import com.fran.inventory_api.entity.Movimiento;
 
 import java.util.List;
 
 public interface MovimientoService {
 
-    List<MovimientoStock> getByProduct(Long id);
+    List<Movimiento> getByProduct(Long id);
 
     List<MovimientoResponse> getEntries();
 
@@ -16,6 +16,8 @@ public interface MovimientoService {
     List<MovimientoResponse> getAll();
 
     void deleteAllEntries();
+
+    void delete(Long id);
 
     void deleteAllOutputs();
 

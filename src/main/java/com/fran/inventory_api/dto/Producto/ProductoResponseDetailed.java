@@ -1,7 +1,7 @@
 package com.fran.inventory_api.dto.Producto;
 
 import com.fran.inventory_api.dto.Proveedor.ProveedorResponseBasic;
-import com.fran.inventory_api.entity.MovimientoStock;
+import com.fran.inventory_api.entity.Movimiento;
 
 import java.util.List;
 import lombok.AllArgsConstructor;
@@ -20,5 +20,5 @@ public class ProductoResponseDetailed {
     private String imageUrl;
     private ProveedorResponseBasic proveedor;
     private Integer umbralBajoStock;
-    private List<MovimientoStock> movimientosStock;
+    private List<Movimiento> movimientosStock;
 }

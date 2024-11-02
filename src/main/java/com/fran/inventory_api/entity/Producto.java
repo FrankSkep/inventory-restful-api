@@ -46,7 +46,7 @@ public class Producto {
 
     @OneToMany(mappedBy = "producto", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
-    private List<MovimientoStock> movimientosStock = new ArrayList<>();
+    private List<Movimiento> movimientosStock = new ArrayList<>();
 
     // Constructor para agregar nuevo producto
     public Producto(String nombre, String descripcion, Double precio, Long cantidadStock, Categoria categoria, Proveedor proveedor, Integer umbralBajoStock) {

@@ -1,7 +1,7 @@
 package com.fran.inventory_api.dto;
 
 import com.fran.inventory_api.dto.Producto.ProductoResponseBasic;
-import com.fran.inventory_api.entity.MovimientoStock;
+import com.fran.inventory_api.entity.Movimiento;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 public class MovimientoResponse {
 
     private Long id;
-    private MovimientoStock.TipoMovimiento tipoMovimiento;
+    private Movimiento.TipoMovimiento tipoMovimiento;
     private LocalDateTime fechaMovimiento;
     private String razon;
     private Long cantidad;

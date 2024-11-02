@@ -1,7 +1,7 @@
 package com.fran.inventory_api.service.Impl;
 
 import com.fran.inventory_api.dto.MovimientoResponse;
-import com.fran.inventory_api.entity.MovimientoStock;
+import com.fran.inventory_api.entity.Movimiento;
 import com.fran.inventory_api.mapper.MovimientoMapperDTO;
 import com.fran.inventory_api.repository.MovimientoRepository;
 import com.fran.inventory_api.repository.ProductoRepository;
@@ -28,7 +28,7 @@ public class MovimientoServiceImpl implements MovimientoService {
     }
 
     @Override
-    public List<MovimientoStock> getByProduct(Long id) {
+    public List<Movimiento> getByProduct(Long id) {
         if (!productoRepository.existsById(id)) {
             throw new EntityNotFoundException("Producto no encontrado");
         }
@@ -37,30 +37,37 @@ public class MovimientoServiceImpl implements MovimientoService {
 
     @Override
     public List<MovimientoResponse> getEntries() {
-        List<MovimientoStock> movimientos = movimientoRepository.findByTipoMovimiento(MovimientoStock.TipoMovimiento.ENTRADA);
+        List<Movimiento> movimientos = movimientoRepository.findByTipoMovimiento(Movimiento.TipoMovimiento.ENTRADA);
         return movimientos.stream().map(movimientoMapperDTO::toDTO).collect(Collectors.toList());
     }
 
     @Override
     public List<MovimientoResponse> getOutputs() {
-        List<MovimientoStock> movimientos = movimientoRepository.findByTipoMovimiento(MovimientoStock.TipoMovimiento.SALIDA);
+        List<Movimiento> movimientos = movimientoRepository.findByTipoMovimiento(Movimiento.TipoMovimiento.SALIDA);
         return movimientos.stream().map(movimientoMapperDTO::toDTO).collect(Collectors.toList());
     }
 
     @Override
     public List<MovimientoResponse> getAll() {
-        List<MovimientoStock> movimientos = movimientoRepository.findAll();
+        List<Movimiento> movimientos = movimientoRepository.findAll();
         return movimientos.stream().map(movimientoMapperDTO::toDTO).collect(Collectors.toList());
     }
 
     @Override
     public void deleteAllEntries() {
-        movimientoRepository.deleteByTipoMovimiento(MovimientoStock.TipoMovimiento.ENTRADA);
+        movimientoRepository.deleteByTipoMovimiento(Movimiento.TipoMovimiento.ENTRADA);
+    }
+
+    @Override
+    public void delete(Long id) {
+        Movimiento movementDB = movimientoRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Movimiento no encontrado"));
+        movimientoRepository.delete(movementDB);
     }
 
     @Override
     public void deleteAllOutputs() {
-        movimientoRepository.deleteByTipoMovimiento(MovimientoStock.TipoMovimiento.SALIDA);
+        movimientoRepository.deleteByTipoMovimiento(Movimiento.TipoMovimiento.SALIDA);
     }
 
     @Override

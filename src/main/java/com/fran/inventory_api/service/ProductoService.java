@@ -2,7 +2,7 @@ package com.fran.inventory_api.service;
 
 import com.fran.inventory_api.dto.Producto.ProductoResponseBasic;
 import com.fran.inventory_api.dto.Producto.ProductoResponseDetailed;
-import com.fran.inventory_api.entity.MovimientoStock;
+import com.fran.inventory_api.entity.Movimiento;
 import com.fran.inventory_api.entity.Producto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -27,7 +27,7 @@ public interface ProductoService {
 
     void delete(Long id) throws IOException;
 
-    MovimientoStock updateStock(MovimientoStock movimiento);
+    Movimiento updateStock(Movimiento movimiento);
 
     void sendNotification(String message);
 }

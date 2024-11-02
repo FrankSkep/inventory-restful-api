@@ -1,7 +1,7 @@
 package com.fran.inventory_api.controller;
 
 import com.fran.inventory_api.dto.MovimientoResponse;
-import com.fran.inventory_api.entity.MovimientoStock;
+import com.fran.inventory_api.entity.Movimiento;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -45,9 +45,9 @@ public class MovimientosController {
     }
 
     @PostMapping
-    public ResponseEntity<?> addMovement(@RequestBody MovimientoStock movimiento) {
+    public ResponseEntity<?> addMovement(@RequestBody Movimiento movimiento) {
         try {
-            MovimientoStock movement = productoService.updateStock(movimiento);
+            Movimiento movement = productoService.updateStock(movimiento);
             return ResponseEntity.status(HttpStatus.CREATED).body(movement);
         } catch (
                 IllegalArgumentException e) {
@@ -59,6 +59,12 @@ public class MovimientosController {
     public ResponseEntity<?> deleteAllMovements() {
         movimientoService.deleteAllMovements();
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteMovement(@PathVariable Long id) {
+        movimientoService.delete(id);
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 
     @DeleteMapping("/salidas")

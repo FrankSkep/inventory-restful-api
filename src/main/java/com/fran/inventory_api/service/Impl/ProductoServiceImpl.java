@@ -3,7 +3,7 @@ package com.fran.inventory_api.service.Impl;
 import com.fran.inventory_api.dto.Producto.ProductoResponseBasic;
 import com.fran.inventory_api.dto.Producto.ProductoResponseDetailed;
 import com.fran.inventory_api.entity.Imagen;
-import com.fran.inventory_api.entity.MovimientoStock;
+import com.fran.inventory_api.entity.Movimiento;
 import com.fran.inventory_api.entity.Producto;
 import com.fran.inventory_api.mapper.ProductoMapperDTO;
 import com.fran.inventory_api.exception.ProductNotFoundException;
@@ -128,14 +128,14 @@ public class ProductoServiceImpl implements ProductoService {
     // Actualiza el stock y registra el movimiento
     @Override
     @Transactional
-    public MovimientoStock updateStock(MovimientoStock movimiento) {
+    public Movimiento updateStock(Movimiento movimiento) {
 
         Producto producto = productoRepository.getReferenceById(movimiento.getProducto().getId());
 
         Long stockActual = producto.getCantidadStock();
         Long stockMovimiento = movimiento.getCantidad();
 
-        if (movimiento.getTipoMovimiento() == MovimientoStock.TipoMovimiento.SALIDA) {
+        if (movimiento.getTipoMovimiento() == Movimiento.TipoMovimiento.SALIDA) {
             if (stockActual < stockMovimiento) {
                 throw new IllegalArgumentException("No hay suficiente stock para realizar esta operación");
             }
