@@ -93,10 +93,14 @@ Esta API RESTful de Inventario permite gestionar productos, proveedores, entrada
 ### Movimientos
 
 | Método | Endpoint                          | Descripción                                                |
-| ------ | --------------------------------- | ---------------------------------------------------------- |
+| ------ |-----------------------------------|------------------------------------------------------------|
 | GET    | `/api/movimientos`                | Obtener todos los movimientos.                             |
 | GET    | `/api/movimientos/entradas`       | Obtener las entradas de stock.                             |
 | GET    | `/api/movimientos/salidas`        | Obtener las salidas de stock.                              |
+| DELETE | `/api/movimientos`                | Eliminar todos los movimientos.                            |
+| DELETE | `/api/movimientos/{id}`           | Eliminar un movimiento de stock.                           |
+| DELETE | `/api/movimientos/entradas`       | Eliminar todas las entradas de stock.                      |
+| DELETE | `/api/movimientos/salidas`        | Eliminar todas las salidas de stock.                       |
 | POST   | `/api/movimientos`                | Registrar un movimiento de stock.                          |
 | GET    | `/api/movimientos/reporte/{tipo}` | Generar reporte de movimientos (general, entrada, salida). |
 

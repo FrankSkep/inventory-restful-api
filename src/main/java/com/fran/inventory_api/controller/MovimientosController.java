@@ -67,11 +67,6 @@ public class MovimientosController {
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
-    @DeleteMapping("/salidas")
-    public ResponseEntity<?> deleteAllOutputs() {
-        movimientoService.deleteAllOutputs();
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-    }
 
     @DeleteMapping("/entradas")
     public ResponseEntity<?> deleteAllEntries() {
@@ -79,7 +74,12 @@ public class MovimientosController {
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
-    // Generar reporte de movimientos
+    @DeleteMapping("/salidas")
+    public ResponseEntity<?> deleteAllOutputs() {
+        movimientoService.deleteAllOutputs();
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
     @GetMapping("/reporte/{tipo}")
     public ResponseEntity<byte[]> generateReport(@PathVariable String tipo) {
         // tipo = "general" o "entrada" o "salida"
