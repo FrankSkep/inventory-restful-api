@@ -82,23 +82,23 @@ Esta API RESTful de Inventario permite gestionar productos, proveedores, entrada
 
 ### Notificaciones
 
-| Método | Endpoint                            | Descripción                         |
-| ------ | ----------------------------------- | ----------------------------------- |
-| GET    | `/notificaciones/no-leidas`         | Obtener notificaciones no leídas.   |
-| GET    | `/notificaciones/todas`             | Obtener todas las notificaciones.   |
-| POST   | `/notificaciones/marcar-leida/{id}` | Marcar una notificación como leída. |
-| DELETE | `/notificaciones/eliminar/{id}`     | Eliminar una notificación.          |
-| DELETE | `/notificaciones/eliminar-todas`    | Eliminar todas las notificaciones.  |
+| Método | Endpoint                                | Descripción                         |
+| ------ | --------------------------------------- | ----------------------------------- |
+| GET    | `/api/notificaciones/no-leidas`         | Obtener notificaciones no leídas.   |
+| GET    | `/api/notificaciones`                   | Obtener todas las notificaciones.   |
+| POST   | `/api/notificaciones/{id}/marcar-leida` | Marcar una notificación como leída. |
+| DELETE | `/api/notificaciones/{id}`              | Eliminar una notificación.          |
+| DELETE | `/api/notificaciones`                   | Eliminar todas las notificaciones.  |
 
 ### Movimientos
 
-| Método | Endpoint                      | Descripción                                                |
-| ------ | ----------------------------- | ---------------------------------------------------------- |
-| GET    | `/movimientos/`               | Obtener todos los movimientos.                             |
-| GET    | `/movimientos/entradas`       | Obtener las entradas de stock.                             |
-| GET    | `/movimientos/salidas`        | Obtener las salidas de stock.                              |
-| POST   | `/movimientos/registrar`      | Registrar un movimiento de stock.                          |
-| GET    | `/movimientos/reporte/{tipo}` | Generar reporte de movimientos (general, entrada, salida). |
+| Método | Endpoint                          | Descripción                                                |
+| ------ | --------------------------------- | ---------------------------------------------------------- |
+| GET    | `/api/movimientos`                | Obtener todos los movimientos.                             |
+| GET    | `/api/movimientos/entradas`       | Obtener las entradas de stock.                             |
+| GET    | `/api/movimientos/salidas`        | Obtener las salidas de stock.                              |
+| POST   | `/api/movimientos`                | Registrar un movimiento de stock.                          |
+| GET    | `/api/movimientos/reporte/{tipo}` | Generar reporte de movimientos (general, entrada, salida). |
 
 ## Requisitos
 
@@ -156,6 +156,6 @@ Esta API RESTful de Inventario permite gestionar productos, proveedores, entrada
 
 Para interactuar con la API, puedes usar herramientas como [Postman](https://www.postman.com/) o [cURL](https://curl.se/).
 
-## Autor
+## Desarrollador
 
 [FrankSkep](https://github.com/FrankSkep)

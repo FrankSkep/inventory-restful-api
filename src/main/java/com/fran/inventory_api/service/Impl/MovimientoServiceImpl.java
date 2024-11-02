@@ -2,7 +2,7 @@ package com.fran.inventory_api.service.Impl;
 
 import com.fran.inventory_api.dto.MovimientoResponse;
 import com.fran.inventory_api.entity.MovimientoStock;
-import com.fran.inventory_api.dto_mapper.MovimientoMapperDTO;
+import com.fran.inventory_api.mapper.MovimientoMapperDTO;
 import com.fran.inventory_api.repository.MovimientoRepository;
 import com.fran.inventory_api.repository.ProductoRepository;
 import com.fran.inventory_api.service.MovimientoService;

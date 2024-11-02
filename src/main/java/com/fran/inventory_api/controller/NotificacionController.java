@@ -23,24 +23,24 @@ public class NotificacionController {
         return notificacionService.getUnread();
     }
 
-    @GetMapping("/todas")
+    @GetMapping
     public List<Notificacion> getAllNotifications() {
         return notificacionService.getAll();
     }
 
-    @PostMapping("/marcar-leida/{id}")
+    @PostMapping("/{id}/marcar-leida")
     public ResponseEntity<?> markAsRead(@PathVariable Long id) {
         notificacionService.readed(id);
         return ResponseEntity.status(HttpStatus.OK).body("Notificación marcada como leída");
     }
 
-    @DeleteMapping("/eliminar/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteNotification(@PathVariable Long id) {
         notificacionService.delete(id);
         return ResponseEntity.status(HttpStatus.OK).body("Notificación eliminada");
     }
 
-    @DeleteMapping("/eliminar-todas")
+    @DeleteMapping
     public ResponseEntity<?> deleteAllNotifications() {
         notificacionService.deleteAll();
         return ResponseEntity.status(HttpStatus.OK).body("Notificaciones eliminadas");

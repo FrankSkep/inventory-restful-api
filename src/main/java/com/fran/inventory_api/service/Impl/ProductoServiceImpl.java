@@ -5,7 +5,7 @@ import com.fran.inventory_api.dto.Producto.ProductoResponseDetailed;
 import com.fran.inventory_api.entity.Imagen;
 import com.fran.inventory_api.entity.MovimientoStock;
 import com.fran.inventory_api.entity.Producto;
-import com.fran.inventory_api.dto_mapper.ProductoMapperDTO;
+import com.fran.inventory_api.mapper.ProductoMapperDTO;
 import com.fran.inventory_api.exception.ProductNotFoundException;
 import com.fran.inventory_api.repository.MovimientoRepository;
 import com.fran.inventory_api.repository.ProductoRepository;

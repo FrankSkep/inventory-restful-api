@@ -1,4 +1,4 @@
-package com.fran.inventory_api.dto_mapper;
+package com.fran.inventory_api.mapper;
 
 import com.fran.inventory_api.dto.MovimientoResponse;
 import com.fran.inventory_api.entity.MovimientoStock;

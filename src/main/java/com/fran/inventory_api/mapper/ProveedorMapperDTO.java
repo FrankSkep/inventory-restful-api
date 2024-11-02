@@ -1,4 +1,4 @@
-package com.fran.inventory_api.dto_mapper;
+package com.fran.inventory_api.mapper;
 
 import com.fran.inventory_api.dto.Producto.ProductoResponseProv;
 import com.fran.inventory_api.dto.Proveedor.ProveedorResponseBasic;

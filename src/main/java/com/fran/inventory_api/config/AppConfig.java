@@ -1,4 +1,4 @@
-package com.fran.inventory_api.auth.config;
+package com.fran.inventory_api.config;
 
 import com.fran.inventory_api.auth.repository.UserRepository;
 import org.springframework.context.annotation.Bean;

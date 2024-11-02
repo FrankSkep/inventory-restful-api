@@ -3,7 +3,7 @@ package com.fran.inventory_api.service.Impl;
 import com.fran.inventory_api.dto.Proveedor.ProveedorResponseBasic;
 import com.fran.inventory_api.dto.Proveedor.ProveedorResponseDetailed;
 import com.fran.inventory_api.entity.Proveedor;
-import com.fran.inventory_api.dto_mapper.ProveedorMapperDTO;
+import com.fran.inventory_api.mapper.ProveedorMapperDTO;
 import com.fran.inventory_api.repository.ProveedorRepository;
 import com.fran.inventory_api.service.ProveedorService;
 import jakarta.persistence.EntityNotFoundException;
