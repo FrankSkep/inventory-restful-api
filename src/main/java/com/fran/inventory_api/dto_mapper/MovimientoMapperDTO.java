@@ -1,7 +1,7 @@
-package com.fran.InventoryAPI.dto_mapper;
+package com.fran.inventory_api.dto_mapper;
 
-import com.fran.InventoryAPI.dto.MovimientoResponse;
-import com.fran.InventoryAPI.entity.MovimientoStock;
+import com.fran.inventory_api.dto.MovimientoResponse;
+import com.fran.inventory_api.entity.MovimientoStock;
 import org.springframework.stereotype.Component;
 
 @Component

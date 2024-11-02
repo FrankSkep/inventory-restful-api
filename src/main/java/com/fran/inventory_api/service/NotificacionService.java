@@ -1,6 +1,6 @@
-package com.fran.InventoryAPI.service;
+package com.fran.inventory_api.service;
 
-import com.fran.InventoryAPI.entity.Notificacion;
+import com.fran.inventory_api.entity.Notificacion;
 
 import java.util.List;
 

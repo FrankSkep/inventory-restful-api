@@ -44,41 +44,41 @@ Esta API RESTful de Inventario permite gestionar productos, proveedores, entrada
 
 ### Autenticación
 
-| Método | Endpoint         | Descripción                         |
-| ------ | ---------------- | ----------------------------------- |
-| POST   | `/auth/login`    | Iniciar sesión y obtener token JWT. |
-| POST   | `/auth/register` | Registrar un nuevo usuario.         |
+| Método | Endpoint             | Descripción                         |
+| ------ | -------------------- | ----------------------------------- |
+| POST   | `/api/auth/login`    | Iniciar sesión y obtener token JWT. |
+| POST   | `/api/auth/register` | Registrar un nuevo usuario.         |
 
 ### Productos
 
-| Método | Endpoint                    | Descripción                              |
-| ------ | --------------------------- | ---------------------------------------- |
-| GET    | `/inventario/`              | Obtener productos paginados y filtrados. |
-| GET    | `/inventario/detalles/{id}` | Obtener detalles de un producto.         |
-| POST   | `/inventario/nuevo`         | Agregar nuevo producto al inventario.    |
-| PUT    | `/inventario/editar/{id}`   | Editar un producto existente.            |
-| DELETE | `/inventario/eliminar/{id}` | Eliminar un producto.                    |
-| GET    | `/inventario/reporte`       | Generar reporte de inventario.           |
+| Método | Endpoint             | Descripción                              |
+| ------ | -------------------- | ---------------------------------------- |
+| GET    | `/productos`         | Obtener productos paginados y filtrados. |
+| GET    | `/productos/{id}`    | Obtener detalles de un producto.         |
+| POST   | `/productos`         | Agregar nuevo producto al inventario.    |
+| PUT    | `/productos/{id}`    | Editar un producto existente.            |
+| DELETE | `/productos/{id}`    | Eliminar un producto.                    |
+| GET    | `/productos/reporte` | Generar reporte de inventario.           |
 
 ### Categorías
 
-| Método | Endpoint                    | Descripción                            |
-| ------ | --------------------------- | -------------------------------------- |
-| GET    | `/categorias/`              | Obtener lista de todas las categorías. |
-| GET    | `/categorias/detalles/{id}` | Ver detalles de una categoría.         |
-| POST   | `/categorias/registrar`     | Registrar nueva categoría.             |
-| PUT    | `/categorias/editar/{id}`   | Editar datos de una categoría.         |
-| DELETE | `/categorias/eliminar/{id}` | Eliminar una categoría.                |
+| Método | Endpoint               | Descripción                            |
+| ------ | ---------------------- | -------------------------------------- |
+| GET    | `/api/categorias`      | Obtener lista de todas las categorías. |
+| GET    | `/api/categorias/{id}` | Ver detalles de una categoría.         |
+| POST   | `/api/categorias`      | Registrar nueva categoría.             |
+| PUT    | `/api/categorias/{id}` | Editar datos de una categoría.         |
+| DELETE | `/api/categorias/{id}` | Eliminar una categoría.                |
 
 ### Proveedores
 
-| Método | Endpoint                     | Descripción                             |
-| ------ | ---------------------------- | --------------------------------------- |
-| GET    | `/proveedores/`              | Obtener lista de todos los proveedores. |
-| GET    | `/proveedores/detalles/{id}` | Ver detalles de un proveedor.           |
-| POST   | `/proveedores/registrar`     | Registrar nuevo proveedor.              |
-| PUT    | `/proveedores/editar/{id}`   | Editar datos de un proveedor.           |
-| DELETE | `/proveedores/eliminar/{id}` | Eliminar un proveedor.                  |
+| Método | Endpoint                | Descripción                             |
+| ------ | ----------------------- | --------------------------------------- |
+| GET    | `/api/proveedores`      | Obtener lista de todos los proveedores. |
+| GET    | `/api/proveedores/{id}` | Ver detalles de un proveedor.           |
+| POST   | `/api/proveedores`      | Registrar nuevo proveedor.              |
+| PUT    | `/api/proveedores/{id}` | Editar datos de un proveedor.           |
+| DELETE | `/api/proveedores/{id}` | Eliminar un proveedor.                  |
 
 ### Notificaciones
 

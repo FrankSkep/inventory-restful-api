@@ -1,4 +1,4 @@
-package com.fran.InventoryAPI.auth.jwt;
+package com.fran.inventory_api.auth.jwt;
 
 import java.io.IOException;
 

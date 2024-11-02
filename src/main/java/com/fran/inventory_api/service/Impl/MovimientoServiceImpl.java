@@ -1,11 +1,11 @@
-package com.fran.InventoryAPI.service.Impl;
+package com.fran.inventory_api.service.Impl;
 
-import com.fran.InventoryAPI.dto.MovimientoResponse;
-import com.fran.InventoryAPI.entity.MovimientoStock;
-import com.fran.InventoryAPI.dto_mapper.MovimientoMapperDTO;
-import com.fran.InventoryAPI.repository.MovimientoRepository;
-import com.fran.InventoryAPI.repository.ProductoRepository;
-import com.fran.InventoryAPI.service.MovimientoService;
+import com.fran.inventory_api.dto.MovimientoResponse;
+import com.fran.inventory_api.entity.MovimientoStock;
+import com.fran.inventory_api.dto_mapper.MovimientoMapperDTO;
+import com.fran.inventory_api.repository.MovimientoRepository;
+import com.fran.inventory_api.repository.ProductoRepository;
+import com.fran.inventory_api.service.MovimientoService;
 import jakarta.persistence.EntityNotFoundException;
 
 import java.util.List;

@@ -1,11 +1,11 @@
-package com.fran.InventoryAPI.service.Impl;
+package com.fran.inventory_api.service.Impl;
 
-import com.fran.InventoryAPI.dto.Proveedor.ProveedorResponseBasic;
-import com.fran.InventoryAPI.dto.Proveedor.ProveedorResponseDetailed;
-import com.fran.InventoryAPI.entity.Proveedor;
-import com.fran.InventoryAPI.dto_mapper.ProveedorMapperDTO;
-import com.fran.InventoryAPI.repository.ProveedorRepository;
-import com.fran.InventoryAPI.service.ProveedorService;
+import com.fran.inventory_api.dto.Proveedor.ProveedorResponseBasic;
+import com.fran.inventory_api.dto.Proveedor.ProveedorResponseDetailed;
+import com.fran.inventory_api.entity.Proveedor;
+import com.fran.inventory_api.dto_mapper.ProveedorMapperDTO;
+import com.fran.inventory_api.repository.ProveedorRepository;
+import com.fran.inventory_api.service.ProveedorService;
 import jakarta.persistence.EntityNotFoundException;
 
 import java.util.List;

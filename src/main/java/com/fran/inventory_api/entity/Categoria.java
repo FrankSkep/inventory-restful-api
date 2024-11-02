@@ -1,4 +1,4 @@
-package com.fran.InventoryAPI.entity;
+package com.fran.inventory_api.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

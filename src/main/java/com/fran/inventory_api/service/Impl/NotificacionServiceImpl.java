@@ -1,8 +1,8 @@
-package com.fran.InventoryAPI.service.Impl;
+package com.fran.inventory_api.service.Impl;
 
-import com.fran.InventoryAPI.entity.Notificacion;
-import com.fran.InventoryAPI.repository.NotificacionRepository;
-import com.fran.InventoryAPI.service.NotificacionService;
+import com.fran.inventory_api.entity.Notificacion;
+import com.fran.inventory_api.repository.NotificacionRepository;
+import com.fran.inventory_api.service.NotificacionService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

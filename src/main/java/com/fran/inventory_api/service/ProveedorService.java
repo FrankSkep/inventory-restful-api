@@ -1,8 +1,8 @@
-package com.fran.InventoryAPI.service;
+package com.fran.inventory_api.service;
 
-import com.fran.InventoryAPI.dto.Proveedor.ProveedorResponseBasic;
-import com.fran.InventoryAPI.dto.Proveedor.ProveedorResponseDetailed;
-import com.fran.InventoryAPI.entity.Proveedor;
+import com.fran.inventory_api.dto.Proveedor.ProveedorResponseBasic;
+import com.fran.inventory_api.dto.Proveedor.ProveedorResponseDetailed;
+import com.fran.inventory_api.entity.Proveedor;
 import java.util.List;
 
 public interface ProveedorService {

@@ -1,6 +1,6 @@
-package com.fran.InventoryAPI.exception.handler;
+package com.fran.inventory_api.exception.handler;
 
-import com.fran.InventoryAPI.exception.ProductNotFoundException;
+import com.fran.inventory_api.exception.ProductNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;

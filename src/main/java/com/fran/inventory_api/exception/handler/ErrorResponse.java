@@ -1,4 +1,4 @@
-package com.fran.InventoryAPI.exception.handler;
+package com.fran.inventory_api.exception.handler;
 
 import lombok.Builder;
 import lombok.Data;

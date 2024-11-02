@@ -1,7 +1,7 @@
-package com.fran.InventoryAPI.service;
+package com.fran.inventory_api.service;
 
-import com.fran.InventoryAPI.dto.MovimientoResponse;
-import com.fran.InventoryAPI.entity.MovimientoStock;
+import com.fran.inventory_api.dto.MovimientoResponse;
+import com.fran.inventory_api.entity.MovimientoStock;
 
 import java.util.List;
 

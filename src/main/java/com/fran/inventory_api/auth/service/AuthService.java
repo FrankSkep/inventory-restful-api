@@ -1,13 +1,13 @@
-package com.fran.InventoryAPI.auth.service;
+package com.fran.inventory_api.auth.service;
 
-import com.fran.InventoryAPI.auth.dto.AuthResponse;
-import com.fran.InventoryAPI.auth.dto.LoginRequest;
-import com.fran.InventoryAPI.auth.dto.RegisterRequest;
-import com.fran.InventoryAPI.auth.entity.Role;
-import com.fran.InventoryAPI.auth.entity.User;
-import com.fran.InventoryAPI.auth.exception.AuthenticationException;
-import com.fran.InventoryAPI.auth.jwt.JwtService;
-import com.fran.InventoryAPI.auth.repository.UserRepository;
+import com.fran.inventory_api.auth.dto.AuthResponse;
+import com.fran.inventory_api.auth.dto.LoginRequest;
+import com.fran.inventory_api.auth.dto.RegisterRequest;
+import com.fran.inventory_api.auth.entity.Role;
+import com.fran.inventory_api.auth.entity.User;
+import com.fran.inventory_api.auth.exception.AuthenticationException;
+import com.fran.inventory_api.auth.jwt.JwtService;
+import com.fran.inventory_api.auth.repository.UserRepository;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;

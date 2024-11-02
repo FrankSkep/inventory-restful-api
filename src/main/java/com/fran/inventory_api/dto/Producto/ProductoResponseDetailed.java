@@ -1,7 +1,7 @@
-package com.fran.InventoryAPI.dto.Producto;
+package com.fran.inventory_api.dto.Producto;
 
-import com.fran.InventoryAPI.dto.Proveedor.ProveedorResponseBasic;
-import com.fran.InventoryAPI.entity.MovimientoStock;
+import com.fran.inventory_api.dto.Proveedor.ProveedorResponseBasic;
+import com.fran.inventory_api.entity.MovimientoStock;
 
 import java.util.List;
 import lombok.AllArgsConstructor;

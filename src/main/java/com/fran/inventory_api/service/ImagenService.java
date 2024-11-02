@@ -1,6 +1,6 @@
-package com.fran.InventoryAPI.service;
+package com.fran.inventory_api.service;
 
-import com.fran.InventoryAPI.entity.Imagen;
+import com.fran.inventory_api.entity.Imagen;
 import org.springframework.web.multipart.MultipartFile;
 
 public interface ImagenService {

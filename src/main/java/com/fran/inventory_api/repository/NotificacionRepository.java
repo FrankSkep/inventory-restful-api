@@ -1,6 +1,6 @@
-package com.fran.InventoryAPI.repository;
+package com.fran.inventory_api.repository;
 
-import com.fran.InventoryAPI.entity.Notificacion;
+import com.fran.inventory_api.entity.Notificacion;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

@@ -1,15 +1,15 @@
-package com.fran.InventoryAPI.controller;
+package com.fran.inventory_api.controller;
 
-import com.fran.InventoryAPI.dto.MovimientoResponse;
-import com.fran.InventoryAPI.entity.MovimientoStock;
+import com.fran.inventory_api.dto.MovimientoResponse;
+import com.fran.inventory_api.entity.MovimientoStock;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
-import com.fran.InventoryAPI.service.MovimientoService;
-import com.fran.InventoryAPI.service.ProductoService;
-import com.fran.InventoryAPI.service.Impl.ReporteService;
+import com.fran.inventory_api.service.MovimientoService;
+import com.fran.inventory_api.service.ProductoService;
+import com.fran.inventory_api.service.Impl.ReporteService;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -1,8 +1,8 @@
-package com.fran.InventoryAPI.service.Impl;
+package com.fran.inventory_api.service.Impl;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
-import com.fran.InventoryAPI.service.CloudinaryService;
+import com.fran.inventory_api.service.CloudinaryService;
 import io.github.cdimascio.dotenv.Dotenv;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;

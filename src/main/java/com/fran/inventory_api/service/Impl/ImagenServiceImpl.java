@@ -1,9 +1,9 @@
-package com.fran.InventoryAPI.service.Impl;
+package com.fran.inventory_api.service.Impl;
 
-import com.fran.InventoryAPI.entity.Imagen;
-import com.fran.InventoryAPI.repository.ImagenRepository;
-import com.fran.InventoryAPI.service.CloudinaryService;
-import com.fran.InventoryAPI.service.ImagenService;
+import com.fran.inventory_api.entity.Imagen;
+import com.fran.inventory_api.repository.ImagenRepository;
+import com.fran.inventory_api.service.CloudinaryService;
+import com.fran.inventory_api.service.ImagenService;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 

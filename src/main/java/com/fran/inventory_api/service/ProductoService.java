@@ -1,9 +1,9 @@
-package com.fran.InventoryAPI.service;
+package com.fran.inventory_api.service;
 
-import com.fran.InventoryAPI.dto.Producto.ProductoResponseBasic;
-import com.fran.InventoryAPI.dto.Producto.ProductoResponseDetailed;
-import com.fran.InventoryAPI.entity.MovimientoStock;
-import com.fran.InventoryAPI.entity.Producto;
+import com.fran.inventory_api.dto.Producto.ProductoResponseBasic;
+import com.fran.inventory_api.dto.Producto.ProductoResponseDetailed;
+import com.fran.inventory_api.entity.MovimientoStock;
+import com.fran.inventory_api.entity.Producto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.multipart.MultipartFile;

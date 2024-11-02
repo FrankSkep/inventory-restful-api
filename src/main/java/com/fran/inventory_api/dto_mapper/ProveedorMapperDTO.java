@@ -1,11 +1,11 @@
-package com.fran.InventoryAPI.dto_mapper;
+package com.fran.inventory_api.dto_mapper;
 
-import com.fran.InventoryAPI.dto.Producto.ProductoResponseProv;
-import com.fran.InventoryAPI.dto.Proveedor.ProveedorResponseBasic;
-import com.fran.InventoryAPI.dto.Proveedor.ProveedorRequest;
-import com.fran.InventoryAPI.dto.Proveedor.ProveedorResponseDetailed;
-import com.fran.InventoryAPI.entity.Producto;
-import com.fran.InventoryAPI.entity.Proveedor;
+import com.fran.inventory_api.dto.Producto.ProductoResponseProv;
+import com.fran.inventory_api.dto.Proveedor.ProveedorResponseBasic;
+import com.fran.inventory_api.dto.Proveedor.ProveedorRequest;
+import com.fran.inventory_api.dto.Proveedor.ProveedorResponseDetailed;
+import com.fran.inventory_api.entity.Producto;
+import com.fran.inventory_api.entity.Proveedor;
 
 import java.util.Set;
 import java.util.stream.Collectors;

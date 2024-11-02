@@ -1,6 +1,6 @@
-package com.fran.InventoryAPI.auth.config;
+package com.fran.inventory_api.auth.config;
 
-import com.fran.InventoryAPI.auth.repository.UserRepository;
+import com.fran.inventory_api.auth.repository.UserRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;

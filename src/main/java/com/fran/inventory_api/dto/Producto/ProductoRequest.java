@@ -1,4 +1,4 @@
-package com.fran.InventoryAPI.dto.Producto;
+package com.fran.inventory_api.dto.Producto;
 
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;

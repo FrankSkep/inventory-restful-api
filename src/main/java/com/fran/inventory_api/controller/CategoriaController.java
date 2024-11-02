@@ -1,7 +1,7 @@
-package com.fran.InventoryAPI.controller;
+package com.fran.inventory_api.controller;
 
-import com.fran.InventoryAPI.entity.Categoria;
-import com.fran.InventoryAPI.service.CategoriaService;
+import com.fran.inventory_api.entity.Categoria;
+import com.fran.inventory_api.service.CategoriaService;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

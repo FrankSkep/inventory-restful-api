@@ -1,7 +1,7 @@
-package com.fran.InventoryAPI.service.Impl;
+package com.fran.inventory_api.service.Impl;
 
-import com.fran.InventoryAPI.dto.MovimientoResponse;
-import com.fran.InventoryAPI.dto.Producto.ProductoResponseBasic;
+import com.fran.inventory_api.dto.MovimientoResponse;
+import com.fran.inventory_api.dto.Producto.ProductoResponseBasic;
 import com.itextpdf.io.image.ImageData;
 import com.itextpdf.io.image.ImageDataFactory;
 import com.itextpdf.kernel.pdf.PdfDocument;

@@ -1,12 +1,12 @@
-package com.fran.InventoryAPI.controller;
+package com.fran.inventory_api.controller;
 
-import com.fran.InventoryAPI.dto.Producto.ProductoResponseBasic;
-import com.fran.InventoryAPI.dto.Producto.ProductoRequest;
-import com.fran.InventoryAPI.entity.Producto;
-import com.fran.InventoryAPI.dto_mapper.ProductoMapperDTO;
-import com.fran.InventoryAPI.service.ProductoService;
-import com.fran.InventoryAPI.service.Impl.ReporteService;
-import com.fran.InventoryAPI.service.FileValidator;
+import com.fran.inventory_api.dto.Producto.ProductoResponseBasic;
+import com.fran.inventory_api.dto.Producto.ProductoRequest;
+import com.fran.inventory_api.entity.Producto;
+import com.fran.inventory_api.dto_mapper.ProductoMapperDTO;
+import com.fran.inventory_api.service.ProductoService;
+import com.fran.inventory_api.service.Impl.ReporteService;
+import com.fran.inventory_api.service.FileValidator;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 

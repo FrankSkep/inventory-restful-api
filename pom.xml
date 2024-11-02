@@ -9,9 +9,9 @@
         <relativePath/>
     </parent>
     <groupId>com.fran</groupId>
-    <artifactId>Inventory_REST_API</artifactId>
-    <version>0.1</version>
-    <name>Inventory</name>
+    <artifactId>inventory-rest-api</artifactId>
+    <version>1.0</version>
+    <name>inventory-application</name>
     <description>Rest API for inventory management</description>
     <url/>
     <licenses>

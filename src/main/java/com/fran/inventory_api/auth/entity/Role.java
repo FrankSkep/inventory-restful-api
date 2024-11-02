@@ -1,4 +1,4 @@
-package com.fran.InventoryAPI.auth.entity;
+package com.fran.inventory_api.auth.entity;
 
 public enum Role {
     ADMIN,

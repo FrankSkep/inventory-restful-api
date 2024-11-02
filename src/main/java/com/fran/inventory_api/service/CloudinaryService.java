@@ -1,4 +1,4 @@
-package com.fran.InventoryAPI.service;
+package com.fran.inventory_api.service;
 
 import org.springframework.web.multipart.MultipartFile;
 

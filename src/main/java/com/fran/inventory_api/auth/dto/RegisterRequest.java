@@ -1,4 +1,4 @@
-package com.fran.InventoryAPI.auth.dto;
+package com.fran.inventory_api.auth.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

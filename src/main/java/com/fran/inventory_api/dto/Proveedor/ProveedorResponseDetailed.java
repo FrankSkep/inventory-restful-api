@@ -1,6 +1,6 @@
-package com.fran.InventoryAPI.dto.Proveedor;
+package com.fran.inventory_api.dto.Proveedor;
 
-import com.fran.InventoryAPI.dto.Producto.ProductoResponseProv;
+import com.fran.inventory_api.dto.Producto.ProductoResponseProv;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 

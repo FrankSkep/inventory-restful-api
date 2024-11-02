@@ -1,17 +1,17 @@
-package com.fran.InventoryAPI.service.Impl;
+package com.fran.inventory_api.service.Impl;
 
-import com.fran.InventoryAPI.dto.Producto.ProductoResponseBasic;
-import com.fran.InventoryAPI.dto.Producto.ProductoResponseDetailed;
-import com.fran.InventoryAPI.entity.Imagen;
-import com.fran.InventoryAPI.entity.MovimientoStock;
-import com.fran.InventoryAPI.entity.Producto;
-import com.fran.InventoryAPI.dto_mapper.ProductoMapperDTO;
-import com.fran.InventoryAPI.exception.ProductNotFoundException;
-import com.fran.InventoryAPI.repository.MovimientoRepository;
-import com.fran.InventoryAPI.repository.ProductoRepository;
-import com.fran.InventoryAPI.service.ImagenService;
-import com.fran.InventoryAPI.service.NotificacionService;
-import com.fran.InventoryAPI.service.ProductoService;
+import com.fran.inventory_api.dto.Producto.ProductoResponseBasic;
+import com.fran.inventory_api.dto.Producto.ProductoResponseDetailed;
+import com.fran.inventory_api.entity.Imagen;
+import com.fran.inventory_api.entity.MovimientoStock;
+import com.fran.inventory_api.entity.Producto;
+import com.fran.inventory_api.dto_mapper.ProductoMapperDTO;
+import com.fran.inventory_api.exception.ProductNotFoundException;
+import com.fran.inventory_api.repository.MovimientoRepository;
+import com.fran.inventory_api.repository.ProductoRepository;
+import com.fran.inventory_api.service.ImagenService;
+import com.fran.inventory_api.service.NotificacionService;
+import com.fran.inventory_api.service.ProductoService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 

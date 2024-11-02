@@ -1,10 +1,10 @@
-package com.fran.InventoryAPI.auth.controller;
+package com.fran.inventory_api.auth.controller;
 
-import com.fran.InventoryAPI.auth.dto.AuthResponse;
-import com.fran.InventoryAPI.auth.dto.LoginRequest;
-import com.fran.InventoryAPI.auth.dto.RegisterRequest;
-import com.fran.InventoryAPI.auth.exception.AuthenticationException;
-import com.fran.InventoryAPI.auth.service.AuthService;
+import com.fran.inventory_api.auth.dto.AuthResponse;
+import com.fran.inventory_api.auth.dto.LoginRequest;
+import com.fran.inventory_api.auth.dto.RegisterRequest;
+import com.fran.inventory_api.auth.exception.AuthenticationException;
+import com.fran.inventory_api.auth.service.AuthService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

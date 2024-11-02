@@ -1,6 +1,6 @@
-package com.fran.InventoryAPI.repository;
+package com.fran.inventory_api.repository;
 
-import com.fran.InventoryAPI.entity.MovimientoStock;
+import com.fran.inventory_api.entity.MovimientoStock;
 import java.util.List;
 
 import jakarta.transaction.Transactional;

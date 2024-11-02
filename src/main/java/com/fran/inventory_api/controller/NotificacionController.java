@@ -1,7 +1,7 @@
-package com.fran.InventoryAPI.controller;
+package com.fran.inventory_api.controller;
 
-import com.fran.InventoryAPI.entity.Notificacion;
-import com.fran.InventoryAPI.service.NotificacionService;
+import com.fran.inventory_api.entity.Notificacion;
+import com.fran.inventory_api.service.NotificacionService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

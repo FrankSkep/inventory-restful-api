@@ -1,8 +1,8 @@
-package com.fran.InventoryAPI.service.Impl;
+package com.fran.inventory_api.service.Impl;
 
-import com.fran.InventoryAPI.entity.Categoria;
-import com.fran.InventoryAPI.repository.CategoriaRepository;
-import com.fran.InventoryAPI.service.CategoriaService;
+import com.fran.inventory_api.entity.Categoria;
+import com.fran.inventory_api.repository.CategoriaRepository;
+import com.fran.inventory_api.service.CategoriaService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 

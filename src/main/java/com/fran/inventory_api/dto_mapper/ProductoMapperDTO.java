@@ -1,11 +1,11 @@
-package com.fran.InventoryAPI.dto_mapper;
+package com.fran.inventory_api.dto_mapper;
 
-import com.fran.InventoryAPI.dto.Producto.ProductoResponseBasic;
-import com.fran.InventoryAPI.dto.Producto.ProductoRequest;
-import com.fran.InventoryAPI.dto.Producto.ProductoResponseDetailed;
-import com.fran.InventoryAPI.entity.Producto;
-import com.fran.InventoryAPI.service.CategoriaService;
-import com.fran.InventoryAPI.service.ProveedorService;
+import com.fran.inventory_api.dto.Producto.ProductoResponseBasic;
+import com.fran.inventory_api.dto.Producto.ProductoRequest;
+import com.fran.inventory_api.dto.Producto.ProductoResponseDetailed;
+import com.fran.inventory_api.entity.Producto;
+import com.fran.inventory_api.service.CategoriaService;
+import com.fran.inventory_api.service.ProveedorService;
 import org.springframework.stereotype.Component;
 
 @Component
