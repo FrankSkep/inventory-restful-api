@@ -1,11 +1,11 @@
-package com.fran.InventoryAPI.controller;
+package com.fran.inventory_api.controller;
 
-import com.fran.InventoryAPI.dto.Proveedor.ProveedorResponseBasic;
-import com.fran.InventoryAPI.dto.Proveedor.ProveedorRequest;
-import com.fran.InventoryAPI.dto.Proveedor.ProveedorResponseDetailed;
-import com.fran.InventoryAPI.entity.Proveedor;
-import com.fran.InventoryAPI.dto_mapper.ProveedorMapperDTO;
-import com.fran.InventoryAPI.service.ProveedorService;
+import com.fran.inventory_api.dto.Proveedor.ProveedorResponseBasic;
+import com.fran.inventory_api.dto.Proveedor.ProveedorRequest;
+import com.fran.inventory_api.dto.Proveedor.ProveedorResponseDetailed;
+import com.fran.inventory_api.entity.Proveedor;
+import com.fran.inventory_api.dto_mapper.ProveedorMapperDTO;
+import com.fran.inventory_api.service.ProveedorService;
 import jakarta.validation.Valid;
 
 import java.util.List;
@@ -33,20 +33,17 @@ public class ProveedorController {
         this.proveedorMapper = proveedorMapper;
     }
 
-    // Obtener lista de todos los proveedores
-    @GetMapping({"", "/"})
+    @GetMapping
     public List<ProveedorResponseBasic> getSuppliers() {
         return proveedorService.obtenerProveedores();
     }
 
-    // Detalles de un proveedor
-    @GetMapping("/detalles/{id}")
+    @GetMapping("/{id}")
     public ProveedorResponseDetailed supplierDetails(@PathVariable Long id) {
         return proveedorService.getDetails(proveedorService.getById(id));
     }
 
-    // Registrar nuevo proveedor
-    @PostMapping("/registrar")
+    @PostMapping
     public ResponseEntity<?> createSupplier(@Valid @RequestBody ProveedorRequest supplierRequest, BindingResult result) {
 
         if (result.hasErrors()) {
@@ -59,7 +56,7 @@ public class ProveedorController {
         return ResponseEntity.ok(supplier);
     }
 
-    @PutMapping("/editar/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<?> updateSupplier(@PathVariable Long id, @Valid @RequestBody ProveedorRequest supplier, BindingResult result) {
 
         if (result.hasErrors()) {
@@ -69,7 +66,7 @@ public class ProveedorController {
         return ResponseEntity.ok(proveedorService.update(proveedorMapper.toEntityFromDTOWithId(supplier)));
     }
 
-    @DeleteMapping("/eliminar/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteSupplier(@PathVariable Long id) {
 
         proveedorService.delete(id);
