@@ -21,11 +21,11 @@ public class JwtService {
 
     @Value("${jwt.secret.key}")
     private String SECRET_KEY;
+
     private static final long JWT_TOKEN_VALIDITY = 24 * 60 * 1000; // 24 minutes in milliseconds
 
 
     public String getToken(UserDetails user) {
-        System.out.println("secret key: " + SECRET_KEY);
         return getToken(new HashMap<>(), user);
     }
 
