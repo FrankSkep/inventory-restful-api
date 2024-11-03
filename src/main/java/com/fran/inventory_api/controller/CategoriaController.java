@@ -18,7 +18,7 @@ public class CategoriaController {
         this.categoriaService = categoriaService;
     }
 
-    @GetMapping("/")
+    @GetMapping
     public List<Categoria> getCategories() {
         return categoriaService.getAll();
     }

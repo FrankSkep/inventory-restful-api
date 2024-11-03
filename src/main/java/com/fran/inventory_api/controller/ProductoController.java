@@ -21,7 +21,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-//import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -43,7 +42,6 @@ public class ProductoController {
 
     // Obtener productos paginados
     @GetMapping
-    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     public Page<ProductoResponseBasic> getProducts(@RequestParam(defaultValue = "0") int page,
                                                    @RequestParam(defaultValue = "10") int size) {
         Pageable pageable = PageRequest.of(page, size);
@@ -52,7 +50,6 @@ public class ProductoController {
 
     // Obtener detalles de un producto
     @GetMapping("/{id}")
-//    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     public ResponseEntity<?> getProductDetails(@PathVariable Long id) {
         try {
             return ResponseEntity.ok(productoService.getProductDetails(id));
@@ -65,7 +62,7 @@ public class ProductoController {
 
     // Agregar nuevo producto al inventario
     @PostMapping
-//    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> createProduct(
             @Valid @ModelAttribute ProductoRequest productoRequest,
             @RequestPart(value = "file", required = false) MultipartFile file,
@@ -107,7 +104,7 @@ public class ProductoController {
 
     // Eliminar un producto por su ID
     @DeleteMapping("/{id}")
-//    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> deleteProduct(@PathVariable Long id) {
         try {
             productoService.delete(id);
@@ -124,7 +121,6 @@ public class ProductoController {
     }
 
     @GetMapping("/reporte")
-//    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     public ResponseEntity<byte[]> generarReporteInventario() {
         try {
             byte[] pdfBytes = reporteService.genInventoryReport(productoService.getAllProducts());
