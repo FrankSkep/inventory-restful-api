@@ -1,8 +1,4 @@
-# Inventario API RESTful
-
-## Descripción
-
-Esta API RESTful de Inventario permite gestionar productos, proveedores, entradas/salidas de stock y notificaciones. Proporciona funcionalidades para crear, leer, actualizar y eliminar registros, así como para generar reportes. La API también incluye autenticación basada en JWT para la gestión de roles y permisos.
+<h1 align="center">API RESTful Inventario</h1>
 
 ## Tabla de Contenidos
 
@@ -19,22 +15,29 @@ Esta API RESTful de Inventario permite gestionar productos, proveedores, entrada
 - [Requisitos](#requisitos)
 - [Instalación](#instalación)
 
+## Descripción
+
+Esta API RESTful de Inventario permite gestionar productos, proveedores, entradas/salidas de stock y notificaciones. Proporciona funcionalidades para crear, leer, actualizar y eliminar registros, generacion de reportes y gestion de imagenes de productos en la nube con Cloudinary. La API incluye autenticación basada en JWT para la gestión de roles y permisos.
+
 ## Funcionalidades
 
 ### Autenticación y Autorización
 
-- Gestión de roles y permisos.
-- Autenticación basada en JWT (JSON Web Tokens).
+- Registro de nuevos usuarios.
+- Inicio de sesión con credenciales de usuario.
+- Generación y validación de tokens JWT para autenticación.
+- Protección de endpoints mediante roles (`USER` y `ADMIN`).
+- Manejo de excepciones de autenticación y autorización.
 
 ### Productos
 
 - Crear, leer, actualizar y eliminar productos.
 - Gestionar imágenes de productos.
 - Buscar y filtrar productos.
-- Ver detalles del producto (datos, entradas/salidas de stock y proveedor).
+- Ver detalles del producto (datos, movimientos de stock y proveedor).
 - Conteo del total de productos.
 - Exportar reporte PDF del inventario actual.
-- Paginación y filtrado avanzado de productos.
+- Paginación de productos.
 
 ### Categorias
 
@@ -44,14 +47,14 @@ Esta API RESTful de Inventario permite gestionar productos, proveedores, entrada
 
 - Crear, leer, actualizar y eliminar proveedores.
 - Asociar productos con proveedores.
-- Ver detalles del proveedor (datos y productos que provee).
+- Ver detalles del proveedor (datos y productos).
 
 ### Movimientos
 
 - Registrar entradas y salidas de stock.
 - Visualizar el historial general de movimientos de stock.
 - Notificación para stock bajo.
-- Exportar reporte PDF de movimientos de stock(Entrada / Salida / General).
+- Exportar reporte PDF de movimientos de stock (Entrada / Salida / General).
 
 ### Notificaciones
 
@@ -135,37 +138,37 @@ El rol `ADMIN` tiene acceso total, incluyendo permisos para modificar, crear y e
 
 ### Resumen de Permisos por Rol
 
-| Endpoint                                | Método | Rol `USER` | Rol `ADMIN` |
-| --------------------------------------- | ------ | ---------- | ----------- |
-| `/productos`                            | GET    | ✔️         | ✔️          |
-| `/productos/{id}`                       | GET    | ✔️         | ✔️          |
-| `/productos`                            | POST   |            | ✔️          |
-| `/productos/{id}`                       | PUT    |            | ✔️          |
-| `/productos/{id}`                       | DELETE |            | ✔️          |
-| `/productos/reporte`                    | GET    | ✔️         | ✔️          |
-| `/api/categorias`                       | GET    | ✔️         | ✔️          |
-| `/api/categorias/{id}`                  | GET    | ✔️         | ✔️          |
-| `/api/categorias`                       | POST   |            | ✔️          |
-| `/api/categorias/{id}`                  | PUT    |            | ✔️          |
-| `/api/categorias/{id}`                  | DELETE |            | ✔️          |
-| `/api/proveedores`                      | GET    | ✔️         | ✔️          |
-| `/api/proveedores/{id}`                 | GET    | ✔️         | ✔️          |
-| `/api/proveedores`                      | POST   |            | ✔️          |
-| `/api/proveedores/{id}`                 | PUT    |            | ✔️          |
-| `/api/proveedores/{id}`                 | DELETE |            | ✔️          |
-| `/api/notificaciones/no-leidas`         | GET    | ✔️         | ✔️          |
-| `/api/notificaciones`                   | GET    | ✔️         | ✔️          |
-| `/api/notificaciones/{id}/marcar-leida` | POST   | ✔️         | ✔️          |
-| `/api/notificaciones/{id}`              | DELETE |            | ✔️          |
-| `/api/notificaciones`                   | DELETE |            | ✔️          |
-| `/api/movimientos`                      | GET    | ✔️         | ✔️          |
-| `/api/movimientos/entradas`             | GET    | ✔️         | ✔️          |
-| `/api/movimientos/salidas`              | GET    | ✔️         | ✔️          |
-| `/api/movimientos`                      | POST   | ✔️         | ✔️          |
-| `/api/movimientos/{id}`                 | DELETE |            | ✔️          |
-| `/api/movimientos/entradas`             | DELETE |            | ✔️          |
-| `/api/movimientos/salidas`              | DELETE |            | ✔️          |
-| `/api/movimientos/reporte/{tipo}`       | GET    | ✔️         | ✔️          |
+| Endpoint                                | Método | `USER` | `ADMIN` |
+| --------------------------------------- | ------ | ------ | ------- |
+| `/productos`                            | GET    | ✔️     | ✔️      |
+| `/productos/{id}`                       | GET    | ✔️     | ✔️      |
+| `/productos`                            | POST   |        | ✔️      |
+| `/productos/{id}`                       | PUT    |        | ✔️      |
+| `/productos/{id}`                       | DELETE |        | ✔️      |
+| `/productos/reporte`                    | GET    | ✔️     | ✔️      |
+| `/api/categorias`                       | GET    | ✔️     | ✔️      |
+| `/api/categorias/{id}`                  | GET    | ✔️     | ✔️      |
+| `/api/categorias`                       | POST   |        | ✔️      |
+| `/api/categorias/{id}`                  | PUT    |        | ✔️      |
+| `/api/categorias/{id}`                  | DELETE |        | ✔️      |
+| `/api/proveedores`                      | GET    | ✔️     | ✔️      |
+| `/api/proveedores/{id}`                 | GET    | ✔️     | ✔️      |
+| `/api/proveedores`                      | POST   |        | ✔️      |
+| `/api/proveedores/{id}`                 | PUT    |        | ✔️      |
+| `/api/proveedores/{id}`                 | DELETE |        | ✔️      |
+| `/api/notificaciones/no-leidas`         | GET    | ✔️     | ✔️      |
+| `/api/notificaciones`                   | GET    | ✔️     | ✔️      |
+| `/api/notificaciones/{id}/marcar-leida` | POST   | ✔️     | ✔️      |
+| `/api/notificaciones/{id}`              | DELETE |        | ✔️      |
+| `/api/notificaciones`                   | DELETE |        | ✔️      |
+| `/api/movimientos`                      | GET    | ✔️     | ✔️      |
+| `/api/movimientos/entradas`             | GET    | ✔️     | ✔️      |
+| `/api/movimientos/salidas`              | GET    | ✔️     | ✔️      |
+| `/api/movimientos`                      | POST   | ✔️     | ✔️      |
+| `/api/movimientos/{id}`                 | DELETE |        | ✔️      |
+| `/api/movimientos/entradas`             | DELETE |        | ✔️      |
+| `/api/movimientos/salidas`              | DELETE |        | ✔️      |
+| `/api/movimientos/reporte/{tipo}`       | GET    | ✔️     | ✔️      |
 
 ## Requisitos
 

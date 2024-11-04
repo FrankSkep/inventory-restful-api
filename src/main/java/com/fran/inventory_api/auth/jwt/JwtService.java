@@ -22,7 +22,7 @@ public class JwtService {
     @Value("${jwt.secret.key}")
     private String SECRET_KEY;
 
-    private static final long JWT_TOKEN_VALIDITY = 24 * 60 * 1000; // 24 minutes in milliseconds
+    private static final long JWT_TOKEN_VALIDITY = 4 * 60 * 60 * 1000; // 4 hours in milliseconds
 
 
     public String getToken(UserDetails user) {
