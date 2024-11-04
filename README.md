@@ -4,7 +4,27 @@
 
 Esta API RESTful de Inventario permite gestionar productos, proveedores, entradas/salidas de stock y notificaciones. Proporciona funcionalidades para crear, leer, actualizar y eliminar registros, así como para generar reportes. La API también incluye autenticación basada en JWT para la gestión de roles y permisos.
 
+## Tabla de Contenidos
+
+- [Descripción](#descripción)
+- [Funcionalidades](#funcionalidades)
+- [Endpoints](#endpoints)
+  - [Autenticación](#autenticación)
+  - [Productos](#productos)
+  - [Categorías](#categorías)
+  - [Proveedores](#proveedores)
+  - [Movimientos](#movimientos)
+  - [Notificaciones](#notificaciones)
+- [Permisos por Rol](#permisos-por-rol)
+- [Requisitos](#requisitos)
+- [Instalación](#instalación)
+
 ## Funcionalidades
+
+### Autenticación y Autorización
+
+- Gestión de roles y permisos.
+- Autenticación basada en JWT (JSON Web Tokens).
 
 ### Productos
 
@@ -16,12 +36,9 @@ Esta API RESTful de Inventario permite gestionar productos, proveedores, entrada
 - Exportar reporte PDF del inventario actual.
 - Paginación y filtrado avanzado de productos.
 
-### Stock
+### Categorias
 
-- Registrar entradas y salidas de stock.
-- Visualizar el historial general de movimientos de stock.
-- Notificación para stock bajo.
-- Exportar reporte PDF de movimientos de stock(Entrada / Salida / General).
+- Crear, leer, actualizar y eliminar categorias de productos.
 
 ### Proveedores
 
@@ -29,10 +46,12 @@ Esta API RESTful de Inventario permite gestionar productos, proveedores, entrada
 - Asociar productos con proveedores.
 - Ver detalles del proveedor (datos y productos que provee).
 
-### Autenticación y Autorización
+### Movimientos
 
-- Gestión de roles y permisos.
-- Autenticación basada en JWT (JSON Web Tokens).
+- Registrar entradas y salidas de stock.
+- Visualizar el historial general de movimientos de stock.
+- Notificación para stock bajo.
+- Exportar reporte PDF de movimientos de stock(Entrada / Salida / General).
 
 ### Notificaciones
 
@@ -80,6 +99,20 @@ Esta API RESTful de Inventario permite gestionar productos, proveedores, entrada
 | PUT    | `/api/proveedores/{id}` | Editar datos de un proveedor.           |
 | DELETE | `/api/proveedores/{id}` | Eliminar un proveedor.                  |
 
+### Movimientos
+
+| Método | Endpoint                          | Descripción                                                |
+| ------ | --------------------------------- | ---------------------------------------------------------- |
+| GET    | `/api/movimientos`                | Obtener todos los movimientos.                             |
+| GET    | `/api/movimientos/entradas`       | Obtener las entradas de stock.                             |
+| GET    | `/api/movimientos/salidas`        | Obtener las salidas de stock.                              |
+| DELETE | `/api/movimientos`                | Eliminar todos los movimientos.                            |
+| DELETE | `/api/movimientos/{id}`           | Eliminar un movimiento de stock.                           |
+| DELETE | `/api/movimientos/entradas`       | Eliminar todas las entradas de stock.                      |
+| DELETE | `/api/movimientos/salidas`        | Eliminar todas las salidas de stock.                       |
+| POST   | `/api/movimientos`                | Registrar un movimiento de stock.                          |
+| GET    | `/api/movimientos/reporte/{tipo}` | Generar reporte de movimientos (general, entrada, salida). |
+
 ### Notificaciones
 
 | Método | Endpoint                                | Descripción                         |
@@ -90,19 +123,49 @@ Esta API RESTful de Inventario permite gestionar productos, proveedores, entrada
 | DELETE | `/api/notificaciones/{id}`              | Eliminar una notificación.          |
 | DELETE | `/api/notificaciones`                   | Eliminar todas las notificaciones.  |
 
-### Movimientos
+## Permisos por Rol
 
-| Método | Endpoint                          | Descripción                                                |
-| ------ |-----------------------------------|------------------------------------------------------------|
-| GET    | `/api/movimientos`                | Obtener todos los movimientos.                             |
-| GET    | `/api/movimientos/entradas`       | Obtener las entradas de stock.                             |
-| GET    | `/api/movimientos/salidas`        | Obtener las salidas de stock.                              |
-| DELETE | `/api/movimientos`                | Eliminar todos los movimientos.                            |
-| DELETE | `/api/movimientos/{id}`           | Eliminar un movimiento de stock.                           |
-| DELETE | `/api/movimientos/entradas`       | Eliminar todas las entradas de stock.                      |
-| DELETE | `/api/movimientos/salidas`        | Eliminar todas las salidas de stock.                       |
-| POST   | `/api/movimientos`                | Registrar un movimiento de stock.                          |
-| GET    | `/api/movimientos/reporte/{tipo}` | Generar reporte de movimientos (general, entrada, salida). |
+### `USER`
+
+El rol `USER` tiene permisos para consultar y realizar operaciones de bajo impacto en el sistema, especialmente aquellas relacionadas con el acceso a datos, la consulta de información y la creación de registros de stock que puedan ser revisados o auditados posteriormente por un `ADMIN`.
+
+### `ADMIN`
+
+El rol `ADMIN` tiene acceso total, incluyendo permisos para modificar, crear y eliminar recursos críticos, como productos y proveedores. También debe gestionar el inventario y los movimientos de stock de manera completa.
+
+### Resumen de Permisos por Rol
+
+| Endpoint                                | Método | Rol `USER` | Rol `ADMIN` |
+| --------------------------------------- | ------ | ---------- | ----------- |
+| `/productos`                            | GET    | ✔️         | ✔️          |
+| `/productos/{id}`                       | GET    | ✔️         | ✔️          |
+| `/productos`                            | POST   |            | ✔️          |
+| `/productos/{id}`                       | PUT    |            | ✔️          |
+| `/productos/{id}`                       | DELETE |            | ✔️          |
+| `/productos/reporte`                    | GET    | ✔️         | ✔️          |
+| `/api/categorias`                       | GET    | ✔️         | ✔️          |
+| `/api/categorias/{id}`                  | GET    | ✔️         | ✔️          |
+| `/api/categorias`                       | POST   |            | ✔️          |
+| `/api/categorias/{id}`                  | PUT    |            | ✔️          |
+| `/api/categorias/{id}`                  | DELETE |            | ✔️          |
+| `/api/proveedores`                      | GET    | ✔️         | ✔️          |
+| `/api/proveedores/{id}`                 | GET    | ✔️         | ✔️          |
+| `/api/proveedores`                      | POST   |            | ✔️          |
+| `/api/proveedores/{id}`                 | PUT    |            | ✔️          |
+| `/api/proveedores/{id}`                 | DELETE |            | ✔️          |
+| `/api/notificaciones/no-leidas`         | GET    | ✔️         | ✔️          |
+| `/api/notificaciones`                   | GET    | ✔️         | ✔️          |
+| `/api/notificaciones/{id}/marcar-leida` | POST   | ✔️         | ✔️          |
+| `/api/notificaciones/{id}`              | DELETE |            | ✔️          |
+| `/api/notificaciones`                   | DELETE |            | ✔️          |
+| `/api/movimientos`                      | GET    | ✔️         | ✔️          |
+| `/api/movimientos/entradas`             | GET    | ✔️         | ✔️          |
+| `/api/movimientos/salidas`              | GET    | ✔️         | ✔️          |
+| `/api/movimientos`                      | POST   | ✔️         | ✔️          |
+| `/api/movimientos/{id}`                 | DELETE |            | ✔️          |
+| `/api/movimientos/entradas`             | DELETE |            | ✔️          |
+| `/api/movimientos/salidas`              | DELETE |            | ✔️          |
+| `/api/movimientos/reporte/{tipo}`       | GET    | ✔️         | ✔️          |
 
 ## Requisitos
 
