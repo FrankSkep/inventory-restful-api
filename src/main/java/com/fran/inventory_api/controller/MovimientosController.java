@@ -47,13 +47,8 @@ public class MovimientosController {
 
     @PostMapping
     public ResponseEntity<?> addMovement(@RequestBody Movimiento movimiento) {
-        try {
-            Movimiento movement = productoService.updateStock(movimiento);
-            return ResponseEntity.status(HttpStatus.CREATED).body(movement);
-        } catch (
-                IllegalArgumentException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-        }
+        Movimiento movement = productoService.updateStock(movimiento);
+        return ResponseEntity.status(HttpStatus.CREATED).body(movement);
     }
 
     @DeleteMapping
