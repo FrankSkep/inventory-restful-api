@@ -2,6 +2,7 @@ package com.fran.inventory_api.auth.jwt;
 
 import java.io.IOException;
 
+import com.fran.inventory_api.auth.exception.InvalidTokenException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -51,8 +52,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 
                 SecurityContextHolder.getContext().setAuthentication(authToken);
+            } else {
+                throw new InvalidTokenException("Token JWT inválido");
             }
-
         }
 
         filterChain.doFilter(request, response);

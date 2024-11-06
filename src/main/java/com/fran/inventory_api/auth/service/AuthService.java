@@ -6,6 +6,7 @@ import com.fran.inventory_api.auth.dto.RegisterRequest;
 import com.fran.inventory_api.auth.entity.Role;
 import com.fran.inventory_api.auth.entity.User;
 import com.fran.inventory_api.auth.exception.AuthenticationException;
+import com.fran.inventory_api.auth.exception.InvalidUserRegistrationException;
 import com.fran.inventory_api.auth.jwt.JwtService;
 import com.fran.inventory_api.auth.repository.UserRepository;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -33,12 +34,18 @@ public class AuthService {
             return AuthResponse.builder()
                     .token(token)
                     .build();
-        } catch (Exception e) {
+        } catch (
+                Exception e) {
             throw new AuthenticationException("Usuario o contraseña incorrectos");
         }
     }
 
     public AuthResponse register(RegisterRequest request) {
+
+        if (userRepository.existsByUsername(request.getUsername())) {
+            throw new AuthenticationException("El usuario ya existe");
+        }
+
         User user = User.builder()
                 .username(request.getUsername())
                 .password(passwordEncoder.encode(request.getPassword()))
@@ -53,5 +60,27 @@ public class AuthService {
         return AuthResponse.builder()
                 .token(jwtService.getToken(user))
                 .build();
+    }
+
+    public void delete(String username) {
+        userRepository.deleteByUsername(username);
+    }
+
+    public void validatePassword(String password) {
+        if (password.length() < 8) {
+            throw new InvalidUserRegistrationException("La contraseña debe tener al menos 8 caracteres");
+        }
+
+        if (!password.matches(".*[A-Z].*")) {
+            throw new InvalidUserRegistrationException("La contraseña debe tener al menos una letra mayúscula");
+        }
+
+        if (password.contains(" ")) {
+            throw new InvalidUserRegistrationException("La contraseña no puede contener espacios en blanco");
+        }
+
+        if (!password.matches(".*\\d.*")) {
+            throw new InvalidUserRegistrationException("La contraseña debe tener al menos un número");
+        }
     }
 }
