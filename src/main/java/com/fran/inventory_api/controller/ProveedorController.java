@@ -11,6 +11,7 @@ import jakarta.validation.Valid;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -44,6 +45,7 @@ public class ProveedorController {
     }
 
     @PostMapping
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> createSupplier(@Valid @RequestBody ProveedorRequest supplierRequest, BindingResult result) {
 
         if (result.hasErrors()) {
@@ -57,6 +59,7 @@ public class ProveedorController {
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> updateSupplier(@PathVariable Long id, @Valid @RequestBody ProveedorRequest supplier, BindingResult result) {
 
         if (result.hasErrors()) {
@@ -67,6 +70,7 @@ public class ProveedorController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> deleteSupplier(@PathVariable Long id) {
 
         proveedorService.delete(id);

@@ -4,6 +4,7 @@ import com.fran.inventory_api.entity.Notificacion;
 import com.fran.inventory_api.service.NotificacionService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -35,12 +36,14 @@ public class NotificacionController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> deleteNotification(@PathVariable Long id) {
         notificacionService.delete(id);
         return ResponseEntity.status(HttpStatus.OK).body("Notificación eliminada");
     }
 
     @DeleteMapping
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> deleteAllNotifications() {
         notificacionService.deleteAll();
         return ResponseEntity.status(HttpStatus.OK).body("Notificaciones eliminadas");

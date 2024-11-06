@@ -73,14 +73,14 @@ Esta API RESTful de Inventario permite gestionar productos, proveedores, entrada
 
 ### Productos
 
-| Método | Endpoint             | Descripción                              |
-| ------ | -------------------- | ---------------------------------------- |
-| GET    | `/productos`         | Obtener productos paginados y filtrados. |
-| GET    | `/productos/{id}`    | Obtener detalles de un producto.         |
-| POST   | `/productos`         | Agregar nuevo producto al inventario.    |
-| PUT    | `/productos/{id}`    | Editar un producto existente.            |
-| DELETE | `/productos/{id}`    | Eliminar un producto.                    |
-| GET    | `/productos/reporte` | Generar reporte de inventario.           |
+| Método | Endpoint                 | Descripción                              |
+| ------ |--------------------------| ---------------------------------------- |
+| GET    | `/api/productos`         | Obtener productos paginados y filtrados. |
+| GET    | `/api/productos/{id}`    | Obtener detalles de un producto.         |
+| POST   | `/api/productos`         | Agregar nuevo producto al inventario.    |
+| PUT    | `/api/productos/{id}`    | Editar un producto existente.            |
+| DELETE | `/api/productos/{id}`    | Eliminar un producto.                    |
+| GET    | `/api/productos/reporte` | Generar reporte de inventario.           |
 
 ### Categorías
 

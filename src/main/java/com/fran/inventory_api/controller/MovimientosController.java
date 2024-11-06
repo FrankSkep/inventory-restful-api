@@ -13,6 +13,7 @@ import com.fran.inventory_api.service.Impl.ReporteService;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -56,12 +57,14 @@ public class MovimientosController {
     }
 
     @DeleteMapping
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> deleteAllMovements() {
         movimientoService.deleteAllMovements();
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> deleteMovement(@PathVariable Long id) {
         movimientoService.delete(id);
         return ResponseEntity.status(HttpStatus.OK).build();
@@ -69,6 +72,7 @@ public class MovimientosController {
 
 
     @DeleteMapping("/entradas")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> deleteAllEntries() {
         movimientoService.deleteAllEntries();
         return ResponseEntity.status(HttpStatus.OK).build();
