@@ -2,6 +2,7 @@ package com.fran.inventory_api.service.Impl;
 
 import com.fran.inventory_api.dto.MovimientoResponse;
 import com.fran.inventory_api.dto.Producto.ProductoResponseBasic;
+import com.fran.inventory_api.exception.InvalidReportType;
 import com.itextpdf.io.image.ImageData;
 import com.itextpdf.io.image.ImageDataFactory;
 import com.itextpdf.kernel.pdf.PdfDocument;
@@ -97,9 +98,14 @@ public class ReporteService {
         PdfDocument pdfDoc = new PdfDocument(writer);
         Document document = new Document(pdfDoc);
 
+        if (!tipoReporte.equals("general") && !tipoReporte.equals("entrada") && !tipoReporte.equals("salida")) {
+            throw new InvalidReportType("Tipo de reporte inválido");
+        }
+
         // Título del reporte
         String reportTitle = tipoReporte.equals("general") ? "Reporte de movimientos de inventario" :
                 tipoReporte.equals("entrada") ? "Reporte de entradas de inventario" : "Reporte de salidas de inventario";
+
         document.add(new Paragraph(reportTitle).setBold().setFontSize(20).setTextAlignment(TextAlignment.CENTER));
         document.add(new Paragraph("Fecha de generación: " + java.time.LocalDate.now()).setItalic().setFontSize(12).setTextAlignment(TextAlignment.CENTER));
 

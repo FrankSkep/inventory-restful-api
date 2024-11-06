@@ -1,6 +1,7 @@
 package com.fran.inventory_api.service.Impl;
 
 import com.fran.inventory_api.entity.Notificacion;
+import com.fran.inventory_api.exception.NotificationNotFoundException;
 import com.fran.inventory_api.repository.NotificacionRepository;
 import com.fran.inventory_api.service.NotificacionService;
 import org.springframework.stereotype.Service;
@@ -35,14 +36,17 @@ public class NotificacionServiceImpl implements NotificacionService {
 
     @Override
     public void readed(Long id) {
-        Notificacion notificacion = notificacionRepository.findById(id).orElseThrow(() -> new RuntimeException("Notificación no encontrada"));
+        Notificacion notificacion = notificacionRepository.findById(id)
+                .orElseThrow(() -> new NotificationNotFoundException("Notificación no encontrada"));
         notificacion.setRead(true);
         notificacionRepository.save(notificacion);
     }
 
     @Override
     public void delete(Long id) {
-        notificacionRepository.deleteById(id);
+        Notificacion notificacion = notificacionRepository.findById(id)
+                .orElseThrow(() -> new NotificationNotFoundException("Notificación no encontrada"));
+        notificacionRepository.delete(notificacion);
     }
 
     @Override

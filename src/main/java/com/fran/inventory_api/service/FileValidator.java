@@ -32,6 +32,7 @@ public class FileValidator {
         if (extension == null || !ALLOWED_EXTENSIONS.contains(extension.toLowerCase())) {
             return false;
         }
+
         // Verificar el tipo MIME
         String mimeType = file.getContentType();
         if (mimeType == null || !ALLOWED_MIME_TYPES.contains(mimeType)) {
@@ -41,7 +42,7 @@ public class FileValidator {
         return file.getSize() <= MAX_FILE_SIZE;
     }
 
-    // Método para obtener la extensión del archivo
+    // obtener la extensión del archivo
     private static String getFileExtension(MultipartFile file) {
         String originalFilename = file.getOriginalFilename();
         if (StringUtils.hasText(originalFilename) && originalFilename.contains(".")) {

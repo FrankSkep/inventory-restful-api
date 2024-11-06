@@ -3,6 +3,7 @@ package com.fran.inventory_api.service.Impl;
 import com.fran.inventory_api.dto.Proveedor.ProveedorResponseBasic;
 import com.fran.inventory_api.dto.Proveedor.ProveedorResponseDetailed;
 import com.fran.inventory_api.entity.Proveedor;
+import com.fran.inventory_api.exception.SupplierNotFoundException;
 import com.fran.inventory_api.mapper.ProveedorMapperDTO;
 import com.fran.inventory_api.repository.ProveedorRepository;
 import com.fran.inventory_api.service.ProveedorService;
@@ -54,7 +55,7 @@ public class ProveedorServiceImpl implements ProveedorService {
     public void delete(Long id) {
 
         Proveedor proveedor = proveedorRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Proveedor no encontrado"));
+                .orElseThrow(() -> new SupplierNotFoundException("Proveedor con id " + id + " no encontrado"));
 
         proveedorRepository.delete(proveedor);
     }
@@ -62,7 +63,7 @@ public class ProveedorServiceImpl implements ProveedorService {
     @Override
     public Proveedor getById(Long id) {
         return proveedorRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Proveedor no encontrado"));
+                .orElseThrow(() -> new SupplierNotFoundException("Proveedor con id " + id + " no encontrado"));
     }
 
     @Override

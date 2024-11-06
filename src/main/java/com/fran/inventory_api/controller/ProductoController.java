@@ -3,6 +3,7 @@ package com.fran.inventory_api.controller;
 import com.fran.inventory_api.dto.Producto.ProductoResponseBasic;
 import com.fran.inventory_api.dto.Producto.ProductoRequest;
 import com.fran.inventory_api.entity.Producto;
+import com.fran.inventory_api.exception.InvalidFileException;
 import com.fran.inventory_api.mapper.ProductoMapperDTO;
 import com.fran.inventory_api.service.ProductoService;
 import com.fran.inventory_api.service.Impl.ReporteService;
@@ -72,9 +73,13 @@ public class ProductoController {
             return ResponseEntity.badRequest().body(result.getAllErrors());
         }
 
+        if (!FileValidator.isValidFile(file)) {
+            throw new InvalidFileException("El archivo subido no es válido.");
+        }
+
         Producto product = productoService.save(
                 productoMapper.toEntity(productoRequest),
-                FileValidator.isValidFile(file) ? file : null);
+                file);
 
         return ResponseEntity.ok(productoMapper.toDTO(product));
     }

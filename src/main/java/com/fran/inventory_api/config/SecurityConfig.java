@@ -45,21 +45,21 @@ public class SecurityConfig {
                 .build();
     }
 
+    // Manejador de excepciones de autenticación
+    @Bean
+    public AuthenticationEntryPoint authenticationEntryPoint() {
+        return (request, response, authException) -> {
+            response.setStatus(HttpStatus.UNAUTHORIZED.value());
+            response.getWriter().write("Necesitas autenticarte para acceder a este recurso.");
+        };
+    }
+
     // Manejador de excepciones de acceso denegado
     @Bean
     public AccessDeniedHandler accessDeniedHandler() {
         return (request, response, accessDeniedException) -> {
             response.setStatus(HttpStatus.FORBIDDEN.value());
             response.getWriter().write("No tienes permisos para acceder a este recurso.");
-        };
-    }
-
-    // Manejador de excepciones de autenticación
-    @Bean
-    public AuthenticationEntryPoint authenticationEntryPoint() {
-        return (request, response, authException) -> {
-            response.setStatus(HttpStatus.UNAUTHORIZED.value());
-            response.getWriter().write("Debes estar autenticado para acceder a este recurso.");
         };
     }
 }

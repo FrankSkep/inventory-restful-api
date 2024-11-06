@@ -5,6 +5,8 @@ import com.fran.inventory_api.dto.Producto.ProductoResponseDetailed;
 import com.fran.inventory_api.entity.Imagen;
 import com.fran.inventory_api.entity.Movimiento;
 import com.fran.inventory_api.entity.Producto;
+import com.fran.inventory_api.exception.InsufficientStockException;
+import com.fran.inventory_api.exception.RequiredValueException;
 import com.fran.inventory_api.mapper.ProductoMapperDTO;
 import com.fran.inventory_api.exception.ProductNotFoundException;
 import com.fran.inventory_api.repository.MovimientoRepository;
@@ -114,7 +116,7 @@ public class ProductoServiceImpl implements ProductoService {
     @Override
     public void delete(Long id) {
         Producto producto = productoRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Producto no encontrado"));
+                .orElseThrow(() -> new ProductNotFoundException("Producto no encontrado"));
 
         // Eliminar la imagen si existe
         if (producto.getImagen() != null) {
@@ -137,13 +139,13 @@ public class ProductoServiceImpl implements ProductoService {
 
         if (movimiento.getTipoMovimiento() == Movimiento.TipoMovimiento.SALIDA) {
             if (stockActual < stockMovimiento) {
-                throw new IllegalArgumentException("No hay suficiente stock para realizar esta operación");
+                throw new InsufficientStockException("No hay suficiente stock para realizar esta operación");
             }
             movimiento.setCostoAdquisicion(null);
             producto.setCantidadStock(stockActual - stockMovimiento);
         } else {
             if (movimiento.getCostoAdquisicion() == null || movimiento.getCostoAdquisicion() <= 0) {
-                throw new IllegalArgumentException("El costo de adquisición es obligatorio para entradas de stock.");
+                throw new RequiredValueException("El costo de adquisición es obligatorio para entradas de stock.");
             }
             producto.setCantidadStock(stockActual + stockMovimiento);
         }

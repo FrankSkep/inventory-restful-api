@@ -1,6 +1,7 @@
 package com.fran.inventory_api.service.Impl;
 
 import com.fran.inventory_api.entity.Categoria;
+import com.fran.inventory_api.exception.CategoryNotFoundException;
 import com.fran.inventory_api.repository.CategoriaRepository;
 import com.fran.inventory_api.service.CategoriaService;
 import jakarta.persistence.EntityNotFoundException;
@@ -25,7 +26,7 @@ public class CategoriaServiceImpl implements CategoriaService {
     @Override
     public Categoria getById(Long id) {
         return categoriaRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Categoría no encontrada"));
+                .orElseThrow(() -> new CategoryNotFoundException("Categoría no encontrada"));
     }
 
     @Override
@@ -42,7 +43,7 @@ public class CategoriaServiceImpl implements CategoriaService {
     public Categoria update(Categoria categoria) {
 
         Categoria dbCategory = categoriaRepository.findById(categoria.getId())
-                .orElseThrow(() -> new EntityNotFoundException("Categoría no encontrada"));
+                .orElseThrow(() -> new CategoryNotFoundException("Categoría no encontrada"));
 
         dbCategory.setNombre(categoria.getNombre());
 
@@ -52,7 +53,7 @@ public class CategoriaServiceImpl implements CategoriaService {
     @Override
     public void delete(Long id) {
         Categoria category = categoriaRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Categoría no encontrada"));
+                .orElseThrow(() -> new CategoryNotFoundException("Categoría no encontrada"));
         categoriaRepository.delete(category);
     }
 }

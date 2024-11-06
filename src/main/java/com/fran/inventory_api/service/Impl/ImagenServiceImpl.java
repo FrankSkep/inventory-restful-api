@@ -1,6 +1,7 @@
 package com.fran.inventory_api.service.Impl;
 
 import com.fran.inventory_api.entity.Imagen;
+import com.fran.inventory_api.exception.FileOperationErrorException;
 import com.fran.inventory_api.repository.ImagenRepository;
 import com.fran.inventory_api.service.CloudinaryService;
 import com.fran.inventory_api.service.ImagenService;
@@ -26,8 +27,9 @@ public class ImagenServiceImpl implements ImagenService {
         Map uploadResult = null;
         try {
             uploadResult = cloudinaryService.upload(file);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        } catch (
+                IOException e) {
+            throw new FileOperationErrorException(e.toString());
         }
         String imageUrl = (String) uploadResult.get("url");
         String imageId = (String) uploadResult.get("public_id");
@@ -45,8 +47,9 @@ public class ImagenServiceImpl implements ImagenService {
         try {
             // Subir la nueva imagen
             uploadResult = cloudinaryService.upload(file);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        } catch (
+                IOException e) {
+            throw new FileOperationErrorException(e.toString());
         }
 
         if (uploadResult != null) {
@@ -65,8 +68,9 @@ public class ImagenServiceImpl implements ImagenService {
     public void completeDeletion(Imagen image) {
         try {
             cloudinaryService.delete(image.getImageId());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        } catch (
+                IOException e) {
+            throw new FileOperationErrorException(e.toString());
         }
         imagenRepository.deleteById(image.getId());
     }
@@ -76,8 +80,9 @@ public class ImagenServiceImpl implements ImagenService {
     public void deleteFromCloudinary(String imageId) {
         try {
             cloudinaryService.delete(imageId);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        } catch (
+                IOException e) {
+            throw new FileOperationErrorException(e.toString());
         }
     }
 }

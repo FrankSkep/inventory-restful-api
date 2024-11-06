@@ -70,7 +70,6 @@ public class MovimientosController {
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
-
     @DeleteMapping("/entradas")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> deleteAllEntries() {

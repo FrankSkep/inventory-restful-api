@@ -2,11 +2,12 @@ package com.fran.inventory_api.service.Impl;
 
 import com.fran.inventory_api.dto.MovimientoResponse;
 import com.fran.inventory_api.entity.Movimiento;
+import com.fran.inventory_api.exception.MovementNotFoundException;
+import com.fran.inventory_api.exception.ProductNotFoundException;
 import com.fran.inventory_api.mapper.MovimientoMapperDTO;
 import com.fran.inventory_api.repository.MovimientoRepository;
 import com.fran.inventory_api.repository.ProductoRepository;
 import com.fran.inventory_api.service.MovimientoService;
-import jakarta.persistence.EntityNotFoundException;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -30,7 +31,7 @@ public class MovimientoServiceImpl implements MovimientoService {
     @Override
     public List<Movimiento> getByProduct(Long id) {
         if (!productoRepository.existsById(id)) {
-            throw new EntityNotFoundException("Producto no encontrado");
+            throw new ProductNotFoundException("Producto no encontrado");
         }
         return movimientoRepository.findByProductoId(id);
     }
@@ -61,7 +62,7 @@ public class MovimientoServiceImpl implements MovimientoService {
     @Override
     public void delete(Long id) {
         Movimiento movementDB = movimientoRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Movimiento no encontrado"));
+                .orElseThrow(() -> new MovementNotFoundException("Movimiento no encontrado"));
         movimientoRepository.delete(movementDB);
     }
 
