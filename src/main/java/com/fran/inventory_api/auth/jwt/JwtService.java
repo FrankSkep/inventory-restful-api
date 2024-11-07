@@ -22,8 +22,8 @@ public class JwtService {
     @Value("${jwt.secret.key}")
     private String SECRET_KEY;
 
-    private static final long JWT_TOKEN_VALIDITY = 4 * 60 * 60 * 1000; // 4 hours in milliseconds
-
+    @Value("${jwt.expiration.time}")
+    private long JWT_TOKEN_VALIDITY;
 
     public String getToken(UserDetails user) {
         return getToken(new HashMap<>(), user);

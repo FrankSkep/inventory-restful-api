@@ -28,7 +28,8 @@ public class Producto {
     @Column(name = "cantidad_stock", nullable = false)
     private Long cantidadStock;
 
-    @ManyToOne(fetch = FetchType.LAZY) // Lazy loading, para cargar la categoría solo cuando se necesita
+    @ManyToOne(fetch = FetchType.LAZY)
+    // Lazy loading, para cargar la categoría solo cuando se necesita
     @JoinColumn(name = "categoria_id", referencedColumnName = "id", nullable = false)
     private Categoria categoria;
 
