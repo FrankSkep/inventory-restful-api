@@ -232,6 +232,6 @@ Para interactuar con la API, puedes usar herramientas como [Postman](https://www
 
 ## License
 
-This project, **inventory-rest-api**, is licensed under the [GNU General Public License v3.0](LICENSE).
+This project, **inventory-rest-api**, is licensed under the [GNU Affero General Public License v3.0](LICENSE).
 
 © 2024 FrankSkep. You are free to use, modify, and distribute this software under the terms of GPL-3.0. For more details, see the full [LICENSE](LICENSE) file.
