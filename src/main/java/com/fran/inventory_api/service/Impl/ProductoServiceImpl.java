@@ -14,12 +14,10 @@ import com.fran.inventory_api.repository.ProductoRepository;
 import com.fran.inventory_api.service.ImagenService;
 import com.fran.inventory_api.service.NotificacionService;
 import com.fran.inventory_api.service.ProductoService;
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -48,13 +46,12 @@ public class ProductoServiceImpl implements ProductoService {
     // Obtener todos los productos y sus datos basicos
     @Override
     public List<ProductoResponseBasic> getAllProducts() {
-        List<Producto> productos = productoRepository.findAll();
-        return productos.stream().map(productoMapper::toDTObasic).collect(Collectors.toList());
+        return productoRepository.findAllBasic();
     }
 
     @Override
     public Page<ProductoResponseBasic> getProductsPage(Pageable pageable) {
-        return productoRepository.findAll(pageable).map(productoMapper::toDTObasic);
+        return productoRepository.findAllBasic(pageable);
     }
 
     // Obtener detalles de un producto

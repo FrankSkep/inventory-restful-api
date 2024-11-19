@@ -21,6 +21,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
@@ -131,7 +132,7 @@ public class ProductoController {
             byte[] pdfBytes = reporteService.genInventoryReport(productoService.getAllProducts());
 
             HttpHeaders headers = new HttpHeaders();
-            headers.setContentType(org.springframework.http.MediaType.APPLICATION_PDF);
+            headers.setContentType(MediaType.APPLICATION_PDF);
 
             String filename = "reporte_inventario_" + LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) + ".pdf";
             headers.setContentDispositionFormData("filename", filename);
