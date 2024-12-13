@@ -27,9 +27,7 @@ public class ProveedorServiceImpl implements ProveedorService {
 
     @Override
     public List<ProveedorResponseBasic> obtenerProveedores() {
-        // ProveedorServiceImpl::convertirDTOrespuesta
-        List<Proveedor> proveedores = proveedorRepository.findAll();
-        return proveedores.stream().map(proveedorMapper::toDTObasic).collect(Collectors.toList());
+        return proveedorRepository.findAllBasic();
     }
 
     @Override
@@ -67,8 +65,8 @@ public class ProveedorServiceImpl implements ProveedorService {
     }
 
     @Override
-    public ProveedorResponseDetailed getDetails(Proveedor provedor) {
-        return proveedorMapper.toDTOdetailed(provedor);
+    public ProveedorResponseDetailed getDetails(Long id) {
+        return proveedorRepository.getDetailsById(id);
     }
 
 }

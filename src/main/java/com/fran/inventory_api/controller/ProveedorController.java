@@ -41,7 +41,7 @@ public class ProveedorController {
 
     @GetMapping("/{id}")
     public ProveedorResponseDetailed supplierDetails(@PathVariable Long id) {
-        return proveedorService.getDetails(proveedorService.getById(id));
+        return proveedorService.getDetails(id);
     }
 
     @PostMapping

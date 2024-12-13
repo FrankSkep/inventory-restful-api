@@ -17,5 +17,5 @@ public interface ProveedorService {
 
     void delete(Long id);
 
-    ProveedorResponseDetailed getDetails(Proveedor provedor);
+    ProveedorResponseDetailed getDetails(Long id);
 }
