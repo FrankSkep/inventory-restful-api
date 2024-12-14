@@ -66,13 +66,13 @@ INSERT INTO `imagenes` VALUES (2,'ba1suvzhssno96c6hnoi','http://res.cloudinary.c
 UNLOCK TABLES;
 
 --
--- Table structure for table `movimientos`
+-- Table structure for table `movements`
 --
 
-DROP TABLE IF EXISTS `movimientos`;
+DROP TABLE IF EXISTS `movements`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `movimientos` (
+CREATE TABLE `movements` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `cantidad` bigint NOT NULL,
   `fecha_movimiento` datetime(6) NOT NULL,
@@ -82,19 +82,19 @@ CREATE TABLE `movimientos` (
   `costo_adquisicion` double DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FK114r6r1i2sn7g9i8qtou9ui8s` (`producto_id`),
-  CONSTRAINT `FK114r6r1i2sn7g9i8qtou9ui8s` FOREIGN KEY (`producto_id`) REFERENCES `productos` (`id`),
+  CONSTRAINT `FK114r6r1i2sn7g9i8qtou9ui8s` FOREIGN KEY (`producto_id`) REFERENCES `products` (`id`),
   CONSTRAINT `movimientos_chk_1` CHECK ((`costo_adquisicion` >= 0))
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `movimientos`
+-- Dumping data for table `movements`
 --
 
-LOCK TABLES `movimientos` WRITE;
-/*!40000 ALTER TABLE `movimientos` DISABLE KEYS */;
-INSERT INTO `movimientos` VALUES (1,45,'2024-10-01 12:53:21.086131','Venta','SALIDA',1,NULL),(2,20,'2024-10-01 12:53:26.093067','Venta','SALIDA',1,NULL),(3,700,'2024-10-01 12:53:31.650256','Venta','SALIDA',1,NULL),(4,100,'2024-10-01 13:21:23.039846','Venta','SALIDA',1,NULL),(5,13,'2024-10-01 13:27:49.047620','Venta','ENTRADA',1,490),(6,2150,'2024-10-13 21:08:50.233220','Venta','SALIDA',1,NULL);
-/*!40000 ALTER TABLE `movimientos` ENABLE KEYS */;
+LOCK TABLES `movements` WRITE;
+/*!40000 ALTER TABLE `movements` DISABLE KEYS */;
+INSERT INTO `movements` VALUES (1,45,'2024-10-01 12:53:21.086131','Venta','SALIDA',1,NULL),(2,20,'2024-10-01 12:53:26.093067','Venta','SALIDA',1,NULL),(3,700,'2024-10-01 12:53:31.650256','Venta','SALIDA',1,NULL),(4,100,'2024-10-01 13:21:23.039846','Venta','SALIDA',1,NULL),(5,13,'2024-10-01 13:27:49.047620','Venta','ENTRADA',1,490),(6,2150,'2024-10-13 21:08:50.233220','Venta','SALIDA',1,NULL);
+/*!40000 ALTER TABLE `movements` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -123,13 +123,13 @@ LOCK TABLES `notificaciones` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `productos`
+-- Table structure for table `products`
 --
 
-DROP TABLE IF EXISTS `productos`;
+DROP TABLE IF EXISTS `products`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `productos` (
+CREATE TABLE `products` (
   `precio_venta` double DEFAULT NULL,
   `stock_minimo` int DEFAULT NULL,
   `cantidad_stock` bigint NOT NULL,
@@ -150,13 +150,13 @@ CREATE TABLE `productos` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `productos`
+-- Dumping data for table `products`
 --
 
-LOCK TABLES `productos` WRITE;
-/*!40000 ALTER TABLE `productos` DISABLE KEYS */;
-INSERT INTO `productos` VALUES (8900,222,184,1,1,2,1,'8 GB RAM, 512GB SSD, ANDROID 12','Poco M6 Pro'),(8900,109,3231,1,8,11,1,'8 GB RAM, 512GB SSD, ANDROID 12','Poco M5 Pro');
-/*!40000 ALTER TABLE `productos` ENABLE KEYS */;
+LOCK TABLES `products` WRITE;
+/*!40000 ALTER TABLE `products` DISABLE KEYS */;
+INSERT INTO `products` VALUES (8900,222,184,1,1,2,1,'8 GB RAM, 512GB SSD, ANDROID 12','Poco M6 Pro'),(8900,109,3231,1,8,11,1,'8 GB RAM, 512GB SSD, ANDROID 12','Poco M5 Pro');
+/*!40000 ALTER TABLE `products` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --

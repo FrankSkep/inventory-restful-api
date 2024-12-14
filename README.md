@@ -6,10 +6,10 @@
 - [Funcionalidades](#funcionalidades)
 - [Endpoints](#endpoints)
   - [Autenticación](#autenticación)
-  - [Productos](#productos)
+  - [Productos](#products)
   - [Categorías](#categorías)
   - [Proveedores](#proveedores)
-  - [Movimientos](#movimientos)
+  - [Movimientos](#movements)
   - [Notificaciones](#notificaciones)
 - [Permisos por Rol](#permisos-por-rol)
 - [Requisitos](#requisitos)
@@ -17,7 +17,7 @@
 
 ## Descripción
 
-Esta API RESTful de Inventario permite gestionar productos, proveedores, entradas/salidas de stock y notificaciones. Proporciona funcionalidades para crear, leer, actualizar y eliminar registros, generacion de reportes y gestion de imagenes de productos en la nube con Cloudinary. La API incluye autenticación basada en JWT para la gestión de roles y permisos.
+Esta API RESTful de Inventario permite gestionar products, proveedores, entradas/salidas de stock y notificaciones. Proporciona funcionalidades para crear, leer, actualizar y eliminar registros, generacion de reportes y gestion de imagenes de products en la nube con Cloudinary. La API incluye autenticación basada en JWT para la gestión de roles y permisos.
 
 ## Funcionalidades
 
@@ -31,30 +31,30 @@ Esta API RESTful de Inventario permite gestionar productos, proveedores, entrada
 
 ### Productos
 
-- Crear, leer, actualizar y eliminar productos.
-- Gestionar imágenes de productos.
-- Buscar y filtrar productos.
-- Ver detalles del producto (datos, movimientos de stock y proveedor).
-- Conteo del total de productos.
+- Crear, leer, actualizar y eliminar products.
+- Gestionar imágenes de products.
+- Buscar y filtrar products.
+- Ver detalles del product (datos, movements de stock y supplier).
+- Conteo del total de products.
 - Exportar reporte PDF del inventario actual.
-- Paginación de productos.
+- Paginación de products.
 
 ### Categorias
 
-- Crear, leer, actualizar y eliminar categorias de productos.
+- Crear, leer, actualizar y eliminar categorias de products.
 
 ### Proveedores
 
 - Crear, leer, actualizar y eliminar proveedores.
-- Asociar productos con proveedores.
-- Ver detalles del proveedor (datos y productos).
+- Asociar products con proveedores.
+- Ver detalles del supplier (datos y products).
 
 ### Movimientos
 
 - Registrar entradas y salidas de stock.
-- Visualizar el historial general de movimientos de stock.
+- Visualizar el historial general de movements de stock.
 - Notificación para stock bajo.
-- Exportar reporte PDF de movimientos de stock (Entrada / Salida / General).
+- Exportar reporte PDF de movements de stock (Entrada / Salida / General).
 
 ### Notificaciones
 
@@ -75,12 +75,12 @@ Esta API RESTful de Inventario permite gestionar productos, proveedores, entrada
 
 | Método | Endpoint                 | Descripción                              |
 | ------ |--------------------------| ---------------------------------------- |
-| GET    | `/api/productos`         | Obtener productos paginados y filtrados. |
-| GET    | `/api/productos/{id}`    | Obtener detalles de un producto.         |
-| POST   | `/api/productos`         | Agregar nuevo producto al inventario.    |
-| PUT    | `/api/productos/{id}`    | Editar un producto existente.            |
-| DELETE | `/api/productos/{id}`    | Eliminar un producto.                    |
-| GET    | `/api/productos/reporte` | Generar reporte de inventario.           |
+| GET    | `/api/products`         | Obtener products paginados y filtrados. |
+| GET    | `/api/products/{id}`    | Obtener detalles de un product.         |
+| POST   | `/api/products`         | Agregar nuevo product al inventario.    |
+| PUT    | `/api/products/{id}`    | Editar un product existente.            |
+| DELETE | `/api/products/{id}`    | Eliminar un product.                    |
+| GET    | `/api/products/reporte` | Generar reporte de inventario.           |
 
 ### Categorías
 
@@ -97,24 +97,24 @@ Esta API RESTful de Inventario permite gestionar productos, proveedores, entrada
 | Método | Endpoint                | Descripción                             |
 | ------ | ----------------------- | --------------------------------------- |
 | GET    | `/api/proveedores`      | Obtener lista de todos los proveedores. |
-| GET    | `/api/proveedores/{id}` | Ver detalles de un proveedor.           |
-| POST   | `/api/proveedores`      | Registrar nuevo proveedor.              |
-| PUT    | `/api/proveedores/{id}` | Editar datos de un proveedor.           |
-| DELETE | `/api/proveedores/{id}` | Eliminar un proveedor.                  |
+| GET    | `/api/proveedores/{id}` | Ver detalles de un supplier.           |
+| POST   | `/api/proveedores`      | Registrar nuevo supplier.              |
+| PUT    | `/api/proveedores/{id}` | Editar datos de un supplier.           |
+| DELETE | `/api/proveedores/{id}` | Eliminar un supplier.                  |
 
 ### Movimientos
 
 | Método | Endpoint                          | Descripción                                                |
 | ------ | --------------------------------- | ---------------------------------------------------------- |
-| GET    | `/api/movimientos`                | Obtener todos los movimientos.                             |
-| GET    | `/api/movimientos/entradas`       | Obtener las entradas de stock.                             |
-| GET    | `/api/movimientos/salidas`        | Obtener las salidas de stock.                              |
-| DELETE | `/api/movimientos`                | Eliminar todos los movimientos.                            |
-| DELETE | `/api/movimientos/{id}`           | Eliminar un movimiento de stock.                           |
-| DELETE | `/api/movimientos/entradas`       | Eliminar todas las entradas de stock.                      |
-| DELETE | `/api/movimientos/salidas`        | Eliminar todas las salidas de stock.                       |
-| POST   | `/api/movimientos`                | Registrar un movimiento de stock.                          |
-| GET    | `/api/movimientos/reporte/{tipo}` | Generar reporte de movimientos (general, entrada, salida). |
+| GET    | `/api/movements`                | Obtener todos los movements.                             |
+| GET    | `/api/movements/entradas`       | Obtener las entradas de stock.                             |
+| GET    | `/api/movements/salidas`        | Obtener las salidas de stock.                              |
+| DELETE | `/api/movements`                | Eliminar todos los movements.                            |
+| DELETE | `/api/movements/{id}`           | Eliminar un movement de stock.                           |
+| DELETE | `/api/movements/entradas`       | Eliminar todas las entradas de stock.                      |
+| DELETE | `/api/movements/salidas`        | Eliminar todas las salidas de stock.                       |
+| POST   | `/api/movements`                | Registrar un movement de stock.                          |
+| GET    | `/api/movements/reporte/{tipo}` | Generar reporte de movements (general, entrada, salida). |
 
 ### Notificaciones
 
@@ -134,18 +134,18 @@ El rol `USER` tiene permisos para consultar y realizar operaciones de bajo impac
 
 ### `ADMIN`
 
-El rol `ADMIN` tiene acceso total, incluyendo permisos para modificar, crear y eliminar recursos críticos, como productos y proveedores. También debe gestionar el inventario y los movimientos de stock de manera completa.
+El rol `ADMIN` tiene acceso total, incluyendo permisos para modificar, crear y eliminar recursos críticos, como products y proveedores. También debe gestionar el inventario y los movements de stock de manera completa.
 
 ### Resumen de Permisos por Rol
 
 | Endpoint                                | Método | `USER` | `ADMIN` |
 | --------------------------------------- | ------ | ------ | ------- |
-| `/productos`                            | GET    | ✔️     | ✔️      |
-| `/productos/{id}`                       | GET    | ✔️     | ✔️      |
-| `/productos`                            | POST   |        | ✔️      |
-| `/productos/{id}`                       | PUT    |        | ✔️      |
-| `/productos/{id}`                       | DELETE |        | ✔️      |
-| `/productos/reporte`                    | GET    | ✔️     | ✔️      |
+| `/products`                            | GET    | ✔️     | ✔️      |
+| `/products/{id}`                       | GET    | ✔️     | ✔️      |
+| `/products`                            | POST   |        | ✔️      |
+| `/products/{id}`                       | PUT    |        | ✔️      |
+| `/products/{id}`                       | DELETE |        | ✔️      |
+| `/products/reporte`                    | GET    | ✔️     | ✔️      |
 | `/api/categorias`                       | GET    | ✔️     | ✔️      |
 | `/api/categorias/{id}`                  | GET    | ✔️     | ✔️      |
 | `/api/categorias`                       | POST   |        | ✔️      |
@@ -161,14 +161,14 @@ El rol `ADMIN` tiene acceso total, incluyendo permisos para modificar, crear y e
 | `/api/notificaciones/{id}/marcar-leida` | POST   | ✔️     | ✔️      |
 | `/api/notificaciones/{id}`              | DELETE |        | ✔️      |
 | `/api/notificaciones`                   | DELETE |        | ✔️      |
-| `/api/movimientos`                      | GET    | ✔️     | ✔️      |
-| `/api/movimientos/entradas`             | GET    | ✔️     | ✔️      |
-| `/api/movimientos/salidas`              | GET    | ✔️     | ✔️      |
-| `/api/movimientos`                      | POST   | ✔️     | ✔️      |
-| `/api/movimientos/{id}`                 | DELETE |        | ✔️      |
-| `/api/movimientos/entradas`             | DELETE |        | ✔️      |
-| `/api/movimientos/salidas`              | DELETE |        | ✔️      |
-| `/api/movimientos/reporte/{tipo}`       | GET    | ✔️     | ✔️      |
+| `/api/movements`                      | GET    | ✔️     | ✔️      |
+| `/api/movements/entradas`             | GET    | ✔️     | ✔️      |
+| `/api/movements/salidas`              | GET    | ✔️     | ✔️      |
+| `/api/movements`                      | POST   | ✔️     | ✔️      |
+| `/api/movements/{id}`                 | DELETE |        | ✔️      |
+| `/api/movements/entradas`             | DELETE |        | ✔️      |
+| `/api/movements/salidas`              | DELETE |        | ✔️      |
+| `/api/movements/reporte/{tipo}`       | GET    | ✔️     | ✔️      |
 
 ## Requisitos
 
