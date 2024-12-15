@@ -9,7 +9,7 @@ import java.util.List;
 
 @Entity
 @Data
-@Table(name = "productos")
+@Table(name = "products")
 public class Product {
 
     @Id
@@ -44,7 +44,7 @@ public class Product {
     @Column(name = "stock_minimo", nullable = false)
     private Integer umbralBajoStock;
 
-    @OneToMany(mappedBy = "producto", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
     private List<Movement> movimientosStock;
 

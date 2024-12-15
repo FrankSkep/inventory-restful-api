@@ -16,15 +16,13 @@ import org.springframework.stereotype.Service;
 public class SupplierServiceImpl implements SupplierService {
 
     private final SupplierRepository supplierRepository;
-    private final SupplierMapperDTO proveedorMapper;
 
     public SupplierServiceImpl(SupplierRepository supplierRepository, SupplierMapperDTO proveedorMapper) {
         this.supplierRepository = supplierRepository;
-        this.proveedorMapper = proveedorMapper;
     }
 
     @Override
-    public List<SupplierResponseBasic> obtenerProveedores() {
+    public List<SupplierResponseBasic> getAll() {
         return supplierRepository.findAllBasic();
     }
 

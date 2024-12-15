@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface SupplierService {
 
-    List<SupplierResponseBasic> obtenerProveedores();
+    List<SupplierResponseBasic> getAll();
 
     Supplier save(Supplier supplier);
 

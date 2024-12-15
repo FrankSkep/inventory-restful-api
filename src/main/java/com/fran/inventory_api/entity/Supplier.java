@@ -13,7 +13,7 @@ import java.util.Set;
 
 @Data
 @Entity
-@Table(name = "proveedores")
+@Table(name = "suppliers")
 public class Supplier {
 
     @Id
@@ -31,7 +31,7 @@ public class Supplier {
     private String identificacionFiscal;
 
     // Relación con productos
-    @OneToMany(mappedBy = "proveedor")
+    @OneToMany(mappedBy = "supplier")
     @JsonManagedReference
     private Set<Product> products;
 

@@ -14,11 +14,16 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import java.time.LocalDateTime;
+
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Data
-@Table(name = "movimientos")
+@Table(name = "movements")
+@AllArgsConstructor
+@NoArgsConstructor
 public class Movement {
 
     @Id

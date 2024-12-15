@@ -25,7 +25,7 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public Category getById(Long id) {
         return categoryRepository.findById(id)
-                .orElseThrow(() -> new CategoryNotFoundException("Categoría no encontrada"));
+                .orElseThrow(() -> new CategoryNotFoundException("Category not found"));
     }
 
     @Override
@@ -41,7 +41,7 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public Category update(Category category) {
         Category dbCategory = categoryRepository.findById(category.getId())
-                .orElseThrow(() -> new CategoryNotFoundException("Categoría no encontrada"));
+                .orElseThrow(() -> new CategoryNotFoundException("Category not found"));
         dbCategory.setNombre(category.getNombre());
 
         return categoryRepository.save(category);
@@ -50,7 +50,7 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public void delete(Long id) {
         Category category = categoryRepository.findById(id)
-                .orElseThrow(() -> new CategoryNotFoundException("Categoría no encontrada"));
+                .orElseThrow(() -> new CategoryNotFoundException("Category not found"));
         categoryRepository.delete(category);
     }
 }

@@ -50,13 +50,7 @@ public class ProductController {
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getProductDetails(@PathVariable Long id) {
-        try {
-            return ResponseEntity.ok(productService.getProductDetails(id));
-        } catch (
-                EntityNotFoundException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body(e.getMessage());
-        }
+        return ResponseEntity.ok(productService.getProductDetails(id));
     }
 
     @PostMapping

@@ -37,15 +37,14 @@ public class ImageServiceImpl implements ImageService {
         return imageRepository.save(image);
     }
 
-    // Actualiza la imagen de un producto
     @Override
     public Image update(MultipartFile file, Image image) {
 
         Image imageDB = imageRepository.getReferenceById(image.getId());
         Map uploadResult = null;
 
+        // try to upload the new image
         try {
-            // Subir la nueva imagen
             uploadResult = cloudinaryService.upload(file);
         } catch (
                 IOException e) {
@@ -53,17 +52,14 @@ public class ImageServiceImpl implements ImageService {
         }
 
         if (uploadResult != null) {
-            // Obtener url e id de la nueva imagen
             String imageUrl = (String) uploadResult.get("url");
             String imageId = (String) uploadResult.get("public_id");
-            // Actualizar url e id de imagen
             imageDB.setUrl(imageUrl);
             imageDB.setImageId(imageId);
         }
         return imageRepository.save(imageDB);
     }
 
-    // Elimina la imagen de cloudinary y de la base de datos
     @Override
     public void completeDeletion(Image image) {
         try {
@@ -75,7 +71,6 @@ public class ImageServiceImpl implements ImageService {
         imageRepository.deleteById(image.getId());
     }
 
-    // Elimina la imagen de cloudinary
     @Override
     public void deleteFromCloudinary(String imageId) {
         try {

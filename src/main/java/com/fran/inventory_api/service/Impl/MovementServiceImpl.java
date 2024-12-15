@@ -33,19 +33,21 @@ public class MovementServiceImpl implements MovementService {
         if (!productRepository.existsById(id)) {
             throw new ProductNotFoundException("Producto no encontrado");
         }
-        return movementRepository.findByProductoId(id);
+        return movementRepository.findByProductId(id);
     }
 
     @Override
     public List<MovementResponse> getEntries() {
-        List<Movement> movements = movementRepository.findByTipoMovimiento(Movement.TipoMovimiento.ENTRADA);
-        return movements.stream().map(movementMapperDTO::toDTO).collect(Collectors.toList());
+//        List<Movement> movements = movementRepository.findByTipoMovimiento(Movement.TipoMovimiento.ENTRADA);
+//        return movements.stream().map(movementMapperDTO::toDTO).collect(Collectors.toList());
+        return movementRepository.findByTipoMovimiento(Movement.TipoMovimiento.ENTRADA);
     }
 
     @Override
     public List<MovementResponse> getOutputs() {
-        List<Movement> movements = movementRepository.findByTipoMovimiento(Movement.TipoMovimiento.SALIDA);
-        return movements.stream().map(movementMapperDTO::toDTO).collect(Collectors.toList());
+//        List<Movement> movements = movementRepository.findByTipoMovimiento(Movement.TipoMovimiento.SALIDA);
+//        return movements.stream().map(movementMapperDTO::toDTO).collect(Collectors.toList());
+        return movementRepository.findByTipoMovimiento(Movement.TipoMovimiento.SALIDA);
     }
 
     @Override

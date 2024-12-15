@@ -36,7 +36,7 @@ public class SupplierController {
 
     @GetMapping
     public List<SupplierResponseBasic> getSuppliers() {
-        return supplierService.obtenerProveedores();
+        return supplierService.getAll();
     }
 
     @GetMapping("/{id}")
