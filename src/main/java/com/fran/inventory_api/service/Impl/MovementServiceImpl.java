@@ -10,7 +10,6 @@ import com.fran.inventory_api.repository.ProductRepository;
 import com.fran.inventory_api.service.MovementService;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
@@ -31,46 +30,43 @@ public class MovementServiceImpl implements MovementService {
     @Override
     public List<Movement> getByProduct(Long id) {
         if (!productRepository.existsById(id)) {
-            throw new ProductNotFoundException("Producto no encontrado");
+            throw new ProductNotFoundException("Product not found");
         }
         return movementRepository.findByProductId(id);
     }
 
     @Override
     public List<MovementResponse> getEntries() {
-//        List<Movement> movements = movementRepository.findByTipoMovimiento(Movement.TipoMovimiento.ENTRADA);
-//        return movements.stream().map(movementMapperDTO::toDTO).collect(Collectors.toList());
-        return movementRepository.findByTipoMovimiento(Movement.MovementType.ENTRY);
+        return movementRepository.findByType(Movement.MovementType.ENTRY);
     }
 
     @Override
     public List<MovementResponse> getOutputs() {
-//        List<Movement> movements = movementRepository.findByTipoMovimiento(Movement.TipoMovimiento.SALIDA);
-//        return movements.stream().map(movementMapperDTO::toDTO).collect(Collectors.toList());
-        return movementRepository.findByTipoMovimiento(Movement.MovementType.EXIT);
+        return movementRepository.findByType(Movement.MovementType.EXIT);
     }
 
     @Override
     public List<MovementResponse> getAll() {
-        List<Movement> movements = movementRepository.findAll();
-        return movements.stream().map(movementMapperDTO::toDTO).collect(Collectors.toList());
+        return movementRepository.findAllBasic();
+//        List<Movement> movements = movementRepository.findAll();
+//        return movements.stream().map(movementMapperDTO::toDTO).collect(Collectors.toList());
     }
 
     @Override
     public void deleteAllEntries() {
-        movementRepository.deleteByTipoMovimiento(Movement.MovementType.ENTRY);
+        movementRepository.deleteByType(Movement.MovementType.ENTRY);
     }
 
     @Override
     public void delete(Long id) {
         Movement movementDB = movementRepository.findById(id)
-                .orElseThrow(() -> new MovementNotFoundException("Movimiento no encontrado"));
+                .orElseThrow(() -> new MovementNotFoundException("Movement not found"));
         movementRepository.delete(movementDB);
     }
 
     @Override
     public void deleteAllOutputs() {
-        movementRepository.deleteByTipoMovimiento(Movement.MovementType.EXIT);
+        movementRepository.deleteByType(Movement.MovementType.EXIT);
     }
 
     @Override

@@ -15,11 +15,11 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long> {
 
-    List<Product> findByNombreContaining(String nombre);
+    List<Product> findByNameContaining(String nombre);
 
     List<Product> findByCategory(Category category);
 
-    List<Product> findByPrecioBetween(Double min, Double max);
+    List<Product> findByPriceBetween(Double min, Double max);
 
     @Query("SELECT new com.fran.inventory_api.dto.ProductResponseBasic(p.id, p.name, p.description, p.price, p.stock, p.category.name, p.image.url) FROM Product p")
     List<ProductResponseBasic> findAllBasic();

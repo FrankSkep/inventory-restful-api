@@ -17,7 +17,7 @@ public interface SupplierRepository extends JpaRepository<Supplier, Long> {
 
     @Query("SELECT new com.fran.inventory_api.dto.SupplierResponseDetailed(p.id, p.name, p.address, p.email, p.phone, p.taxIdentification, " +
             "(SELECT new com.fran.inventory_api.dto.ProductResponseProv(prod.id, prod.name, prod.description, prod.price, prod.category.name, prod.image.url) " +
-            "FROM p.products prod)) " +
+            "FROM Supplier s JOIN s.products prod WHERE s.id = p.id)) " +
             "FROM Supplier p WHERE p.id = :id")
     SupplierResponseDetailed getDetailsById(Long id);
 }

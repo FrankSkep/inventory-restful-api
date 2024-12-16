@@ -64,5 +64,4 @@ public class SupplierServiceImpl implements SupplierService {
     public SupplierResponseDetailed getDetails(Long id) {
         return supplierRepository.getDetailsById(id);
     }
-
 }

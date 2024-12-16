@@ -16,17 +16,21 @@ public interface MovementRepository extends JpaRepository<Movement, Long> {
 
     List<Movement> findByProductId(Long id);
 
-//    List<Movement> findByTipoMovimiento(Movement.TipoMovimiento tipoMovimiento);
+    @Query("SELECT new com.fran.inventory_api.dto.MovementResponse(m.id, m.type, m.date, m.reason, m.quantity, " +
+            "new com.fran.inventory_api.dto.ProductResponseBasic(p.id, p.name, p.description, p.price, p.stock, p.category.name, p.image.url), " +
+            "m.acquisitionCost) " +
+            "FROM Movement m JOIN m.product p")
+    List<MovementResponse> findAllBasic();
 
     @Query("SELECT new com.fran.inventory_api.dto.MovementResponse(m.id, m.type, m.date, m.reason, m.quantity, " +
-            "new com.fran.inventory_api.dto.ProductResponseBasic(p.id, p.nombre, p.descripcion, p.precio, p.cantidadStock, p.category.nombre, p.image.url), " +
+            "new com.fran.inventory_api.dto.ProductResponseBasic(p.id, p.name, p.description, p.price, p.stock, p.category.name, p.image.url), " +
             "m.acquisitionCost) " +
             "FROM Movement m JOIN m.product p " +
-            "WHERE m.type = :tipoMovimiento")
-    List<MovementResponse> findByTipoMovimiento(@Param("tipoMovimiento") Movement.MovementType movementType);
+            "WHERE m.type = :movementType")
+    List<MovementResponse> findByType(@Param("movementType") Movement.MovementType movementType);
 
     @Transactional
-    void deleteByTipoMovimiento(Movement.MovementType movementType);
+    void deleteByType(Movement.MovementType movementType);
 
     @Transactional
     void deleteAll();

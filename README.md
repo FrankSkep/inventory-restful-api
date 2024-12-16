@@ -6,12 +6,12 @@
 - [Funcionalidades](#funcionalidades)
 - [Arquitectura](#arquitectura)
 - [Endpoints](#endpoints)
-    - [Autenticación](#autenticación)
-    - [Productos](#productos)
-    - [Categorías](#categorías)
-    - [Proveedores](#proveedores)
-    - [Movimientos](#movimientos)
-    - [Notificaciones](#notificaciones)
+  - [Autenticación](#autenticación)
+  - [Productos](#productos)
+  - [Categorías](#categorías)
+  - [Proveedores](#proveedores)
+  - [Movimientos](#movimientos)
+  - [Notificaciones](#notificaciones)
 - [Permisos por Rol](#permisos-por-rol)
 - [Requisitos](#requisitos)
 - [Instalación](#instalación)
@@ -65,10 +65,10 @@ Incluye un **manejador de excepciones global** que garantiza respuestas consiste
 ### Excepciones Globales
 
 - Manejo centralizado de errores en:
-    - Validación de datos.
-    - Autenticación y autorización.
-    - Recursos no encontrados.
-    - Operaciones no permitidas.
+  - Validación de datos.
+  - Autenticación y autorización.
+  - Recursos no encontrados.
+  - Operaciones no permitidas.
 
 ## Arquitectura
 
@@ -76,10 +76,10 @@ La API utiliza un diseño modular basado en controladores RESTful, servicios de 
 
 ### Principales tecnologías:
 - **Spring Boot**: Framework principal para la aplicación.
-- **MySQL**: Base de datos relacional.
-- **Cloudinary**: Almacenamiento de imágenes en la nube.
 - **JWT**: Autenticación y autorización.
 - **Spring Security**: Gestión de roles y protección de endpoints.
+- **MySQL**: Base de datos relacional.
+- **Cloudinary**: Almacenamiento de imágenes en la nube.
 
 ## Endpoints
 
@@ -94,12 +94,12 @@ La API utiliza un diseño modular basado en controladores RESTful, servicios de 
 
 | Método | Endpoint                | Descripción                              |
 | ------ |-------------------------|------------------------------------------|
-| GET    | /api/products        | Obtener productos paginados y filtrados. |
-| GET    | /api/products/{id}   | Obtener detalles de un producto.         |
-| POST   | /api/products        | Agregar nuevo producto al inventario.    |
-| PUT    | /api/products/{id}   | Editar un producto existente.            |
-| DELETE | /api/products/{id}   | Eliminar un producto.                    |
-| GET    | /api/products/report | Generar reporte de inventario.           |
+| GET    | /api/products           | Obtener productos paginados y filtrados. |
+| GET    | /api/products/{id}      | Obtener detalles de un producto.         |
+| POST   | /api/products           | Agregar nuevo producto al inventario.    |
+| PUT    | /api/products/{id}      | Editar un producto existente.            |
+| DELETE | /api/products/{id}      | Eliminar un producto.                    |
+| GET    | /api/products/report    | Generar reporte de inventario.           |
 
 ### Categorías
 
@@ -116,10 +116,10 @@ La API utiliza un diseño modular basado en controladores RESTful, servicios de 
 | Método | Endpoint            | Descripción                             |
 | ------ |---------------------| --------------------------------------- |
 | GET    | /api/suppliers      | Obtener lista de todos los proveedores. |
-| GET    | /api/suppliers/{id} | Ver detalles de un supplier.           |
-| POST   | /api/suppliers      | Registrar nuevo supplier.              |
-| PUT    | /api/suppliers/{id} | Editar datos de un supplier.           |
-| DELETE | /api/suppliers/{id} | Eliminar un supplier.                  |
+| GET    | /api/suppliers/{id} | Ver detalles de un proveedor.           |
+| POST   | /api/suppliers      | Registrar nuevo proveedor.              |
+| PUT    | /api/suppliers/{id} | Editar datos de un proveedor.           |
+| DELETE | /api/suppliers/{id} | Eliminar un proveedor.                  |
 
 ### Movimientos
 
@@ -158,9 +158,9 @@ La API utiliza un diseño modular basado en controladores RESTful, servicios de 
 
 #### `ADMIN` Administrador
 - Acceso total al sistema, incluyendo:
-    - Modificar y eliminar cualquier recurso.
-    - Gestionar roles (asignar o revocar).
-    - Eliminar usuarios con rol `USER` y `MOD`.
+  - Modificar y eliminar cualquier recurso.
+  - Gestionar roles (asignar o revocar).
+  - Eliminar usuarios con rol `USER` y `MOD`.
 
 ## Requisitos
 
@@ -204,5 +204,5 @@ Para interactuar con la API, usa herramientas como Postman o cURL. Los endpoints
 
 ## Licencia
 
-**[GNU Affero General Public License v3.0](https://www.gnu.org/licenses/agpl-3.0.html)**.  
+**[GNU Affero General Public License v3.0](https://www.gnu.org/licenses/agpl-3.0.html)**.
 © 2024 FrankSkep. Consultar el archivo [LICENSE](LICENSE) para más información.

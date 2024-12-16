@@ -30,6 +30,11 @@ public class MovementController {
         this.reportService = reportService;
     }
 
+    @GetMapping("/all")
+    public ResponseEntity<List<MovementResponse>> allMovements() {
+        return ResponseEntity.ok(movementService.getAll());
+    }
+
     @GetMapping
     public ResponseEntity<List<MovementResponse>> getAllMovements() {
         return ResponseEntity.ok(movementService.getAll());

@@ -2,11 +2,13 @@ package com.fran.inventory_api.dto;
 
 import com.fran.inventory_api.entity.Movement;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 public class MovementResponse {
     private Long id;
