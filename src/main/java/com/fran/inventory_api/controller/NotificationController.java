@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/notificaciones")
+@RequestMapping("/api/notifications")
 public class NotificationController {
 
     private final NotificationService notificationService;
@@ -19,7 +19,7 @@ public class NotificationController {
         this.notificationService = notificationService;
     }
 
-    @GetMapping("/no-leidas")
+    @GetMapping("/unread")
     public List<Notification> getUnreadNotifications() {
         return notificationService.getUnread();
     }
@@ -29,7 +29,7 @@ public class NotificationController {
         return notificationService.getAll();
     }
 
-    @PostMapping("/{id}/marcar-leida")
+    @PostMapping("/{id}/read")
     public ResponseEntity<?> markAsRead(@PathVariable Long id) {
         notificationService.readed(id);
         return ResponseEntity.status(HttpStatus.OK).body("Notificación marcada como leída");

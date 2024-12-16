@@ -92,71 +92,71 @@ La API utiliza un diseño modular basado en controladores RESTful, servicios de 
 
 ### Productos
 
-| Método | Endpoint                 | Descripción                              |
-| ------ |--------------------------|------------------------------------------|
-| GET    | /api/products         | Obtener productos paginados y filtrados. |
-| GET    | /api/products/{id}    | Obtener detalles de un producto.         |
-| POST   | /api/products         | Agregar nuevo producto al inventario.    |
-| PUT    | /api/products/{id}    | Editar un producto existente.            |
-| DELETE | /api/products/{id}    | Eliminar un producto.                    |
-| GET    | /api/products/reporte | Generar reporte de inventario.           |
+| Método | Endpoint                | Descripción                              |
+| ------ |-------------------------|------------------------------------------|
+| GET    | /api/products        | Obtener productos paginados y filtrados. |
+| GET    | /api/products/{id}   | Obtener detalles de un producto.         |
+| POST   | /api/products        | Agregar nuevo producto al inventario.    |
+| PUT    | /api/products/{id}   | Editar un producto existente.            |
+| DELETE | /api/products/{id}   | Eliminar un producto.                    |
+| GET    | /api/products/report | Generar reporte de inventario.           |
 
 ### Categorías
 
-| Método | Endpoint               | Descripción                            |
-| ------ | ---------------------- | -------------------------------------- |
-| GET    | /api/categorias      | Obtener lista de todas las categorías. |
-| GET    | /api/categorias/{id} | Ver detalles de una categoría.         |
-| POST   | /api/categorias      | Registrar nueva categoría.             |
-| PUT    | /api/categorias/{id} | Editar datos de una categoría.         |
-| DELETE | /api/categorias/{id} | Eliminar una categoría.                |
+| Método | Endpoint             | Descripción                            |
+| ------ |----------------------| -------------------------------------- |
+| GET    | /api/categories      | Obtener lista de todas las categorías. |
+| GET    | /api/categories/{id} | Ver detalles de una categoría.         |
+| POST   | /api/categories      | Registrar nueva categoría.             |
+| PUT    | /api/categories/{id} | Editar datos de una categoría.         |
+| DELETE | /api/categories/{id} | Eliminar una categoría.                |
 
 ### Proveedores
 
-| Método | Endpoint                | Descripción                             |
-| ------ | ----------------------- | --------------------------------------- |
-| GET    | /api/proveedores      | Obtener lista de todos los proveedores. |
-| GET    | /api/proveedores/{id} | Ver detalles de un supplier.           |
-| POST   | /api/proveedores      | Registrar nuevo supplier.              |
-| PUT    | /api/proveedores/{id} | Editar datos de un supplier.           |
-| DELETE | /api/proveedores/{id} | Eliminar un supplier.                  |
+| Método | Endpoint            | Descripción                             |
+| ------ |---------------------| --------------------------------------- |
+| GET    | /api/suppliers      | Obtener lista de todos los proveedores. |
+| GET    | /api/suppliers/{id} | Ver detalles de un supplier.           |
+| POST   | /api/suppliers      | Registrar nuevo supplier.              |
+| PUT    | /api/suppliers/{id} | Editar datos de un supplier.           |
+| DELETE | /api/suppliers/{id} | Eliminar un supplier.                  |
 
 ### Movimientos
 
-| Método | Endpoint                          | Descripción                                               |
-| ------ | --------------------------------- |-----------------------------------------------------------|
-| GET    | /api/movements                | Obtener todos los movimientos.                            |
-| GET    | /api/movements/entradas       | Obtener las entradas de stock.                            |
-| GET    | /api/movements/salidas        | Obtener las salidas de stock.                             |
-| DELETE | /api/movements                | Eliminar todos los movimientos.                           |
-| DELETE | /api/movements/{id}           | Eliminar un movimiento de stock.                          |
-| DELETE | /api/movements/entradas       | Eliminar todas las entradas de stock.                     |
-| DELETE | /api/movements/salidas        | Eliminar todas las salidas de stock.                      |
-| POST   | /api/movements                | Registrar un movimiento de stock.                         |
-| GET    | /api/movements/reporte/{tipo} | Generar reporte de movimiento (general, entrada, salida). |
+| Método | Endpoint                           | Descripción                                               |
+| ------ |------------------------------------|-----------------------------------------------------------|
+| GET    | /api/stock-movements               | Obtener todos los movimientos.                            |
+| GET    | /api/stock-movements/entries       | Obtener las entradas de stock.                            |
+| GET    | /api/stock-movements/outputs       | Obtener las salidas de stock.                             |
+| DELETE | /api/stock-movements               | Eliminar todos los movimientos.                           |
+| DELETE | /api/stock-movements/{id}          | Eliminar un movimiento de stock.                          |
+| DELETE | /api/stock-movements/entries       | Eliminar todas las entradas de stock.                     |
+| DELETE | /api/stock-movements/outputs       | Eliminar todas las salidas de stock.                      |
+| POST   | /api/stock-movements               | Registrar un movimiento de stock.                         |
+| GET    | /api/stock-movements/report/{type} | Generar reporte de movimiento (general, entrada, salida). |
 
 ### Notificaciones
 
-| Método | Endpoint                                | Descripción                         |
-| ------ | --------------------------------------- | ----------------------------------- |
-| GET    | /api/notificaciones/no-leidas         | Obtener notificaciones no leídas.   |
-| GET    | /api/notificaciones                   | Obtener todas las notificaciones.   |
-| POST   | /api/notificaciones/{id}/marcar-leida | Marcar una notificación como leída. |
-| DELETE | /api/notificaciones/{id}              | Eliminar una notificación.          |
-| DELETE | /api/notificaciones                   | Eliminar todas las notificaciones.  |
+| Método | Endpoint                     | Descripción                         |
+| ------ |------------------------------| ----------------------------------- |
+| GET    | /api/notifications/unread    | Obtener notificaciones no leídas.   |
+| GET    | /api/notifications           | Obtener todas las notificaciones.   |
+| POST   | /api/notifications/{id}/read | Marcar una notificación como leída. |
+| DELETE | /api/notifications/{id}      | Eliminar una notificación.          |
+| DELETE | /api/notifications           | Eliminar todas las notificaciones.  |
 
 ### Permisos por Rol
 
-#### `USER`
+#### `USER` Usuario
 - Puede consultar y registrar recursos básicos, como productos y movimientos de stock.
 - No tiene permisos para modificar, eliminar recursos críticos ni gestionar roles.
 
-#### `MOD`
+#### `MOD` Moderador
 - Puede consultar y registrar recursos.
 - Tiene permisos adicionales para eliminar usuarios con rol `USER`.
 - No puede gestionar roles ni acceder a configuraciones avanzadas.
 
-#### `ADMIN`
+#### `ADMIN` Administrador
 - Acceso total al sistema, incluyendo:
     - Modificar y eliminar cualquier recurso.
     - Gestionar roles (asignar o revocar).

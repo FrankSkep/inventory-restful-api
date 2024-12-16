@@ -17,7 +17,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/movimientos")
+@RequestMapping("/api/stock-movements")
 public class MovementController {
 
     private final MovementService movementService;
@@ -35,12 +35,12 @@ public class MovementController {
         return ResponseEntity.ok(movementService.getAll());
     }
 
-    @GetMapping("/entradas")
+    @GetMapping("/entries")
     public ResponseEntity<List<MovementResponse>> getEntries() {
         return ResponseEntity.ok(movementService.getEntries());
     }
 
-    @GetMapping("/salidas")
+    @GetMapping("/outputs")
     public ResponseEntity<List<MovementResponse>> getOutputs() {
         return ResponseEntity.ok(movementService.getOutputs());
     }
@@ -65,33 +65,33 @@ public class MovementController {
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
-    @DeleteMapping("/entradas")
+    @DeleteMapping("/entries")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> deleteAllEntries() {
         movementService.deleteAllEntries();
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
-    @DeleteMapping("/salidas")
+    @DeleteMapping("/outputs")
     public ResponseEntity<?> deleteAllOutputs() {
         movementService.deleteAllOutputs();
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
-    @GetMapping("/reporte/{tipo}")
-    public ResponseEntity<byte[]> generateReport(@PathVariable String tipo) {
+    @GetMapping("/report/{type}")
+    public ResponseEntity<byte[]> generateReport(@PathVariable String type) {
         // tipo = "general" o "entrada" o "salida"
         try {
             byte[] pdfBytes;
-            switch (tipo.toLowerCase()) {
+            switch (type.toLowerCase()) {
                 case "general":
-                    pdfBytes = reportService.genMovementsReport(movementService.getAll(), tipo.toLowerCase());
+                    pdfBytes = reportService.genMovementsReport(movementService.getAll(), type.toLowerCase());
                     break;
                 case "entrada":
-                    pdfBytes = reportService.genMovementsReport(movementService.getEntries(), tipo.toLowerCase());
+                    pdfBytes = reportService.genMovementsReport(movementService.getEntries(), type.toLowerCase());
                     break;
                 case "salida":
-                    pdfBytes = reportService.genMovementsReport(movementService.getOutputs(), tipo.toLowerCase());
+                    pdfBytes = reportService.genMovementsReport(movementService.getOutputs(), type.toLowerCase());
                     break;
                 default:
                     return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

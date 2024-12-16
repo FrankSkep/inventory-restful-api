@@ -8,7 +8,6 @@ import com.fran.inventory_api.mapper.ProductMapperDTO;
 import com.fran.inventory_api.service.ProductService;
 import com.fran.inventory_api.service.Impl.ReportService;
 import com.fran.inventory_api.service.FileValidator;
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 
 import java.io.IOException;
@@ -28,7 +27,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 @RestController
-@RequestMapping("/api/productos")
+@RequestMapping("/api/products")
 public class ProductController {
 
     private final ProductService productService;
@@ -75,11 +74,9 @@ public class ProductController {
     public ResponseEntity<?> updateProduct(@PathVariable Long id, @ModelAttribute ProductRequest productRequest,
                                            @RequestPart(value = "file", required = false) MultipartFile newOptionalImage) {
 
-        // Actualiza datos del producto
         productRequest.setId(id);
         productService.update(productoMapper.toEntityWithId(productRequest));
 
-        // Si se recibe una imagen, la actualiza
         if (FileValidator.isValidFile(newOptionalImage)) {
             productService.updateImage(newOptionalImage, productRequest.getId());
         }
@@ -104,7 +101,7 @@ public class ProductController {
         }
     }
 
-    @GetMapping("/reporte")
+    @GetMapping("/report")
     public ResponseEntity<byte[]> generarReporteInventario() {
         try {
             byte[] pdfBytes = reportService.genInventoryReport(productService.getAllProducts());
