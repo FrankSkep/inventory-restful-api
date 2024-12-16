@@ -10,10 +10,10 @@ import java.util.Set;
 public class SupplierResponseDetailed {
 
     private Long id;
-    private String nombre;
-    private String direccion;
+    private String name;
+    private String address;
     private String email;
-    private String telefono;
-    private String identificacionFiscal;
-    private Set<ProductResponseProv> productos;
+    private String phone;
+    private String taxIdentification;
+    private Set<ProductResponseProv> products;
 }

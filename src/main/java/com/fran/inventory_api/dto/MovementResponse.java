@@ -9,16 +9,11 @@ import java.time.LocalDateTime;
 @Data
 @AllArgsConstructor
 public class MovementResponse {
-
     private Long id;
     private Movement.MovementType movementType;
-    private LocalDateTime fechaMovimiento;
-    private String razon;
-    private Long cantidad;
-    private ProductResponseBasic producto;
-    private Double costoAdquisicion;
-
-    public enum TipoMovimiento {
-        ENTRADA, SALIDA
-    }
+    private LocalDateTime date;
+    private String reason;
+    private Long quantity;
+    private ProductResponseBasic product;
+    private Double acquisitionCost;
 }

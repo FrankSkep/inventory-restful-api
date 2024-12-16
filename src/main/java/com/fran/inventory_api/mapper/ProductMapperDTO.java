@@ -47,7 +47,6 @@ public class ProductMapperDTO {
     }
 
     public ProductResponseDetailed toDTOdetailed(Product product) {
-
         return new ProductResponseDetailed(
                 product.getId(),
                 product.getName(),
@@ -61,30 +60,28 @@ public class ProductMapperDTO {
         );
     }
 
-    // Mapeo para agregar nuevo producto
-    public Product toEntity(ProductRequest productoDTO) {
+    public Product toEntity(ProductRequest product) {
         return new Product(
-                productoDTO.getNombre(),
-                productoDTO.getDescripcion(),
-                productoDTO.getPrecio(),
-                productoDTO.getCantidadStock(),
-                categoryService.getByName(productoDTO.getCategoria()),
-                supplierService.getById(productoDTO.getProveedorId()),
-                productoDTO.getUmbralBajoStock()
+                product.getName(),
+                product.getDescription(),
+                product.getPrice(),
+                product.getStock(),
+                categoryService.getByName(product.getCategory()),
+                supplierService.getById(product.getSupplierId()),
+                product.getMinStock()
         );
     }
 
-    // Mapeo para editar un producto
-    public Product toEntityWithId(ProductRequest productoDTO) {
+    public Product toEntityWithId(ProductRequest product) {
         return new Product(
-                productoDTO.getId(),
-                productoDTO.getNombre(),
-                productoDTO.getDescripcion(),
-                productoDTO.getPrecio(),
-                productoDTO.getCantidadStock(),
-                categoryService.getByName(productoDTO.getCategoria()),
-                supplierService.getById(productoDTO.getProveedorId()),
-                productoDTO.getUmbralBajoStock()
+                product.getId(),
+                product.getName(),
+                product.getDescription(),
+                product.getPrice(),
+                product.getStock(),
+                categoryService.getByName(product.getCategory()),
+                supplierService.getById(product.getSupplierId()),
+                product.getMinStock()
         );
     }
 }

@@ -21,7 +21,7 @@ public class SupplierMapperDTO {
                 supplier.getName(),
                 supplier.getAddress(),
                 supplier.getEmail(),
-                supplier.getPhoneNumber(),
+                supplier.getPhone(),
                 supplier.getTaxIdentification()
         );
     }
@@ -32,7 +32,7 @@ public class SupplierMapperDTO {
                 supplier.getName(),
                 supplier.getAddress(),
                 supplier.getEmail(),
-                supplier.getPhoneNumber(),
+                supplier.getPhone(),
                 supplier.getTaxIdentification()
         );
     }
@@ -47,7 +47,7 @@ public class SupplierMapperDTO {
                 supplier.getName(),
                 supplier.getAddress(),
                 supplier.getEmail(),
-                supplier.getPhoneNumber(),
+                supplier.getPhone(),
                 supplier.getTaxIdentification(),
                 setDeProductos
         );
@@ -67,11 +67,11 @@ public class SupplierMapperDTO {
     // Mapeo para agregacion de nuevo proveedor
     public Supplier toEntity(SupplierRequest dto) {
         return new Supplier(
-                dto.getNombre(),
-                dto.getDireccion(),
+                dto.getName(),
+                dto.getAddress(),
                 dto.getEmail(),
-                dto.getTelefono(),
-                dto.getIdentificacionFiscal()
+                dto.getPhone(),
+                dto.getTaxIdentification()
         );
     }
 
@@ -79,13 +79,11 @@ public class SupplierMapperDTO {
     public Supplier toEntityFromDTOWithId(SupplierRequest dto) {
         return new Supplier(
                 dto.getId(),
-                dto.getNombre(),
-                dto.getDireccion(),
+                dto.getName(),
+                dto.getAddress(),
                 dto.getEmail(),
-                dto.getTelefono(),
-                dto.getIdentificacionFiscal()
+                dto.getPhone(),
+                dto.getTaxIdentification()
         );
     }
-
-
 }

@@ -2,36 +2,39 @@ package com.fran.inventory_api.dto;
 
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 public class ProductRequest {
 
     private Long id;
 
-    @NotBlank(message = "El nombre del producto es obligatorio")
-    private String nombre;
+    @NotBlank(message = "the name is mandatory")
+    private String name;
 
-    private String descripcion;
+    @NotBlank(message = "the description is mandatory")
+    private String description;
 
-    @NotNull(message = "El precio es obligatorio")
-    @Min(value = 0, message = "El precio debe ser mayor o igual a 0")
-    private Double precio;
+    @NotNull(message = "the price is mandatory")
+    @Min(value = 0, message = "the price must be greater than or equal to 0")
+    private Double price;
 
-    @NotNull(message = "La cantidad en stock es obligatoria")
-    @Min(value = 0, message = "La cantidad en stock debe ser mayor o igual a 0")
-    private Long cantidadStock;
+    @NotNull(message = "the stock quantity is mandatory")
+    @Min(value = 0, message = "the stock quantity must be greater than or equal to 0")
+    private Long stock;
 
-    @NotBlank(message = "Debe seleccionar una categoría")
-    private String categoria;
+    @NotBlank(message = "the category is mandatory")
+    private String category;
 
     private String imageUrl;
 
-    @NotNull(message = "Debe seleccionar un proveedor")
-    private Long proveedorId;
+    @NotNull(message = "the supplier id is mandatory")
+    private Long supplierId;
 
-    @NotNull(message = "Debe especificar el umbral de alerta de stock")
-    @Min(value = 0, message = "El umbral de alerta debe ser mayor o igual a 0")
-    private Integer umbralBajoStock;
+    @NotNull(message = "minimum stock alert is mandatory")
+    @Min(value = 0, message = "the minimum stock alert must be greater than or equal to 0")
+    private Integer minStock;
 }

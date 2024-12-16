@@ -60,10 +60,10 @@ public class ReportService {
         // Llenado de tabla con los productos
         for (ProductResponseBasic producto : productos) {
             table.addCell(producto.getId().toString());
-            table.addCell(producto.getNombre());
-            table.addCell(producto.getCategoria());
-            table.addCell(producto.getCantidadStock().toString());
-            table.addCell(producto.getPrecio().toString());
+            table.addCell(producto.getName());
+            table.addCell(producto.getCategory());
+            table.addCell(producto.getStock().toString());
+            table.addCell(producto.getPrice().toString());
 
             // Agregar la imagen del producto
             if (producto.getImageUrl() != null) {
@@ -137,12 +137,12 @@ public class ReportService {
         // Llenado de tabla con los movimientos
         for (MovementResponse mov : movimientos) {
             table.addCell(mov.getId().toString());
-            table.addCell(mov.getProducto().getNombre());
-            table.addCell(mov.getCantidad().toString());
+            table.addCell(mov.getProduct().getName());
+            table.addCell(mov.getQuantity().toString());
             table.addCell(mov.getMovementType().toString());
-            table.addCell(mov.getFechaMovimiento().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+            table.addCell(mov.getDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
             if (mostrarCosto) {
-                table.addCell(mov.getCostoAdquisicion() != null ? mov.getCostoAdquisicion().toString() : "N/A");
+                table.addCell(mov.getAcquisitionCost() != null ? mov.getAcquisitionCost().toString() : "N/A");
             }
         }
         document.add(table);

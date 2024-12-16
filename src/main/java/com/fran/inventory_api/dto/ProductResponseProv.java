@@ -8,10 +8,10 @@ import lombok.Data;
 public class ProductResponseProv {
 
     Long id;
-    String nombre;
-    String descripcion;
-    Double precio;
-    String categoriaNombre;
-    String imagenUrl;
+    String name;
+    String description;
+    Double price;
+    String categoryName;
+    String imageUrl;
 
 }

@@ -39,7 +39,7 @@ public class SupplierServiceImpl implements SupplierService {
         supplierDB.setName(supplier.getName());
         supplierDB.setAddress(supplier.getAddress());
         supplierDB.setEmail(supplier.getEmail());
-        supplierDB.setPhoneNumber(supplier.getPhoneNumber());
+        supplierDB.setPhone(supplier.getPhone());
         supplierDB.setTaxIdentification(supplier.getTaxIdentification());
 
         return supplierRepository.save(supplierDB);

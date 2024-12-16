@@ -8,9 +8,9 @@ import lombok.Data;
 public class SupplierResponseBasic {
 
     private Long id;
-    private String nombre;
-    private String direccion;
+    private String name;
+    private String address;
     private String email;
-    private String telefono;
-    private String identificacionFiscal;
+    private String phone;
+    private String taxIdentification;
 }

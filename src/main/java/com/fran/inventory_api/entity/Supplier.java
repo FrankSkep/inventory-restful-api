@@ -11,7 +11,6 @@ import java.util.Set;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 public class Supplier {
 
     @Id
@@ -28,7 +27,7 @@ public class Supplier {
     private String email;
 
     @Column(name = "phone_number", nullable = false)
-    private String phoneNumber;
+    private String phone;
 
     @Column(name = "tax_identification", nullable = false)
     private String taxIdentification;
@@ -38,11 +37,20 @@ public class Supplier {
     @JsonManagedReference
     private Set<Product> products;
 
-    public Supplier(String name, String address, String email, String phoneNumber, String taxIdentification) {
+    public Supplier(String name, String address, String email, String phone, String taxIdentification) {
         this.name = name;
         this.address = address;
         this.email = email;
-        this.phoneNumber = phoneNumber;
+        this.phone = phone;
+        this.taxIdentification = taxIdentification;
+    }
+
+    public Supplier(Long id, String name, String address, String email, String phone, String taxIdentification) {
+        this.id = id;
+        this.name = name;
+        this.address = address;
+        this.email = email;
+        this.phone = phone;
         this.taxIdentification = taxIdentification;
     }
 }
