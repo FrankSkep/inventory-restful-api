@@ -12,11 +12,11 @@ import java.util.List;
 @Repository
 public interface SupplierRepository extends JpaRepository<Supplier, Long> {
 
-    @Query("SELECT new com.fran.inventory_api.dto.SupplierResponseBasic(p.id, p.nombre, p.direccion, p.email, p.telefono, p.identificacionFiscal) FROM Supplier p")
+    @Query("SELECT new com.fran.inventory_api.dto.SupplierResponseBasic(p.id, p.name, p.address, p.email, p.phoneNumber, p.taxIdentification) FROM Supplier p")
     List<SupplierResponseBasic> findAllBasic();
 
-    @Query("SELECT new com.fran.inventory_api.dto.SupplierResponseDetailed(p.id, p.nombre, p.direccion, p.email, p.telefono, p.identificacionFiscal, " +
-            "(SELECT new com.fran.inventory_api.dto.ProductResponseProv(prod.id, prod.nombre, prod.descripcion, prod.precio, prod.category.nombre, prod.image.url) " +
+    @Query("SELECT new com.fran.inventory_api.dto.SupplierResponseDetailed(p.id, p.name, p.address, p.email, p.phoneNumber, p.taxIdentification, " +
+            "(SELECT new com.fran.inventory_api.dto.ProductResponseProv(prod.id, prod.name, prod.description, prod.price, prod.category.name, prod.image.url) " +
             "FROM p.products prod)) " +
             "FROM Supplier p WHERE p.id = :id")
     SupplierResponseDetailed getDetailsById(Long id);

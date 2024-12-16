@@ -1,58 +1,48 @@
 package com.fran.inventory_api.entity;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
-import lombok.Data;
+import jakarta.persistence.*;
+import lombok.*;
 
 import java.util.Set;
 
-@Data
 @Entity
 @Table(name = "suppliers")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Supplier {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String nombre;
+    @Column(name = "name", nullable = false)
+    private String name;
 
-    private String direccion;
+    @Column(nullable = false)
+    private String address;
 
+    @Column(nullable = false)
     private String email;
 
-    private String telefono;
+    @Column(name = "phone_number", nullable = false)
+    private String phoneNumber;
 
-    private String identificacionFiscal;
+    @Column(name = "tax_identification", nullable = false)
+    private String taxIdentification;
 
     // Relación con productos
     @OneToMany(mappedBy = "supplier")
     @JsonManagedReference
     private Set<Product> products;
 
-    public Supplier() {
-    }
-
-    public Supplier(Long id, String nombre, String direccion, String email, String telefono, String identificacionFiscal) {
-        this.id = id;
-        this.nombre = nombre;
-        this.direccion = direccion;
+    public Supplier(String name, String address, String email, String phoneNumber, String taxIdentification) {
+        this.name = name;
+        this.address = address;
         this.email = email;
-        this.telefono = telefono;
-        this.identificacionFiscal = identificacionFiscal;
+        this.phoneNumber = phoneNumber;
+        this.taxIdentification = taxIdentification;
     }
-
-    public Supplier(String nombre, String direccion, String email, String telefono, String identificacionFiscal) {
-        this.nombre = nombre;
-        this.direccion = direccion;
-        this.email = email;
-        this.telefono = telefono;
-        this.identificacionFiscal = identificacionFiscal;
-    }
-
 }

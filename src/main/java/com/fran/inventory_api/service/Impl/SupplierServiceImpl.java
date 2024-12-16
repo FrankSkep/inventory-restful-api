@@ -36,11 +36,11 @@ public class SupplierServiceImpl implements SupplierService {
 
         Supplier supplierDB = supplierRepository.getReferenceById(supplier.getId());
 
-        supplierDB.setNombre(supplier.getNombre());
-        supplierDB.setDireccion(supplier.getDireccion());
+        supplierDB.setName(supplier.getName());
+        supplierDB.setAddress(supplier.getAddress());
         supplierDB.setEmail(supplier.getEmail());
-        supplierDB.setTelefono(supplier.getTelefono());
-        supplierDB.setIdentificacionFiscal(supplier.getIdentificacionFiscal());
+        supplierDB.setPhoneNumber(supplier.getPhoneNumber());
+        supplierDB.setTaxIdentification(supplier.getTaxIdentification());
 
         return supplierRepository.save(supplierDB);
     }

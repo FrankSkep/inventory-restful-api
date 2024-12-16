@@ -12,9 +12,8 @@ public class Notification {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String message;
-    private boolean isRead; // Indica si la notificación ha sido leída
+    private boolean isRead;
     private LocalDateTime createDate;
 
     @PrePersist

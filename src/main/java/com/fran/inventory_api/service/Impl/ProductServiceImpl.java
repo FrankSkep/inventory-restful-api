@@ -82,12 +82,12 @@ public class ProductServiceImpl implements ProductService {
 
         Product productDB = productRepository.getReferenceById(product.getId());
 
-        productDB.setNombre(product.getNombre());
-        productDB.setDescripcion(product.getDescripcion());
-        productDB.setPrecio(product.getPrecio());
+        productDB.setName(product.getName());
+        productDB.setDescription(product.getDescription());
+        productDB.setPrice(product.getPrice());
         productDB.setCategory(product.getCategory());
         productDB.setSupplier(product.getSupplier());
-        productDB.setUmbralBajoStock(product.getUmbralBajoStock());
+        productDB.setMinStock(product.getMinStock());
         productRepository.save(productDB);
     }
 
@@ -131,28 +131,28 @@ public class ProductServiceImpl implements ProductService {
 
         Product product = productRepository.getReferenceById(movement.getProduct().getId());
 
-        Long stockActual = product.getCantidadStock();
-        Long stockMovimiento = movement.getCantidad();
+        Long stockActual = product.getStock();
+        Long stockMovimiento = movement.getQuantity();
 
-        if (movement.getTipoMovimiento() == Movement.TipoMovimiento.SALIDA) {
+        if (movement.getType() == Movement.MovementType.EXIT) {
             if (stockActual < stockMovimiento) {
                 throw new InsufficientStockException("No hay suficiente stock para realizar esta operación");
             }
-            movement.setCostoAdquisicion(null);
-            product.setCantidadStock(stockActual - stockMovimiento);
+            movement.setAcquisitionCost(null);
+            product.setStock(stockActual - stockMovimiento);
         } else {
-            if (movement.getCostoAdquisicion() == null || movement.getCostoAdquisicion() <= 0) {
+            if (movement.getAcquisitionCost() == null || movement.getAcquisitionCost() <= 0) {
                 throw new RequiredValueException("El costo de adquisición es obligatorio para entradas de stock.");
             }
-            product.setCantidadStock(stockActual + stockMovimiento);
+            product.setStock(stockActual + stockMovimiento);
         }
 
-        if (product.getCantidadStock() <= product.getUmbralBajoStock()) {
-            sendNotification("El producto " + product.getNombre() + " está bajo de stock");
+        if (product.getStock() <= product.getMinStock()) {
+            sendNotification("El producto " + product.getName() + " está bajo de stock");
         }
 
         movement.setProduct(product);
-        movement.setFechaMovimiento(LocalDateTime.now());
+        movement.setDate(LocalDateTime.now());
 
         productRepository.save(product);
         return movimientoStockRepository.save(movement);

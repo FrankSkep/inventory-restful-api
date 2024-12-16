@@ -139,7 +139,7 @@ public class ReportService {
             table.addCell(mov.getId().toString());
             table.addCell(mov.getProducto().getNombre());
             table.addCell(mov.getCantidad().toString());
-            table.addCell(mov.getTipoMovimiento().toString());
+            table.addCell(mov.getMovementType().toString());
             table.addCell(mov.getFechaMovimiento().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
             if (mostrarCosto) {
                 table.addCell(mov.getCostoAdquisicion() != null ? mov.getCostoAdquisicion().toString() : "N/A");

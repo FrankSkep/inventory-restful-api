@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 public class MovementResponse {
 
     private Long id;
-    private Movement.TipoMovimiento tipoMovimiento;
+    private Movement.MovementType movementType;
     private LocalDateTime fechaMovimiento;
     private String razon;
     private Long cantidad;

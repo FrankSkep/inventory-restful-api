@@ -18,22 +18,22 @@ public class SupplierMapperDTO {
     public SupplierResponseBasic toDTObasic(Supplier supplier) {
         return new SupplierResponseBasic(
                 supplier.getId(),
-                supplier.getNombre(),
-                supplier.getDireccion(),
+                supplier.getName(),
+                supplier.getAddress(),
                 supplier.getEmail(),
-                supplier.getTelefono(),
-                supplier.getIdentificacionFiscal()
+                supplier.getPhoneNumber(),
+                supplier.getTaxIdentification()
         );
     }
 
     public SupplierRequest toDTO(Supplier supplier) {
         return new SupplierRequest(
                 supplier.getId(),
-                supplier.getNombre(),
-                supplier.getDireccion(),
+                supplier.getName(),
+                supplier.getAddress(),
                 supplier.getEmail(),
-                supplier.getTelefono(),
-                supplier.getIdentificacionFiscal()
+                supplier.getPhoneNumber(),
+                supplier.getTaxIdentification()
         );
     }
 
@@ -44,11 +44,11 @@ public class SupplierMapperDTO {
 
         return new SupplierResponseDetailed(
                 supplier.getId(),
-                supplier.getNombre(),
-                supplier.getDireccion(),
+                supplier.getName(),
+                supplier.getAddress(),
                 supplier.getEmail(),
-                supplier.getTelefono(),
-                supplier.getIdentificacionFiscal(),
+                supplier.getPhoneNumber(),
+                supplier.getTaxIdentification(),
                 setDeProductos
         );
     }
@@ -56,10 +56,10 @@ public class SupplierMapperDTO {
     public ProductResponseProv productoToDTOminimo(Product product) {
         return new ProductResponseProv(
                 product.getId(),
-                product.getNombre(),
-                product.getDescripcion(),
-                product.getPrecio(),
-                product.getCategory().getNombre(),
+                product.getName(),
+                product.getDescription(),
+                product.getPrice(),
+                product.getCategory().getName(),
                 product.getImage() != null ? product.getImage().getUrl() : null
         );
     }

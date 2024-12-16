@@ -24,24 +24,24 @@ public class ProductMapperDTO {
     public ProductRequest toDTO(Product product) {
         return new ProductRequest(
                 product.getId(),
-                product.getNombre(),
-                product.getDescripcion(),
-                product.getPrecio(),
-                product.getCantidadStock(),
-                product.getCategory().getNombre(),
+                product.getName(),
+                product.getDescription(),
+                product.getPrice(),
+                product.getStock(),
+                product.getCategory().getName(),
                 product.getImage() != null ? product.getImage().getUrl() : null,
                 product.getSupplier().getId(),
-                product.getUmbralBajoStock());
+                product.getMinStock());
     }
 
     public ProductResponseBasic toDTObasic(Product product) {
         return new ProductResponseBasic(
                 product.getId(),
-                product.getNombre(),
-                product.getDescripcion(),
-                product.getPrecio(),
-                product.getCantidadStock(),
-                product.getCategory().getNombre(),
+                product.getName(),
+                product.getDescription(),
+                product.getPrice(),
+                product.getStock(),
+                product.getCategory().getName(),
                 product.getImage() != null ? product.getImage().getUrl() : null
         );
     }
@@ -50,14 +50,14 @@ public class ProductMapperDTO {
 
         return new ProductResponseDetailed(
                 product.getId(),
-                product.getNombre(),
-                product.getDescripcion(),
-                product.getPrecio(),
-                product.getCantidadStock(),
-                product.getCategory().getNombre(),
+                product.getName(),
+                product.getDescription(),
+                product.getPrice(),
+                product.getStock(),
+                product.getCategory().getName(),
                 product.getImage() != null ? product.getImage().getUrl() : null,
                 proveedorMapper.toDTObasic(product.getSupplier()),
-                product.getUmbralBajoStock(), product.getMovimientosStock()
+                product.getMinStock(), product.getStockMovements()
         );
     }
 

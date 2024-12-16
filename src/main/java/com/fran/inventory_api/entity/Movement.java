@@ -13,6 +13,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
+
 import java.time.LocalDateTime;
 
 import lombok.AllArgsConstructor;
@@ -31,25 +32,28 @@ public class Movement {
     private Long id;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private TipoMovimiento tipoMovimiento;
+    @Column(name = "type", nullable = false)
+    private MovementType type;
 
-    @Column(name = "fecha_movimiento", nullable = false)
-    private LocalDateTime fechaMovimiento;
+    @Column(name = "date", nullable = false)
+    private LocalDateTime date;
 
-    private String razon;
+    @Column(name = "reason", nullable = false)
+    private String reason;
 
-    @NotNull(message = "La cantidad es obligatoria.")
-    private Long cantidad;
+    @NotNull(message = "The quantity is mandatory.")
+    @Column(name = "quantity", nullable = false)
+    private Long quantity;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonBackReference
     private Product product;
 
-    @Min(value = 0, message = "El costo de adquisición debe ser mayor o igual a 0")
-    private Double costoAdquisicion;
+    @Min(value = 0, message = "The acquisition cost must be greater than zero.")
+    @Column(name = "acquisition_cost", nullable = false)
+    private Double acquisitionCost;
 
-    public enum TipoMovimiento {
-        ENTRADA, SALIDA
+    public enum MovementType {
+        ENTRY, EXIT
     }
 }

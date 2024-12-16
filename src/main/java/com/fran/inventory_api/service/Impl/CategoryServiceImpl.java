@@ -42,7 +42,7 @@ public class CategoryServiceImpl implements CategoryService {
     public Category update(Category category) {
         Category dbCategory = categoryRepository.findById(category.getId())
                 .orElseThrow(() -> new CategoryNotFoundException("Category not found"));
-        dbCategory.setNombre(category.getNombre());
+        dbCategory.setName(category.getName());
 
         return categoryRepository.save(category);
     }

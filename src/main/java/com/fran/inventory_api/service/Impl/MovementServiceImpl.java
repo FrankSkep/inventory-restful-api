@@ -40,14 +40,14 @@ public class MovementServiceImpl implements MovementService {
     public List<MovementResponse> getEntries() {
 //        List<Movement> movements = movementRepository.findByTipoMovimiento(Movement.TipoMovimiento.ENTRADA);
 //        return movements.stream().map(movementMapperDTO::toDTO).collect(Collectors.toList());
-        return movementRepository.findByTipoMovimiento(Movement.TipoMovimiento.ENTRADA);
+        return movementRepository.findByTipoMovimiento(Movement.MovementType.ENTRY);
     }
 
     @Override
     public List<MovementResponse> getOutputs() {
 //        List<Movement> movements = movementRepository.findByTipoMovimiento(Movement.TipoMovimiento.SALIDA);
 //        return movements.stream().map(movementMapperDTO::toDTO).collect(Collectors.toList());
-        return movementRepository.findByTipoMovimiento(Movement.TipoMovimiento.SALIDA);
+        return movementRepository.findByTipoMovimiento(Movement.MovementType.EXIT);
     }
 
     @Override
@@ -58,7 +58,7 @@ public class MovementServiceImpl implements MovementService {
 
     @Override
     public void deleteAllEntries() {
-        movementRepository.deleteByTipoMovimiento(Movement.TipoMovimiento.ENTRADA);
+        movementRepository.deleteByTipoMovimiento(Movement.MovementType.ENTRY);
     }
 
     @Override
@@ -70,7 +70,7 @@ public class MovementServiceImpl implements MovementService {
 
     @Override
     public void deleteAllOutputs() {
-        movementRepository.deleteByTipoMovimiento(Movement.TipoMovimiento.SALIDA);
+        movementRepository.deleteByTipoMovimiento(Movement.MovementType.EXIT);
     }
 
     @Override

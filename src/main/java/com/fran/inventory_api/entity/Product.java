@@ -16,20 +16,21 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
-    private String nombre;
+    @Column(name = "name", nullable = false)
+    private String name;
 
-    private String descripcion;
+    @Column(name = "description", nullable = false)
+    private String description;
 
-    @Column(name = "precio_venta", nullable = false)
-    private Double precio;
+    @Column(name = "sale_price", nullable = false)
+    private Double price;
 
-    @Column(name = "cantidad_stock", nullable = false)
-    private Long cantidadStock;
+    @Column(name = "stock", nullable = false)
+    private Long stock;
 
     @ManyToOne(fetch = FetchType.LAZY)
     // Lazy loading, para cargar la categoría solo cuando se necesita
-    @JoinColumn(name = "categoria_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "category_id", referencedColumnName = "id", nullable = false)
     private Category category;
 
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
@@ -37,38 +38,38 @@ public class Product {
     private Image image;
 
     @ManyToOne
-    @JoinColumn(name = "proveedor_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "supplier_id", referencedColumnName = "id", nullable = false)
     @JsonBackReference
     private Supplier supplier;
 
-    @Column(name = "stock_minimo", nullable = false)
-    private Integer umbralBajoStock;
+    @Column(name = "min_stock", nullable = false)
+    private Integer minStock;
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
-    private List<Movement> movimientosStock;
+    private List<Movement> stockMovements;
 
     // Constructor para agregar nuevo producto
-    public Product(String nombre, String descripcion, Double precio, Long cantidadStock, Category category, Supplier supplier, Integer umbralBajoStock) {
-        this.nombre = nombre;
-        this.descripcion = descripcion;
-        this.precio = precio;
-        this.cantidadStock = cantidadStock;
+    public Product(String name, String description, Double price, Long stock, Category category, Supplier supplier, Integer minStock) {
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.stock = stock;
         this.category = category;
         this.supplier = supplier;
-        this.umbralBajoStock = umbralBajoStock;
+        this.minStock = minStock;
     }
 
     // Constructor para mapear DTO a Entidad
-    public Product(Long id, String nombre, String descripcion, Double precio, Long cantidadStock, Category category, Supplier supplier, Integer umbralBajoStock) {
+    public Product(Long id, String name, String description, Double price, Long stock, Category category, Supplier supplier, Integer minStock) {
         this.id = id;
-        this.nombre = nombre;
-        this.descripcion = descripcion;
-        this.precio = precio;
-        this.cantidadStock = cantidadStock;
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.stock = stock;
         this.category = category;
         this.supplier = supplier;
-        this.umbralBajoStock = umbralBajoStock;
+        this.minStock = minStock;
     }
 
     public Product() {}
