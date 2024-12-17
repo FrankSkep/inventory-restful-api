@@ -1,5 +1,6 @@
 package com.fran.inventory_api.service.Impl;
 
+import com.fran.inventory_api.dto.ProductResponseSupplier;
 import com.fran.inventory_api.dto.SupplierResponseBasic;
 import com.fran.inventory_api.dto.SupplierResponseDetailed;
 import com.fran.inventory_api.entity.Supplier;
@@ -8,7 +9,9 @@ import com.fran.inventory_api.mapper.SupplierMapperDTO;
 import com.fran.inventory_api.repository.SupplierRepository;
 import com.fran.inventory_api.service.SupplierService;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
@@ -62,6 +65,22 @@ public class SupplierServiceImpl implements SupplierService {
 
     @Override
     public SupplierResponseDetailed getDetails(Long id) {
-        return supplierRepository.getDetailsById(id);
+        Optional<Supplier> supplierOpt = supplierRepository.findSupplierById(id);
+        if (supplierOpt.isPresent()) {
+            Supplier supplier = supplierOpt.get();
+            List<ProductResponseSupplier> products = supplierRepository.findProductsBySupplierId(id);
+            return new SupplierResponseDetailed(
+                    supplier.getId(),
+                    supplier.getName(),
+                    supplier.getAddress(),
+                    supplier.getEmail(),
+                    supplier.getPhone(),
+                    supplier.getTaxIdentification(),
+                    new HashSet<>(products)
+            );
+        } else {
+            throw new RuntimeException("Supplier not found");
+        }
+//        return supplierRepository.getDetailsById(id);
     }
 }

@@ -15,5 +15,5 @@ public class SupplierResponseDetailed {
     private String email;
     private String phone;
     private String taxIdentification;
-    private Set<ProductResponseProv> products;
+    private Set<ProductResponseSupplier> products;
 }

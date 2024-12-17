@@ -40,8 +40,8 @@ public class SupplierController {
     }
 
     @GetMapping("/{id}")
-    public SupplierResponseDetailed supplierDetails(@PathVariable Long id) {
-        return supplierService.getDetails(id);
+    public ResponseEntity<SupplierResponseDetailed> supplierDetails(@PathVariable Long id) {
+        return ResponseEntity.ok(supplierService.getDetails(id));
     }
 
     @PostMapping

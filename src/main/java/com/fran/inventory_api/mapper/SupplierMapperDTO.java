@@ -1,6 +1,6 @@
 package com.fran.inventory_api.mapper;
 
-import com.fran.inventory_api.dto.ProductResponseProv;
+import com.fran.inventory_api.dto.ProductResponseSupplier;
 import com.fran.inventory_api.dto.SupplierResponseBasic;
 import com.fran.inventory_api.dto.SupplierRequest;
 import com.fran.inventory_api.dto.SupplierResponseDetailed;
@@ -40,7 +40,7 @@ public class SupplierMapperDTO {
     public SupplierResponseDetailed toDTOdetailed(Supplier supplier) {
 
         Set<Product> products = supplier.getProducts();
-        Set<ProductResponseProv> setDeProductos = products.stream().map(this::productoToDTOminimo).collect(Collectors.toSet());
+        Set<ProductResponseSupplier> setDeProductos = products.stream().map(this::productoToDTOminimo).collect(Collectors.toSet());
 
         return new SupplierResponseDetailed(
                 supplier.getId(),
@@ -53,12 +53,10 @@ public class SupplierMapperDTO {
         );
     }
 
-    public ProductResponseProv productoToDTOminimo(Product product) {
-        return new ProductResponseProv(
+    public ProductResponseSupplier productoToDTOminimo(Product product) {
+        return new ProductResponseSupplier(
                 product.getId(),
                 product.getName(),
-                product.getDescription(),
-                product.getPrice(),
                 product.getCategory().getName(),
                 product.getImage() != null ? product.getImage().getUrl() : null
         );

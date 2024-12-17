@@ -5,13 +5,9 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class ProductResponseProv {
-
+public class ProductResponseSupplier {
     Long id;
     String name;
     String description;
-    Double price;
     String categoryName;
-    String imageUrl;
-
 }
