@@ -12,7 +12,6 @@ import com.fran.inventory_api.service.ProductService;
 import org.springframework.stereotype.Service;
 
 @Service
-
 public class MovementServiceImpl implements MovementService {
 
     private final MovementRepository movementRepository;
@@ -21,6 +20,11 @@ public class MovementServiceImpl implements MovementService {
     public MovementServiceImpl(MovementRepository movementRepository, ProductService productService) {
         this.movementRepository = movementRepository;
         this.productService = productService;
+    }
+
+    @Override
+    public List<MovementResponse> getAllMovements() {
+        return movementRepository.findAllBasic();
     }
 
     @Override
@@ -34,26 +38,21 @@ public class MovementServiceImpl implements MovementService {
     }
 
     @Override
-    public List<MovementResponse> getAll() {
-        return movementRepository.findAllBasic();
-    }
-
-    @Override
-    public Movement save(Movement movement) {
+    public Movement createMovement(Movement movement) {
         Movement createdMovement = productService.updateStock(movement);
         return movementRepository.save(createdMovement);
     }
 
     @Override
-    public void deleteAllEntries() {
-        movementRepository.deleteByType(Movement.MovementType.ENTRY);
-    }
-
-    @Override
-    public void delete(Long id) {
+    public void deleteMovement(Long id) {
         Movement movementDB = movementRepository.findById(id)
                 .orElseThrow(() -> new MovementNotFoundException("Movement not found"));
         movementRepository.delete(movementDB);
+    }
+
+    @Override
+    public void deleteAllEntries() {
+        movementRepository.deleteByType(Movement.MovementType.ENTRY);
     }
 
     @Override

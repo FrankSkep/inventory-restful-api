@@ -23,131 +23,132 @@ import java.util.List;
 @Service
 public class ReportService {
 
-    public byte[] genInventoryReport(List<ProductResponseBasic> productos) {
-        // ByteArrayOutputStream para generar el PDF en memoria
+    public byte[] generateProductsReport(List<ProductResponseBasic> productos) {
+        // ByteArrayOutputStream to generate the PDF in memory
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         PdfWriter writer = new PdfWriter(baos);
 
-        // Crear el documento PDF
+        // Create the pdf document
         PdfDocument pdfDoc = new PdfDocument(writer);
         Document document = new Document(pdfDoc);
 
         // Título del reporte
-        document.add(new Paragraph("Reporte de Inventario").setBold().setFontSize(20).setTextAlignment(TextAlignment.CENTER));
-        document.add(new Paragraph("Fecha de generación: " + java.time.LocalDate.now()).setItalic().setFontSize(12).setTextAlignment(TextAlignment.CENTER));
+        document.add(new Paragraph("Inventory Report").setBold().setFontSize(20).setTextAlignment(TextAlignment.CENTER));
+        document.add(new Paragraph("Generation date: " + java.time.LocalDate.now()).setItalic().setFontSize(12).setTextAlignment(TextAlignment.CENTER));
 
-        float pageWidth = 595; // Ancho de la página A4 en puntos
-        float margin = 36; // Margen predeterminado en puntos
-        float maxTableWidth = pageWidth - 2 * margin; // Ancho máximo de la tabla
+        float pageWidth = 595; // Width de una página A4 en puntos
+        float margin = 36; // Default margin en puntos
+        float maxTableWidth = pageWidth - 2 * margin; // Maximum table width
 
         Table table = new Table(6);
         table.setWidth(maxTableWidth);
         table.setHorizontalAlignment(HorizontalAlignment.CENTER);
 
         table.addCell(new Paragraph("ID").setTextAlignment(TextAlignment.CENTER));
-        table.addCell(new Paragraph("Nombre").setTextAlignment(TextAlignment.CENTER));
-        table.addCell(new Paragraph("Categoria").setTextAlignment(TextAlignment.CENTER));
-        table.addCell(new Paragraph("Existencias").setTextAlignment(TextAlignment.CENTER));
-        table.addCell(new Paragraph("Precio").setTextAlignment(TextAlignment.CENTER));
-        table.addCell(new Paragraph("Imagen").setTextAlignment(TextAlignment.CENTER));
+        table.addCell(new Paragraph("Name").setTextAlignment(TextAlignment.CENTER));
+        table.addCell(new Paragraph("Category").setTextAlignment(TextAlignment.CENTER));
+        table.addCell(new Paragraph("Stock").setTextAlignment(TextAlignment.CENTER));
+        table.addCell(new Paragraph("Price").setTextAlignment(TextAlignment.CENTER));
+        table.addCell(new Paragraph("Image").setTextAlignment(TextAlignment.CENTER));
 
         if (productos.isEmpty()) {
-            document.add(new Paragraph("No hay productos registrados"));
+            document.add(new Paragraph("Inventory is empty"));
             document.close();
             return baos.toByteArray();
         }
 
         // Llenado de tabla con los productos
-        for (ProductResponseBasic producto : productos) {
-            table.addCell(producto.getId().toString());
-            table.addCell(producto.getName());
-            table.addCell(producto.getCategory());
-            table.addCell(producto.getStock().toString());
-            table.addCell(producto.getPrice().toString());
+        for (ProductResponseBasic p : productos) {
+            table.addCell(p.getId().toString());
+            table.addCell(p.getName());
+            table.addCell(p.getCategory());
+            table.addCell(p.getStock().toString());
+            table.addCell(p.getPrice().toString());
 
             // Agregar la imagen del producto
-            if (producto.getImageUrl() != null) {
+            if (p.getImageUrl() != null) {
                 try {
-                    ImageData imageData = ImageDataFactory.create(new URL(producto.getImageUrl()));
+                    ImageData imageData = ImageDataFactory.create(new URL(p.getImageUrl()));
                     Image image = new Image(imageData);
                     image.setWidth(40);
                     image.setHeight(40);
                     table.addCell(image.setHorizontalAlignment(HorizontalAlignment.CENTER));
                 } catch (
                         Exception e) {
-                    table.addCell("Imagen no disponible");
+                    table.addCell("Image not available");
                 }
             } else {
-                table.addCell("Sin imagen");
+                table.addCell("No image");
             }
         }
 
         document.add(table);
         document.close();
 
-        // Se retorna el PDF como arreglo de bytes
+        // return the PDF as a byte array
         return baos.toByteArray();
     }
 
-    public byte[] genMovementsReport(List<MovementResponse> movimientos, String tipoReporte) {
-        // ByteArrayOutputStream para generar el PDF en memoria
+    public byte[] generateMovementsReport(List<MovementResponse> movements, String reportType) {
+        // ByteArrayOutputStream to generate the PDF in memory
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         PdfWriter writer = new PdfWriter(baos);
 
-        // Crear el documento PDF
+        // Create the pdf document
         PdfDocument pdfDoc = new PdfDocument(writer);
         Document document = new Document(pdfDoc);
 
-        if (!tipoReporte.equals("general") && !tipoReporte.equals("entrada") && !tipoReporte.equals("salida")) {
-            throw new InvalidReportType("Tipo de reporte inválido");
+        if (!reportType.equals("all") && !reportType.equals("entry") && !reportType.equals("exit")) {
+            throw new InvalidReportType("Report type must be 'all', 'entry' or 'exit'");
         }
 
-        // Título del reporte
-        String reportTitle = tipoReporte.equals("general") ? "Reporte de movimientos de inventario" :
-                tipoReporte.equals("entrada") ? "Reporte de entradas de inventario" : "Reporte de salidas de inventario";
+        // Report title
+        String reportTitle = reportType.equals("all") ? "Inventory movements report" :
+                reportType.equals("entry") ? "Stock entries report" : "Stock out report";
 
         document.add(new Paragraph(reportTitle).setBold().setFontSize(20).setTextAlignment(TextAlignment.CENTER));
-        document.add(new Paragraph("Fecha de generación: " + java.time.LocalDate.now()).setItalic().setFontSize(12).setTextAlignment(TextAlignment.CENTER));
+        document.add(new Paragraph("Generation date: " + java.time.LocalDate.now()).setItalic().setFontSize(12).setTextAlignment(TextAlignment.CENTER));
 
-        float pageWidth = 595; // Ancho de la página A4 en puntos
-        float margin = 36; // Margen predeterminado en puntos
-        float maxTableWidth = pageWidth - 2 * margin; // Ancho máximo de la tabla
+        float pageWidth = 595; // Width of an A4 page in points
+        float margin = 36; // Default margin in points
+        float maxTableWidth = pageWidth - 2 * margin; // Maximum table width
 
-        boolean mostrarCosto = tipoReporte.equals("general") || tipoReporte.equals("entrada");
+        boolean mostrarCosto = reportType.equals("all") || reportType.equals("entry");
 
         Table table = new Table(mostrarCosto ? 6 : 5);
         table.setWidth(maxTableWidth);
         table.setHorizontalAlignment(HorizontalAlignment.CENTER);
 
         table.addCell(new Paragraph("ID").setTextAlignment(TextAlignment.CENTER));
-        table.addCell(new Paragraph("Producto").setTextAlignment(TextAlignment.CENTER));
-        table.addCell(new Paragraph("Cantidad").setTextAlignment(TextAlignment.CENTER));
-        table.addCell(new Paragraph("Tipo").setTextAlignment(TextAlignment.CENTER));
-        table.addCell(new Paragraph("Fecha").setTextAlignment(TextAlignment.CENTER));
+        table.addCell(new Paragraph("Product").setTextAlignment(TextAlignment.CENTER));
+        table.addCell(new Paragraph("Quantity").setTextAlignment(TextAlignment.CENTER));
+        table.addCell(new Paragraph("Type").setTextAlignment(TextAlignment.CENTER));
+        table.addCell(new Paragraph("Date").setTextAlignment(TextAlignment.CENTER));
         if (mostrarCosto) {
-            table.addCell(new Paragraph("Costo adquisición").setTextAlignment(TextAlignment.CENTER));
+            table.addCell(new Paragraph("Acquisition cost").setTextAlignment(TextAlignment.CENTER));
         }
 
-        if (movimientos.isEmpty()) {
-            document.add(new Paragraph("No hay movimientos registrados"));
+        if (movements.isEmpty()) {
+            document.add(new Paragraph("No stock movements recorded"));
             document.close();
             return baos.toByteArray();
         }
 
         // Llenado de tabla con los movimientos
-        for (MovementResponse mov : movimientos) {
-            table.addCell(mov.getId().toString());
-            table.addCell(mov.getProduct().getName());
-            table.addCell(mov.getQuantity().toString());
-            table.addCell(mov.getMovementType().toString());
-            table.addCell(mov.getDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+        for (MovementResponse m : movements) {
+            table.addCell(m.getId().toString());
+            table.addCell(m.getProduct().getName());
+            table.addCell(m.getQuantity().toString());
+            table.addCell(m.getMovementType().toString());
+            table.addCell(m.getDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
             if (mostrarCosto) {
-                table.addCell(mov.getAcquisitionCost() != null ? mov.getAcquisitionCost().toString() : "N/A");
+                table.addCell(m.getAcquisitionCost() != null ? m.getAcquisitionCost().toString() : "N/A");
             }
         }
         document.add(table);
         document.close();
-        // Se retorna el PDF como arreglo de bytes
+
+        // return the PDF as a byte array
         return baos.toByteArray();
     }
 }

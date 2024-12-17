@@ -67,7 +67,7 @@ public class ProductMapperDTO {
                 product.getDescription(),
                 product.getPrice(),
                 product.getStock(),
-                categoryService.getByName(product.getCategory()),
+                categoryService.getCategoryByName(product.getCategory()),
                 supplierService.getById(product.getSupplierId()),
                 product.getMinStock()
         );
@@ -80,7 +80,7 @@ public class ProductMapperDTO {
                 product.getDescription(),
                 product.getPrice(),
                 product.getStock(),
-                categoryService.getByName(product.getCategory()),
+                categoryService.getCategoryByName(product.getCategory()),
                 supplierService.getById(product.getSupplierId()),
                 product.getMinStock()
         );

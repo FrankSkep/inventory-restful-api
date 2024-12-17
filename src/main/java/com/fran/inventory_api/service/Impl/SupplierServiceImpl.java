@@ -25,17 +25,17 @@ public class SupplierServiceImpl implements SupplierService {
     }
 
     @Override
-    public List<SupplierResponseBasic> getAll() {
+    public List<SupplierResponseBasic> getAllSuppliers() {
         return supplierRepository.findAllBasic();
     }
 
     @Override
-    public Supplier save(Supplier supplier) {
+    public Supplier createSupplier(Supplier supplier) {
         return supplierRepository.save(supplier);
     }
 
     @Override
-    public Supplier update(Supplier supplier) {
+    public Supplier updateSupplier(Supplier supplier) {
 
         Supplier supplierDB = supplierRepository.getReferenceById(supplier.getId());
 
@@ -49,7 +49,7 @@ public class SupplierServiceImpl implements SupplierService {
     }
 
     @Override
-    public void delete(Long id) {
+    public void deleteSupplier(Long id) {
 
         Supplier supplier = supplierRepository.findById(id)
                 .orElseThrow(() -> new SupplierNotFoundException("Proveedor con id " + id + " no encontrado"));

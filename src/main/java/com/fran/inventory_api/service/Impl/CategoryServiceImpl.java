@@ -18,28 +18,28 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public Category getByName(String nombre) {
+    public Category getCategoryByName(String nombre) {
         return categoryRepository.findByName(nombre);
     }
 
     @Override
-    public Category getById(Long id) {
+    public Category getCategoryById(Long id) {
         return categoryRepository.findById(id)
                 .orElseThrow(() -> new CategoryNotFoundException("Category not found"));
     }
 
     @Override
-    public List<Category> getAll() {
+    public List<Category> getAllCategories() {
         return categoryRepository.findAll();
     }
 
     @Override
-    public Category save(Category category) {
+    public Category createCategory(Category category) {
         return categoryRepository.save(category);
     }
 
     @Override
-    public Category update(Category category) {
+    public Category updateCategory(Category category) {
         Category dbCategory = categoryRepository.findById(category.getId())
                 .orElseThrow(() -> new CategoryNotFoundException("Category not found"));
         dbCategory.setName(category.getName());
@@ -48,7 +48,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public void delete(Long id) {
+    public void deleteCategory(Long id) {
         Category category = categoryRepository.findById(id)
                 .orElseThrow(() -> new CategoryNotFoundException("Category not found"));
         categoryRepository.delete(category);

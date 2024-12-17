@@ -36,7 +36,7 @@ public class SupplierController {
 
     @GetMapping
     public List<SupplierResponseBasic> getSuppliers() {
-        return supplierService.getAll();
+        return supplierService.getAllSuppliers();
     }
 
     @GetMapping("/{id}")
@@ -54,7 +54,7 @@ public class SupplierController {
 
         Supplier supplier = proveedorMapper.toEntity(supplierRequest);
 
-        supplierService.save(supplier);
+        supplierService.createSupplier(supplier);
         return ResponseEntity.ok(supplier);
     }
 
@@ -66,14 +66,14 @@ public class SupplierController {
             return ResponseEntity.badRequest().body(result.getAllErrors());
         }
 
-        return ResponseEntity.ok(supplierService.update(proveedorMapper.toEntityFromDTOWithId(supplier)));
+        return ResponseEntity.ok(supplierService.updateSupplier(proveedorMapper.toEntityFromDTOWithId(supplier)));
     }
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> deleteSupplier(@PathVariable Long id) {
 
-        supplierService.delete(id);
+        supplierService.deleteSupplier(id);
         return ResponseEntity.ok().body("Producto eliminado correctamente.");
     }
 }

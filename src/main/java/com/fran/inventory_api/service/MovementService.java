@@ -7,17 +7,17 @@ import java.util.List;
 
 public interface MovementService {
 
+    List<MovementResponse> getAllMovements();
+
     List<MovementResponse> getEntries();
 
     List<MovementResponse> getOutputs();
 
-    List<MovementResponse> getAll();
+    Movement createMovement(Movement movement);
 
-    Movement save(Movement movement);
+    void deleteMovement(Long id);
 
     void deleteAllEntries();
-
-    void delete(Long id);
 
     void deleteAllOutputs();
 

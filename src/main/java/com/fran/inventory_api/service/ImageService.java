@@ -7,7 +7,7 @@ public interface ImageService {
 
     Image uploadImage(MultipartFile file);
 
-    Image update(MultipartFile file, Image image);
+    Image updateImage(MultipartFile file, Image image);
 
     void completeDeletion(Image image);
 

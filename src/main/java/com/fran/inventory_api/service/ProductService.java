@@ -19,13 +19,13 @@ public interface ProductService {
 
     ProductResponseDetailed getProductDetails(Long id);
 
-    Product save(Product productReq, MultipartFile file);
+    Product createProduct(Product productReq, MultipartFile file);
 
-    void update(Product productReq);
+    void updateProduct(Product productReq);
 
-    void updateImage(MultipartFile file, Long productoId);
+    void updateProductImage(MultipartFile file, Long productoId);
 
-    void delete(Long id) throws IOException;
+    void deleteProduct(Long id) throws IOException;
 
     Movement updateStock(Movement movement);
 }

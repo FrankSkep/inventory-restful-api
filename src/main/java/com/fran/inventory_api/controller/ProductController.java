@@ -62,7 +62,7 @@ public class ProductController {
             throw new InvalidFileException("El archivo subido no es válido.");
         }
 
-        Product product = productService.save(
+        Product product = productService.createProduct(
                 productoMapper.toEntity(productRequest),
                 file);
         productRequest.setId(product.getId());
@@ -76,10 +76,10 @@ public class ProductController {
                                            @RequestPart(value = "file", required = false) MultipartFile newOptionalImage) {
 
         productRequest.setId(id);
-        productService.update(productoMapper.toEntityWithId(productRequest));
+        productService.updateProduct(productoMapper.toEntityWithId(productRequest));
 
         if (FileValidator.isValidFile(newOptionalImage)) {
-            productService.updateImage(newOptionalImage, productRequest.getId());
+            productService.updateProductImage(newOptionalImage, productRequest.getId());
         }
 
         return ResponseEntity.ok().body("Producto editado exitosamente");
@@ -89,7 +89,7 @@ public class ProductController {
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> deleteProduct(@PathVariable Long id) {
         try {
-            productService.delete(id);
+            productService.deleteProduct(id);
             return ResponseEntity.ok("Producto eliminado exitosamente");
         } catch (
                 NoSuchElementException e) {
@@ -105,7 +105,7 @@ public class ProductController {
     @GetMapping("/report")
     public ResponseEntity<byte[]> generarReporteInventario() {
         try {
-            byte[] pdfBytes = reportService.genInventoryReport(productService.getAllProducts());
+            byte[] pdfBytes = reportService.generateProductsReport(productService.getAllProducts());
 
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_PDF);

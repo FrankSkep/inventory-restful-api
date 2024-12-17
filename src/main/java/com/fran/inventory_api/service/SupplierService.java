@@ -7,15 +7,15 @@ import java.util.List;
 
 public interface SupplierService {
 
-    List<SupplierResponseBasic> getAll();
+    List<SupplierResponseBasic> getAllSuppliers();
 
-    Supplier save(Supplier supplier);
+    Supplier createSupplier(Supplier supplier);
 
-    Supplier update(Supplier supplier);
+    Supplier updateSupplier(Supplier supplier);
 
     Supplier getById(Long id);
 
-    void delete(Long id);
+    void deleteSupplier(Long id);
 
     SupplierResponseDetailed getDetails(Long id);
 }

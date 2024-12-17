@@ -15,7 +15,6 @@ import com.fran.inventory_api.service.NotificationService;
 import com.fran.inventory_api.service.ProductService;
 import jakarta.transaction.Transactional;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
@@ -65,7 +64,7 @@ public class ProductServiceImpl implements ProductService {
     // save a new product
     @Transactional
     @Override
-    public Product save(Product product, MultipartFile file) {
+    public Product createProduct(Product product, MultipartFile file) {
 
         if (file != null) {
             Image image = imageService.uploadImage(file);
@@ -76,7 +75,7 @@ public class ProductServiceImpl implements ProductService {
 
     // update a existing product
     @Override
-    public void update(Product product) {
+    public void updateProduct(Product product) {
         Product productDB = productRepository.findById(product.getId())
                 .orElseThrow(() -> new ProductNotFoundException("Product not found"));
 
@@ -92,14 +91,14 @@ public class ProductServiceImpl implements ProductService {
     // update the image of a product
     @Override
     @Transactional
-    public void updateImage(MultipartFile file, Long productoId) {
+    public void updateProductImage(MultipartFile file, Long productoId) {
 
         Product productDB = productRepository.getReferenceById(productoId);
         Image imageActual = productDB.getImage();
 
         if (imageActual != null) {
             imageService.deleteFromCloudinary(imageActual.getImageId());
-            imageActual = imageService.update(file, imageActual);
+            imageActual = imageService.updateImage(file, imageActual);
         } else {
             Image imageNueva = imageService.uploadImage(file);
             productDB.setImage(imageNueva);
@@ -109,7 +108,7 @@ public class ProductServiceImpl implements ProductService {
 
     // delete a product
     @Override
-    public void delete(Long id) {
+    public void deleteProduct(Long id) {
         Product product = productRepository.findById(id)
                 .orElseThrow(() -> new ProductNotFoundException("Product not found"));
 

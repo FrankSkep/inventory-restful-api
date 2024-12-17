@@ -38,7 +38,7 @@ public class ImageServiceImpl implements ImageService {
     }
 
     @Override
-    public Image update(MultipartFile file, Image image) {
+    public Image updateImage(MultipartFile file, Image image) {
 
         Image imageDB = imageRepository.getReferenceById(image.getId());
         Map uploadResult = null;

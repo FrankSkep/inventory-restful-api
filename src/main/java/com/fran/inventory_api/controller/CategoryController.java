@@ -20,31 +20,31 @@ public class CategoryController {
     }
 
     @GetMapping
-    public List<Category> getCategories() {
-        return categoryService.getAll();
+    public List<Category> getAllCategories() {
+        return categoryService.getAllCategories();
     }
 
     @GetMapping("/{id}")
     public Category getCategoryDetails(@PathVariable Long id) {
-        return categoryService.getById(id);
+        return categoryService.getCategoryById(id);
     }
 
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
-    public Category addCategory(@RequestBody Category category) {
-        return categoryService.save(category);
+    public Category createCategory(@RequestBody Category category) {
+        return categoryService.createCategory(category);
     }
 
     @PutMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public Category updateCategory(@PathVariable Long id, @RequestBody Category category) {
-        return categoryService.update(category);
+        return categoryService.updateCategory(category);
     }
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> deleteCategory(@PathVariable Long id) {
-        categoryService.delete(id);
+        categoryService.deleteCategory(id);
         return ResponseEntity.ok().body("Categoría eliminada correctamente.");
     }
 }

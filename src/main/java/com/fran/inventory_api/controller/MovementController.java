@@ -8,7 +8,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import com.fran.inventory_api.service.MovementService;
-import com.fran.inventory_api.service.ProductService;
 import com.fran.inventory_api.service.Impl.ReportService;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -28,14 +27,9 @@ public class MovementController {
         this.reportService = reportService;
     }
 
-    @GetMapping("/all")
-    public ResponseEntity<List<MovementResponse>> allMovements() {
-        return ResponseEntity.ok(movementService.getAll());
-    }
-
     @GetMapping
     public ResponseEntity<List<MovementResponse>> getAllMovements() {
-        return ResponseEntity.ok(movementService.getAll());
+        return ResponseEntity.ok(movementService.getAllMovements());
     }
 
     @GetMapping("/entries")
@@ -49,8 +43,8 @@ public class MovementController {
     }
 
     @PostMapping
-    public ResponseEntity<?> addMovement(@RequestBody Movement movement) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(movementService.save(movement));
+    public ResponseEntity<?> createMovement(@RequestBody Movement movement) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(movementService.createMovement(movement));
     }
 
     @DeleteMapping
@@ -63,7 +57,7 @@ public class MovementController {
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> deleteMovement(@PathVariable Long id) {
-        movementService.delete(id);
+        movementService.deleteMovement(id);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
@@ -82,18 +76,18 @@ public class MovementController {
 
     @GetMapping("/report/{type}")
     public ResponseEntity<byte[]> generateReport(@PathVariable String type) {
-        // tipo = "general" o "entrada" o "salida"
+        // type = "all" o "entry" o "exit"
         try {
             byte[] pdfBytes;
             switch (type.toLowerCase()) {
-                case "general":
-                    pdfBytes = reportService.genMovementsReport(movementService.getAll(), type.toLowerCase());
+                case "all":
+                    pdfBytes = reportService.generateMovementsReport(movementService.getAllMovements(), type.toLowerCase());
                     break;
-                case "entrada":
-                    pdfBytes = reportService.genMovementsReport(movementService.getEntries(), type.toLowerCase());
+                case "entry":
+                    pdfBytes = reportService.generateMovementsReport(movementService.getEntries(), type.toLowerCase());
                     break;
-                case "salida":
-                    pdfBytes = reportService.genMovementsReport(movementService.getOutputs(), type.toLowerCase());
+                case "exit":
+                    pdfBytes = reportService.generateMovementsReport(movementService.getOutputs(), type.toLowerCase());
                     break;
                 default:
                     return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -101,7 +95,7 @@ public class MovementController {
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(org.springframework.http.MediaType.APPLICATION_PDF);
 
-            String filename = "reporte_movimientos_" + LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) + ".pdf";
+            String filename = "stock_movements_report_" + LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) + ".pdf";
             headers.setContentDispositionFormData("filename", filename);
 
             return new ResponseEntity<>(pdfBytes, headers, HttpStatus.OK);
