@@ -127,7 +127,8 @@ public class ProductServiceImpl implements ProductService {
     @Transactional
     public Movement updateStock(Movement movement) {
 
-        Product product = productRepository.getReferenceById(movement.getProduct().getId());
+        Product product = productRepository.findById(movement.getProduct().getId())
+                .orElseThrow(() -> new ProductNotFoundException("Product not found"));
 
         Long currentStock = product.getStock();
         Long movementStock = movement.getQuantity();
@@ -150,8 +151,6 @@ public class ProductServiceImpl implements ProductService {
         }
 
         movement.setProduct(product);
-        movement.setDate(LocalDateTime.now());
-
         productRepository.save(product);
         return movement;
     }

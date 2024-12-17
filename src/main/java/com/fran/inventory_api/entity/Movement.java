@@ -1,16 +1,7 @@
 package com.fran.inventory_api.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 
@@ -54,5 +45,10 @@ public class Movement {
 
     public enum MovementType {
         ENTRY, EXIT
+    }
+
+    @PrePersist
+    public void prePersist() {
+        date = LocalDateTime.now();
     }
 }
