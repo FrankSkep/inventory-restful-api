@@ -54,7 +54,7 @@ public class ProductController {
 
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<?> createProduct(
+    public ResponseEntity<ProductRequest> createProduct(
             @Valid @ModelAttribute ProductRequest productRequest,
             @RequestPart(value = "file", required = false) MultipartFile file) {
 
@@ -65,8 +65,9 @@ public class ProductController {
         Product product = productService.save(
                 productoMapper.toEntity(productRequest),
                 file);
+        productRequest.setId(product.getId());
 
-        return ResponseEntity.ok(productoMapper.toDTO(product));
+        return new ResponseEntity<>(productoMapper.toDTO(product), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")

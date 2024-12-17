@@ -28,6 +28,4 @@ public interface ProductService {
     void delete(Long id) throws IOException;
 
     Movement updateStock(Movement movement);
-
-    void sendNotification(String message);
 }

@@ -7,13 +7,13 @@ import java.util.List;
 
 public interface MovementService {
 
-    List<Movement> getByProduct(Long id);
-
     List<MovementResponse> getEntries();
 
     List<MovementResponse> getOutputs();
 
     List<MovementResponse> getAll();
+
+    Movement save(Movement movement);
 
     void deleteAllEntries();
 

@@ -21,12 +21,10 @@ import org.springframework.web.bind.annotation.*;
 public class MovementController {
 
     private final MovementService movementService;
-    private final ProductService productService;
     private final ReportService reportService;
 
-    public MovementController(MovementService movementService, ProductService productService, ReportService reportService) {
+    public MovementController(MovementService movementService, ReportService reportService) {
         this.movementService = movementService;
-        this.productService = productService;
         this.reportService = reportService;
     }
 
@@ -51,9 +49,8 @@ public class MovementController {
     }
 
     @PostMapping
-    public ResponseEntity<?> addMovement(@RequestBody Movement movimiento) {
-        Movement movement = productService.updateStock(movimiento);
-        return ResponseEntity.status(HttpStatus.CREATED).body(movement);
+    public ResponseEntity<?> addMovement(@RequestBody Movement movement) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(movementService.save(movement));
     }
 
     @DeleteMapping

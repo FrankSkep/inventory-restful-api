@@ -26,42 +26,6 @@ public class SupplierMapperDTO {
         );
     }
 
-    public SupplierRequest toDTO(Supplier supplier) {
-        return new SupplierRequest(
-                supplier.getId(),
-                supplier.getName(),
-                supplier.getAddress(),
-                supplier.getEmail(),
-                supplier.getPhone(),
-                supplier.getTaxIdentification()
-        );
-    }
-
-    public SupplierResponseDetailed toDTOdetailed(Supplier supplier) {
-
-        Set<Product> products = supplier.getProducts();
-        Set<ProductResponseSupplier> setDeProductos = products.stream().map(this::productoToDTOminimo).collect(Collectors.toSet());
-
-        return new SupplierResponseDetailed(
-                supplier.getId(),
-                supplier.getName(),
-                supplier.getAddress(),
-                supplier.getEmail(),
-                supplier.getPhone(),
-                supplier.getTaxIdentification(),
-                setDeProductos
-        );
-    }
-
-    public ProductResponseSupplier productoToDTOminimo(Product product) {
-        return new ProductResponseSupplier(
-                product.getId(),
-                product.getName(),
-                product.getCategory().getName(),
-                product.getImage() != null ? product.getImage().getUrl() : null
-        );
-    }
-
     // Mapeo para agregacion de nuevo proveedor
     public Supplier toEntity(SupplierRequest dto) {
         return new Supplier(

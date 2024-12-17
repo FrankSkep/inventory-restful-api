@@ -9,7 +9,6 @@ import com.fran.inventory_api.exception.InsufficientStockException;
 import com.fran.inventory_api.exception.RequiredValueException;
 import com.fran.inventory_api.mapper.ProductMapperDTO;
 import com.fran.inventory_api.exception.ProductNotFoundException;
-import com.fran.inventory_api.repository.MovementRepository;
 import com.fran.inventory_api.repository.ProductRepository;
 import com.fran.inventory_api.service.ImageService;
 import com.fran.inventory_api.service.NotificationService;
@@ -28,43 +27,42 @@ import org.springframework.web.multipart.MultipartFile;
 public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
-    private final MovementRepository movimientoStockRepository;
     private final ProductMapperDTO productoMapper;
     private final ImageService imageService;
     private final NotificationService notificationService;
 
-    public ProductServiceImpl(ProductRepository productRepository, MovementRepository movimientoStockRepository,
+    public ProductServiceImpl(ProductRepository productRepository,
                               ProductMapperDTO productoMapper, ImageService imageService,
                               NotificationService notificationService) {
         this.productRepository = productRepository;
-        this.movimientoStockRepository = movimientoStockRepository;
         this.productoMapper = productoMapper;
         this.imageService = imageService;
         this.notificationService = notificationService;
     }
 
-    // Obtener todos los productos y sus datos basicos
+    // get all products basic info
     @Override
     public List<ProductResponseBasic> getAllProducts() {
         return productRepository.findAllBasic();
     }
 
+    // get all products basic info with pagination
     @Override
     public Page<ProductResponseBasic> getProductsPage(Pageable pageable) {
         return productRepository.findAllBasic(pageable);
     }
 
-    // Obtener detalles de un producto
+    // get product details
     @Override
     public ProductResponseDetailed getProductDetails(Long id) {
 
         Product product = productRepository.findById(id)
-                .orElseThrow(() -> new ProductNotFoundException("Producto no encontrado"));
+                .orElseThrow(() -> new ProductNotFoundException("Product not found"));
 
         return productoMapper.toDTOdetailed(product);
     }
 
-    // Guardar un nuevo producto
+    // save a new product
     @Transactional
     @Override
     public Product save(Product product, MultipartFile file) {
@@ -76,11 +74,11 @@ public class ProductServiceImpl implements ProductService {
         return productRepository.save(product);
     }
 
-    // Editar datos de un producto existente
+    // update a existing product
     @Override
     public void update(Product product) {
-
-        Product productDB = productRepository.getReferenceById(product.getId());
+        Product productDB = productRepository.findById(product.getId())
+                .orElseThrow(() -> new ProductNotFoundException("Product not found"));
 
         productDB.setName(product.getName());
         productDB.setDescription(product.getDescription());
@@ -91,7 +89,7 @@ public class ProductServiceImpl implements ProductService {
         productRepository.save(productDB);
     }
 
-    // Actualizar la imagen de un producto o la agrega si no existe
+    // update the image of a product
     @Override
     @Transactional
     public void updateImage(MultipartFile file, Long productoId) {
@@ -109,57 +107,52 @@ public class ProductServiceImpl implements ProductService {
         productRepository.save(productDB);
     }
 
-    // Eliminar un producto
+    // delete a product
     @Override
     public void delete(Long id) {
         Product product = productRepository.findById(id)
-                .orElseThrow(() -> new ProductNotFoundException("Producto no encontrado"));
+                .orElseThrow(() -> new ProductNotFoundException("Product not found"));
 
-        // Eliminar la imagen si existe
+        // delete the image if exists
         if (product.getImage() != null) {
             imageService.completeDeletion(product.getImage());
         }
 
-        // Eliminar el producto
+        // delete the product
         productRepository.delete(product);
     }
 
-    // Actualiza el stock y registra el movimiento
+    // update the stock of a product
     @Override
     @Transactional
     public Movement updateStock(Movement movement) {
 
         Product product = productRepository.getReferenceById(movement.getProduct().getId());
 
-        Long stockActual = product.getStock();
-        Long stockMovimiento = movement.getQuantity();
+        Long currentStock = product.getStock();
+        Long movementStock = movement.getQuantity();
 
         if (movement.getType() == Movement.MovementType.EXIT) {
-            if (stockActual < stockMovimiento) {
-                throw new InsufficientStockException("No hay suficiente stock para realizar esta operación");
+            if (currentStock < movementStock) {
+                throw new InsufficientStockException("Insufficient stock for the movement");
             }
             movement.setAcquisitionCost(null);
-            product.setStock(stockActual - stockMovimiento);
+            product.setStock(currentStock - movementStock);
         } else {
             if (movement.getAcquisitionCost() == null || movement.getAcquisitionCost() <= 0) {
-                throw new RequiredValueException("El costo de adquisición es obligatorio para entradas de stock.");
+                throw new RequiredValueException("The acquisition cost is required");
             }
-            product.setStock(stockActual + stockMovimiento);
+            product.setStock(currentStock + movementStock);
         }
 
         if (product.getStock() <= product.getMinStock()) {
-            sendNotification("El producto " + product.getName() + " está bajo de stock");
+            notificationService.sendNotification("The product " + product.getName() + " is below the minimum stock");
         }
 
         movement.setProduct(product);
         movement.setDate(LocalDateTime.now());
 
         productRepository.save(product);
-        return movimientoStockRepository.save(movement);
-    }
-
-    @Override
-    public void sendNotification(String message) {
-        notificationService.sendNotification(message);
+        return movement;
     }
 }

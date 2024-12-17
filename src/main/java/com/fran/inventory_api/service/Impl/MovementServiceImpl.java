@@ -3,14 +3,12 @@ package com.fran.inventory_api.service.Impl;
 import com.fran.inventory_api.dto.MovementResponse;
 import com.fran.inventory_api.entity.Movement;
 import com.fran.inventory_api.exception.MovementNotFoundException;
-import com.fran.inventory_api.exception.ProductNotFoundException;
-import com.fran.inventory_api.mapper.MovementMapperDTO;
 import com.fran.inventory_api.repository.MovementRepository;
-import com.fran.inventory_api.repository.ProductRepository;
 import com.fran.inventory_api.service.MovementService;
 
 import java.util.List;
 
+import com.fran.inventory_api.service.ProductService;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -18,21 +16,11 @@ import org.springframework.stereotype.Service;
 public class MovementServiceImpl implements MovementService {
 
     private final MovementRepository movementRepository;
-    private final ProductRepository productRepository;
-    private final MovementMapperDTO movementMapperDTO;
+    private final ProductService productService;
 
-    public MovementServiceImpl(MovementRepository movementRepository, ProductRepository productRepository, MovementMapperDTO movementMapperDTO) {
+    public MovementServiceImpl(MovementRepository movementRepository, ProductService productService) {
         this.movementRepository = movementRepository;
-        this.productRepository = productRepository;
-        this.movementMapperDTO = movementMapperDTO;
-    }
-
-    @Override
-    public List<Movement> getByProduct(Long id) {
-        if (!productRepository.existsById(id)) {
-            throw new ProductNotFoundException("Product not found");
-        }
-        return movementRepository.findByProductId(id);
+        this.productService = productService;
     }
 
     @Override
@@ -48,8 +36,12 @@ public class MovementServiceImpl implements MovementService {
     @Override
     public List<MovementResponse> getAll() {
         return movementRepository.findAllBasic();
-//        List<Movement> movements = movementRepository.findAll();
-//        return movements.stream().map(movementMapperDTO::toDTO).collect(Collectors.toList());
+    }
+
+    @Override
+    public Movement save(Movement movement) {
+        Movement createdMovement = productService.updateStock(movement);
+        return movementRepository.save(createdMovement);
     }
 
     @Override

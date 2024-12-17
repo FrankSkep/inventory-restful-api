@@ -79,8 +79,7 @@ public class SupplierServiceImpl implements SupplierService {
                     new HashSet<>(products)
             );
         } else {
-            throw new RuntimeException("Supplier not found");
+            throw new SupplierNotFoundException("Supplier not found");
         }
-//        return supplierRepository.getDetailsById(id);
     }
 }

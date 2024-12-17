@@ -56,7 +56,8 @@ public class ProductMapperDTO {
                 product.getCategory().getName(),
                 product.getImage() != null ? product.getImage().getUrl() : null,
                 proveedorMapper.toDTObasic(product.getSupplier()),
-                product.getMinStock(), product.getStockMovements()
+                product.getMinStock(),
+                product.getStockMovements()
         );
     }
 
