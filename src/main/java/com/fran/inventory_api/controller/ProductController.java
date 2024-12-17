@@ -58,7 +58,7 @@ public class ProductController {
             @Valid @ModelAttribute ProductRequest productRequest,
             @RequestPart(value = "file", required = false) MultipartFile file) {
 
-        if (!FileValidator.isValidFile(file)) {
+        if (!FileValidator.isValidFile(file) && file != null) {
             throw new InvalidFileException("El archivo subido no es válido.");
         }
 

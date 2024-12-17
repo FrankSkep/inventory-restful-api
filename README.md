@@ -78,6 +78,7 @@ The API uses a modular design based on RESTful controllers, business services, a
 - **Spring Boot**: Main framework for the application.
 - **JWT**: Authentication and authorization.
 - **Spring Security**: Role management and endpoint protection.
+- **Spring Data JPA**: Data access layer.
 - **MySQL**: Relational database.
 - **Cloudinary**: Cloud image storage.
 
