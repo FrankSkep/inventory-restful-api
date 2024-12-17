@@ -6,11 +6,11 @@ import lombok.*;
 
 import java.util.Set;
 
-@Entity
-@Table(name = "suppliers")
 @Getter
 @Setter
 @NoArgsConstructor
+@Entity
+@Table(name = "suppliers")
 public class Supplier {
 
     @Id
@@ -32,7 +32,6 @@ public class Supplier {
     @Column(name = "tax_identification", nullable = false)
     private String taxIdentification;
 
-    // Relación con productos
     @OneToMany(mappedBy = "supplier")
     @JsonManagedReference
     private Set<Product> products;

@@ -3,12 +3,14 @@ package com.fran.inventory_api.entity;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
 
+@Getter
+@Setter
 @Entity
-@Data
 @Table(name = "products")
 public class Product {
 
@@ -29,7 +31,6 @@ public class Product {
     private Long stock;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    // Lazy loading, para cargar la categoría solo cuando se necesita
     @JoinColumn(name = "category_id", referencedColumnName = "id", nullable = false)
     private Category category;
 
@@ -49,7 +50,6 @@ public class Product {
     @JsonManagedReference
     private List<Movement> stockMovements;
 
-    // Constructor para agregar nuevo producto
     public Product(String name, String description, Double price, Long stock, Category category, Supplier supplier, Integer minStock) {
         this.name = name;
         this.description = description;
@@ -60,7 +60,6 @@ public class Product {
         this.minStock = minStock;
     }
 
-    // Constructor para mapear DTO a Entidad
     public Product(Long id, String name, String description, Double price, Long stock, Category category, Supplier supplier, Integer minStock) {
         this.id = id;
         this.name = name;

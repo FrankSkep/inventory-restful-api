@@ -19,9 +19,7 @@ public class NotificationServiceImpl implements NotificationService {
 
     @Override
     public void sendNotification(String message) {
-        Notification notification = new Notification();
-        notification.setMessage(message);
-        notification.setRead(false);
+        Notification notification = new Notification(message);
         notificationRepository.save(notification);
     }
 

@@ -1,11 +1,13 @@
 package com.fran.inventory_api.dto;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.Set;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 public class SupplierResponseDetailed {
 
