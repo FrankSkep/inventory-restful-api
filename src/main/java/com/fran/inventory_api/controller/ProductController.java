@@ -58,8 +58,8 @@ public class ProductController {
             @Valid @ModelAttribute ProductRequest productRequest,
             @RequestPart(value = "file", required = false) MultipartFile file) {
 
-        if (!FileValidator.isValidFile(file) && file != null) {
-            throw new InvalidFileException("El archivo subido no es válido.");
+        if (file != null && !FileValidator.isValidFile(file)) {
+            throw new InvalidFileException("The file uploaded is not a valid image.");
         }
 
         Product product = productService.createProduct(
@@ -72,8 +72,8 @@ public class ProductController {
 
     @PutMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<?> updateProduct(@PathVariable Long id, @ModelAttribute ProductRequest productRequest,
-                                           @RequestPart(value = "file", required = false) MultipartFile newOptionalImage) {
+    public ResponseEntity<String> updateProduct(@PathVariable Long id, @ModelAttribute ProductRequest productRequest,
+                                                @RequestPart(value = "file", required = false) MultipartFile newOptionalImage) {
 
         productRequest.setId(id);
         productService.updateProduct(productoMapper.toEntityWithId(productRequest));
@@ -82,24 +82,14 @@ public class ProductController {
             productService.updateProductImage(newOptionalImage, productRequest.getId());
         }
 
-        return ResponseEntity.ok().body("Producto editado exitosamente");
+        return ResponseEntity.ok().body("Product updated successfully");
     }
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> deleteProduct(@PathVariable Long id) {
-        try {
-            productService.deleteProduct(id);
-            return ResponseEntity.ok("Producto eliminado exitosamente");
-        } catch (
-                NoSuchElementException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body("Producto con ID " + id + " no encontrado.");
-        } catch (
-                IOException e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("Ocurrió un error al eliminar la imagen del producto.");
-        }
+        productService.deleteProduct(id);
+        return ResponseEntity.ok("Product deleted successfully.");
     }
 
     @GetMapping("/report")
@@ -110,7 +100,7 @@ public class ProductController {
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_PDF);
 
-            String filename = "reporte_inventario_" + LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) + ".pdf";
+            String filename = "inventory_report_" + LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) + ".pdf";
             headers.setContentDispositionFormData("filename", filename);
 
             return new ResponseEntity<>(pdfBytes, headers, HttpStatus.OK);

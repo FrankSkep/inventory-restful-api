@@ -25,7 +25,7 @@ public interface ProductService {
 
     void updateProductImage(MultipartFile file, Long productoId);
 
-    void deleteProduct(Long id) throws IOException;
+    void deleteProduct(Long id);
 
     Movement updateStock(Movement movement);
 }
