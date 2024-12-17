@@ -1,208 +1,208 @@
-<h1 align="center">API RESTful Inventario</h1>
+<h1 align="center">Inventory RESTful API</h1>
 
-## Tabla de Contenidos
+## Table of Contents
 
-- [Descripción](#descripción)
-- [Funcionalidades](#funcionalidades)
-- [Arquitectura](#arquitectura)
+- [Description](#description)
+- [Features](#features)
+- [Architecture](#architecture)
 - [Endpoints](#endpoints)
-  - [Autenticación](#autenticación)
-  - [Productos](#productos)
-  - [Categorías](#categorías)
-  - [Proveedores](#proveedores)
-  - [Movimientos](#movimientos)
-  - [Notificaciones](#notificaciones)
-- [Permisos por Rol](#permisos-por-rol)
-- [Requisitos](#requisitos)
-- [Instalación](#instalación)
-- [Uso](#uso)
-- [Desarrollador](#desarrollador)
-- [Licencia](#licencia)
+  - [Authentication](#authentication)
+  - [Products](#products)
+  - [Categories](#categories)
+  - [Suppliers](#suppliers)
+  - [Movements](#movements)
+  - [Notifications](#notifications)
+- [Role Permissions](#role-permissions)
+- [Requirements](#requirements)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Developer](#developer)
+- [License](#license)
 
-## Descripción
+## Description
 
-API RESTful para la gestión de inventarios, diseñada para manejar productos, proveedores, categorías, movimientos de stock y notificaciones. Utiliza autenticación basada en JWT para gestionar permisos y roles, e integra servicios en la nube como **Cloudinary** para la gestión de imágenes.
+RESTful API for inventory management, designed to handle products, suppliers, categories, stock movements, and notifications. It uses JWT-based authentication to manage permissions and roles and integrates cloud services like **Cloudinary** for image management.
 
-Incluye un **manejador de excepciones global** que garantiza respuestas consistentes en errores comunes (autenticación, validación, datos no encontrados, etc.).
+Includes a **global exception handler** that ensures consistent responses for common errors (authentication, validation, data not found, etc.).
 
-## Funcionalidades
+## Features
 
-### Autenticación y Autorización
+### Authentication and Authorization
 
-- Registro e inicio de sesión de usuarios.
-- Generación y validación de tokens JWT.
-- Protección de endpoints por roles (`USER`, `MOD` y `ADMIN`).
-- Manejo de excepciones específicas (token inválido, acceso no autorizado).
+- User registration and login.
+- JWT token generation and validation.
+- Endpoint protection by roles (`USER`, `MOD`, and `ADMIN`).
+- Specific exception handling (invalid token, unauthorized access).
 
-### Productos
+### Products
 
-- CRUD completo de productos con paginación y filtros.
-- Gestión de imágenes mediante **Cloudinary**.
-- Reportes PDF del inventario actual.
-- Asociación con proveedores y categorías.
+- Full CRUD for products with pagination and filters.
+- Image management via **Cloudinary**.
+- PDF reports of the current inventory.
+- Association with suppliers and categories.
 
-### Categorías
+### Categories
 
-- CRUD de categorías.
-- Relación jerárquica con productos.
+- Full CRUD for categories.
+- Hierarchical relationship with products.
 
-### Proveedores
+### Suppliers
 
-- CRUD de proveedores.
-- Asociación con productos.
+- Full CRUD for suppliers.
+- Association with products.
 
-### Movimientos
+### Movements
 
-- Registro de entradas y salidas de stock.
-- Exportación de reportes en formato PDF.
-- Alertas para stock bajo.
+- Registration of stock entries and exits.
+- Export reports in PDF format.
+- Alerts for low stock.
 
-### Notificaciones
+### Notifications
 
-- Gestión centralizada de notificaciones.
-- Sistema para marcar como leídas o eliminarlas.
+- Centralized notification management.
+- System to mark as read or delete them.
 
-### Excepciones Globales
+### Global Exceptions
 
-- Manejo centralizado de errores en:
-  - Validación de datos.
-  - Autenticación y autorización.
-  - Recursos no encontrados.
-  - Operaciones no permitidas.
+- Centralized error handling in:
+  - Data validation.
+  - Authentication and authorization.
+  - Resources not found.
+  - Forbidden operations.
 
-## Arquitectura
+## Architecture
 
-La API utiliza un diseño modular basado en controladores RESTful, servicios de negocio y repositorios.
+The API uses a modular design based on RESTful controllers, business services, and repositories.
 
-### Principales tecnologías:
-- **Spring Boot**: Framework principal para la aplicación.
-- **JWT**: Autenticación y autorización.
-- **Spring Security**: Gestión de roles y protección de endpoints.
-- **MySQL**: Base de datos relacional.
-- **Cloudinary**: Almacenamiento de imágenes en la nube.
+### Main Technologies:
+- **Spring Boot**: Main framework for the application.
+- **JWT**: Authentication and authorization.
+- **Spring Security**: Role management and endpoint protection.
+- **MySQL**: Relational database.
+- **Cloudinary**: Cloud image storage.
 
 ## Endpoints
 
-### Autenticación
+### Authentication
 
-| Método | Endpoint         | Descripción                         |
+| Method | Endpoint         | Description                         |
 | ------ |------------------| ----------------------------------- |
-| POST   | /api/auth/signin | Iniciar sesión y obtener token JWT. |
-| POST   | /api/auth/signup | Registrar un nuevo usuario.         |
+| POST   | /api/auth/signin | Log in and obtain JWT token.        |
+| POST   | /api/auth/signup | Register a new user.                |
 
-### Productos
+### Products
 
-| Método | Endpoint                | Descripción                              |
+| Method | Endpoint                | Description                              |
 | ------ |-------------------------|------------------------------------------|
-| GET    | /api/products           | Obtener productos paginados y filtrados. |
-| GET    | /api/products/{id}      | Obtener detalles de un producto.         |
-| POST   | /api/products           | Agregar nuevo producto al inventario.    |
-| PUT    | /api/products/{id}      | Editar un producto existente.            |
-| DELETE | /api/products/{id}      | Eliminar un producto.                    |
-| GET    | /api/products/report    | Generar reporte de inventario.           |
+| GET    | /api/products           | Get paginated and filtered products.     |
+| GET    | /api/products/{id}      | Get product details.                     |
+| POST   | /api/products           | Add a new product to the inventory.      |
+| PUT    | /api/products/{id}      | Edit an existing product.                |
+| DELETE | /api/products/{id}      | Delete a product.                        |
+| GET    | /api/products/report    | Generate inventory report.               |
 
-### Categorías
+### Categories
 
-| Método | Endpoint             | Descripción                            |
+| Method | Endpoint             | Description                            |
 | ------ |----------------------| -------------------------------------- |
-| GET    | /api/categories      | Obtener lista de todas las categorías. |
-| GET    | /api/categories/{id} | Ver detalles de una categoría.         |
-| POST   | /api/categories      | Registrar nueva categoría.             |
-| PUT    | /api/categories/{id} | Editar datos de una categoría.         |
-| DELETE | /api/categories/{id} | Eliminar una categoría.                |
+| GET    | /api/categories      | Get a list of all categories.          |
+| GET    | /api/categories/{id} | View category details.                 |
+| POST   | /api/categories      | Register a new category.               |
+| PUT    | /api/categories/{id} | Edit category details.                 |
+| DELETE | /api/categories/{id} | Delete a category.                     |
 
-### Proveedores
+### Suppliers
 
-| Método | Endpoint            | Descripción                             |
+| Method | Endpoint            | Description                             |
 | ------ |---------------------| --------------------------------------- |
-| GET    | /api/suppliers      | Obtener lista de todos los proveedores. |
-| GET    | /api/suppliers/{id} | Ver detalles de un proveedor.           |
-| POST   | /api/suppliers      | Registrar nuevo proveedor.              |
-| PUT    | /api/suppliers/{id} | Editar datos de un proveedor.           |
-| DELETE | /api/suppliers/{id} | Eliminar un proveedor.                  |
+| GET    | /api/suppliers      | Get a list of all suppliers.            |
+| GET    | /api/suppliers/{id} | View supplier details.                  |
+| POST   | /api/suppliers      | Register a new supplier.                |
+| PUT    | /api/suppliers/{id} | Edit supplier details.                  |
+| DELETE | /api/suppliers/{id} | Delete a supplier.                      |
 
-### Movimientos
+### Movements
 
-| Método | Endpoint                           | Descripción                                               |
+| Method | Endpoint                           | Description                                               |
 | ------ |------------------------------------|-----------------------------------------------------------|
-| GET    | /api/stock-movements               | Obtener todos los movimientos.                            |
-| GET    | /api/stock-movements/entries       | Obtener las entradas de stock.                            |
-| GET    | /api/stock-movements/outputs       | Obtener las salidas de stock.                             |
-| DELETE | /api/stock-movements               | Eliminar todos los movimientos.                           |
-| DELETE | /api/stock-movements/{id}          | Eliminar un movimiento de stock.                          |
-| DELETE | /api/stock-movements/entries       | Eliminar todas las entradas de stock.                     |
-| DELETE | /api/stock-movements/outputs       | Eliminar todas las salidas de stock.                      |
-| POST   | /api/stock-movements               | Registrar un movimiento de stock.                         |
-| GET    | /api/stock-movements/report/{type} | Generar reporte de movimiento (general, entrada, salida). |
+| GET    | /api/stock-movements               | Get all movements.                                        |
+| GET    | /api/stock-movements/entries       | Get stock entries.                                        |
+| GET    | /api/stock-movements/outputs       | Get stock outputs.                                        |
+| DELETE | /api/stock-movements               | Delete all movements.                                     |
+| DELETE | /api/stock-movements/{id}          | Delete a stock movement.                                  |
+| DELETE | /api/stock-movements/entries       | Delete all stock entries.                                 |
+| DELETE | /api/stock-movements/outputs       | Delete all stock outputs.                                 |
+| POST   | /api/stock-movements               | Register a stock movement.                                |
+| GET    | /api/stock-movements/report/{type} | Generate movement report (general, entry, exit).          |
 
-### Notificaciones
+### Notifications
 
-| Método | Endpoint                     | Descripción                         |
+| Method | Endpoint                     | Description                         |
 | ------ |------------------------------| ----------------------------------- |
-| GET    | /api/notifications/unread    | Obtener notificaciones no leídas.   |
-| GET    | /api/notifications           | Obtener todas las notificaciones.   |
-| POST   | /api/notifications/{id}/read | Marcar una notificación como leída. |
-| DELETE | /api/notifications/{id}      | Eliminar una notificación.          |
-| DELETE | /api/notifications           | Eliminar todas las notificaciones.  |
+| GET    | /api/notifications/unread    | Get unread notifications.           |
+| GET    | /api/notifications           | Get all notifications.              |
+| POST   | /api/notifications/{id}/read | Mark a notification as read.        |
+| DELETE | /api/notifications/{id}      | Delete a notification.              |
+| DELETE | /api/notifications           | Delete all notifications.           |
 
-### Permisos por Rol
+### Role Permissions
 
-#### `USER` Usuario
-- Puede consultar y registrar recursos básicos, como productos y movimientos de stock.
-- No tiene permisos para modificar, eliminar recursos críticos ni gestionar roles.
+#### `USER` User
+- Can view and register basic resources, such as products and stock movements.
+- Cannot modify, delete critical resources, or manage roles.
 
-#### `MOD` Moderador
-- Puede consultar y registrar recursos.
-- Tiene permisos adicionales para eliminar usuarios con rol `USER`.
-- No puede gestionar roles ni acceder a configuraciones avanzadas.
+#### `MOD` Moderator
+- Can view and register resources.
+- Has additional permissions to delete users with the `USER` role.
+- Cannot manage roles or access advanced settings.
 
-#### `ADMIN` Administrador
-- Acceso total al sistema, incluyendo:
-  - Modificar y eliminar cualquier recurso.
-  - Gestionar roles (asignar o revocar).
-  - Eliminar usuarios con rol `USER` y `MOD`.
+#### `ADMIN` Administrator
+- Full access to the system, including:
+  - Modify and delete any resource.
+  - Manage roles (assign or revoke).
+  - Delete users with the `USER` and `MOD` roles.
 
-## Requisitos
+## Requirements
 
 - **Java 17+**
 - **Spring Boot**
 - **MySQL**
 - **Maven**
 
-## Instalación
+## Installation
 
-1. Clona el repositorio:
+1. Clone the repository:
 
    ```sh
    git clone https://github.com/FrankSkep/inventory-rest-api
    ```
 
-2. Configura el archivo `.env`:
+2. Configure the `.env` file:
    ```properties
-   CLOUDINARY_CLOUD_NAME=tu_cloud_name
-   CLOUDINARY_API_KEY=tu_api_key
-   CLOUDINARY_API_SECRET=tu_api_secret
-   DB_URL=jdbc:mysql://localhost:3306/tu_base_de_datos
-   DB_USERNAME=tu_usuario_mysql
-   DB_PASSWORD=tu_contraseña_mysql
-   JWT_SECRET_KEY=tu_jwt_secret_key
+   CLOUDINARY_CLOUD_NAME=your_cloud_name
+   CLOUDINARY_API_KEY=your_api_key
+   CLOUDINARY_API_SECRET=your_api_secret
+   DB_URL=jdbc:mysql://localhost:3306/your_database
+   DB_USERNAME=your_mysql_user
+   DB_PASSWORD=your_mysql_password
+   JWT_SECRET_KEY=your_jwt_secret_key
    ```
 
-3. Construye y ejecuta el proyecto:
+3. Build and run the project:
    ```sh
    ./mvnw clean install
    ./mvnw spring-boot:run
    ```
 
-## Uso
+## Usage
 
-Para interactuar con la API, usa herramientas como Postman o cURL. Los endpoints se encuentran documentados en la sección correspondiente.
+To interact with the API, use tools like Postman or cURL. The endpoints are documented in the corresponding section.
 
-## Desarrollador
+## Developer
 
 [FrankSkep](https://github.com/FrankSkep)
 
-## Licencia
+## License
 
 **[GNU Affero General Public License v3.0](https://www.gnu.org/licenses/agpl-3.0.html)**.
-© 2024 FrankSkep. Consultar el archivo [LICENSE](LICENSE) para más información.
+© 2024 FrankSkep. See the LICENSE file for more information.
