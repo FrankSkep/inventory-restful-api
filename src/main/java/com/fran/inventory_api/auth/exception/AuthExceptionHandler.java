@@ -1,6 +1,5 @@
 package com.fran.inventory_api.auth.exception;
 
-import com.fran.inventory_api.auth.entity.UserNotFoundException;
 import com.fran.inventory_api.system.exception.handler.ErrorResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

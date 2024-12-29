@@ -1,6 +1,5 @@
 package com.fran.inventory_api.system.exception.handler;
 
-import com.fran.inventory_api.auth.entity.UserNotFoundException;
 import com.fran.inventory_api.system.exception.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,7 +9,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
-public class GeneralExceptionHandler {
+public class SystemExceptionHandler {
 
     @ExceptionHandler(ProductNotFoundException.class)
     public ResponseEntity<ErrorResponse> handleProductNotFound(ProductNotFoundException ex) {
