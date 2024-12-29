@@ -8,7 +8,7 @@ import com.fran.inventory_api.auth.entity.User;
 import com.fran.inventory_api.auth.exception.AuthenticationException;
 import com.fran.inventory_api.auth.jwt.JwtService;
 import com.fran.inventory_api.auth.repository.UserRepository;
-import com.fran.inventory_api.application.exception.UserNotFoundException;
+import com.fran.inventory_api.system.exception.UserNotFoundException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
