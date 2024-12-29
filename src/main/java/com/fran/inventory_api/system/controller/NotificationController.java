@@ -36,14 +36,14 @@ public class NotificationController {
     }
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('MODERATOR')")
     public ResponseEntity<?> deleteNotification(@PathVariable Long id) {
         notificationService.delete(id);
         return ResponseEntity.status(HttpStatus.OK).body("Notificación eliminada");
     }
 
     @DeleteMapping
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('MODERATOR')")
     public ResponseEntity<?> deleteAllNotifications() {
         notificationService.deleteAll();
         return ResponseEntity.status(HttpStatus.OK).body("Notificaciones eliminadas");

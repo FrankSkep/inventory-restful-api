@@ -45,7 +45,7 @@ public class SupplierController {
     }
 
     @PostMapping
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('MODERATOR')")
     public ResponseEntity<?> createSupplier(@Valid @RequestBody SupplierRequest supplierRequest, BindingResult result) {
 
         if (result.hasErrors()) {
@@ -59,7 +59,7 @@ public class SupplierController {
     }
 
     @PutMapping("/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('MODERATOR')")
     public ResponseEntity<?> updateSupplier(@PathVariable Long id, @Valid @RequestBody SupplierRequest supplier, BindingResult result) {
 
         if (result.hasErrors()) {
@@ -70,7 +70,7 @@ public class SupplierController {
     }
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('MODERATOR')")
     public ResponseEntity<?> deleteSupplier(@PathVariable Long id) {
 
         supplierService.deleteSupplier(id);

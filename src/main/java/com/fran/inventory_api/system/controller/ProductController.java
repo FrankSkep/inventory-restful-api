@@ -51,7 +51,7 @@ public class ProductController {
     }
 
     @PostMapping
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('MODERATOR')")
     public ResponseEntity<ProductRequest> createProduct(
             @Valid @ModelAttribute ProductRequest productRequest,
             @RequestPart(value = "file", required = false) MultipartFile file) {
@@ -69,7 +69,7 @@ public class ProductController {
     }
 
     @PutMapping("/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('MODERATOR')")
     public ResponseEntity<String> updateProduct(@PathVariable Long id, @ModelAttribute ProductRequest productRequest,
                                                 @RequestPart(value = "file", required = false) MultipartFile newOptionalImage) {
 
@@ -84,7 +84,7 @@ public class ProductController {
     }
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('MODERATOR')")
     public ResponseEntity<String> deleteProduct(@PathVariable Long id) {
         productService.deleteProduct(id);
         return ResponseEntity.ok("Product deleted successfully.");

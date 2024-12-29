@@ -6,6 +6,7 @@ import com.fran.inventory_api.auth.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -23,6 +24,7 @@ public class UserController {
     }
 
     @PatchMapping
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> updateRole(@PathVariable Long id, @RequestBody Role role) {
         userService.updateRole(id, role);
         return ResponseEntity.status(HttpStatus.OK).build();
