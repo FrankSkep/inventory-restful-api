@@ -6,7 +6,6 @@ import com.fran.inventory_api.auth.dto.RegisterRequest;
 import com.fran.inventory_api.auth.entity.Role;
 import com.fran.inventory_api.auth.entity.User;
 import com.fran.inventory_api.auth.exception.AuthenticationException;
-import com.fran.inventory_api.auth.exception.InvalidUserRegistrationException;
 import com.fran.inventory_api.auth.jwt.JwtService;
 import com.fran.inventory_api.auth.repository.UserRepository;
 import org.springframework.security.authentication.AuthenticationManager;
