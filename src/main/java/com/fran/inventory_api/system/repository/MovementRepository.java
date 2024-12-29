@@ -16,14 +16,14 @@ public interface MovementRepository extends JpaRepository<Movement, Long> {
 
     List<Movement> findByProductId(Long id);
 
-    @Query("SELECT new com.fran.inventory_api.dto.MovementResponse(m.id, m.type, m.date, m.reason, m.quantity, " +
-            "new com.fran.inventory_api.dto.ProductResponseBasic(p.id, p.name, p.description, p.price, p.stock, p.category.name, p.image.url), " +
+    @Query("SELECT new com.fran.inventory_api.system.dto.MovementResponse(m.id, m.type, m.date, m.reason, m.quantity, " +
+            "new com.fran.inventory_api.system.dto.ProductResponseBasic(p.id, p.name, p.description, p.price, p.stock, p.category.name, p.image.url), " +
             "m.acquisitionCost) " +
             "FROM Movement m JOIN m.product p")
     List<MovementResponse> findAllBasic();
 
-    @Query("SELECT new com.fran.inventory_api.dto.MovementResponse(m.id, m.type, m.date, m.reason, m.quantity, " +
-            "new com.fran.inventory_api.dto.ProductResponseBasic(p.id, p.name, p.description, p.price, p.stock, p.category.name, p.image.url), " +
+    @Query("SELECT new com.fran.inventory_api.system.dto.MovementResponse(m.id, m.type, m.date, m.reason, m.quantity, " +
+            "new com.fran.inventory_api.system.dto.ProductResponseBasic(p.id, p.name, p.description, p.price, p.stock, p.category.name, p.image.url), " +
             "m.acquisitionCost) " +
             "FROM Movement m JOIN m.product p " +
             "WHERE m.type = :movementType")

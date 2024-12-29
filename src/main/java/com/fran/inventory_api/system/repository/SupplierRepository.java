@@ -13,13 +13,13 @@ import java.util.Optional;
 @Repository
 public interface SupplierRepository extends JpaRepository<Supplier, Long> {
 
-    @Query("SELECT new com.fran.inventory_api.dto.SupplierResponseBasic(p.id, p.name, p.address, p.email, p.phone, p.taxIdentification) FROM Supplier p")
+    @Query("SELECT new com.fran.inventory_api.system.dto.SupplierResponseBasic(p.id, p.name, p.address, p.email, p.phone, p.taxIdentification) FROM Supplier p")
     List<SupplierResponseBasic> findAllBasic();
 
     @Query("SELECT s FROM Supplier s WHERE s.id = :id")
     Optional<Supplier> findSupplierById(Long id);
 
-    @Query("SELECT new com.fran.inventory_api.dto.ProductResponseSupplier(p.id, p.name, p.description, c.name) " +
+    @Query("SELECT new com.fran.inventory_api.system.dto.ProductResponseSupplier(p.id, p.name, p.description, c.name) " +
             "FROM Product p " +
             "JOIN p.category c " +
             "LEFT JOIN p.image i " +

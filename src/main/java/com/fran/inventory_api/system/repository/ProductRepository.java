@@ -21,9 +21,9 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     List<Product> findByPriceBetween(Double min, Double max);
 
-    @Query("SELECT new com.fran.inventory_api.dto.ProductResponseBasic(p.id, p.name, p.description, p.price, p.stock, p.category.name, p.image.url) FROM Product p")
+    @Query("SELECT new com.fran.inventory_api.system.dto.ProductResponseBasic(p.id, p.name, p.description, p.price, p.stock, p.category.name, p.image.url) FROM Product p")
     List<ProductResponseBasic> findAllBasic();
 
-    @Query("SELECT new com.fran.inventory_api.dto.ProductResponseBasic(p.id, p.name, p.description, p.price, p.stock, p.category.name, p.image.url) FROM Product p")
+    @Query("SELECT new com.fran.inventory_api.system.dto.ProductResponseBasic(p.id, p.name, p.description, p.price, p.stock, p.category.name, p.image.url) FROM Product p")
     Page<ProductResponseBasic> findAllBasic(Pageable pageable);
 }

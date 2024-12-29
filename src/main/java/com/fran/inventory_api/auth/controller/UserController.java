@@ -16,14 +16,14 @@ public class UserController {
     private final UserService userService;
 
     @PutMapping("/{id}")
-    public ResponseEntity<String> updateUser(@PathVariable Long id, @RequestParam UserRequest userReq) {
+    public ResponseEntity<String> updateUser(@PathVariable Long id, @RequestBody UserRequest userReq) {
         userReq.setId(id);
         userService.updateUser(userReq);
         return ResponseEntity.ok("User updated sucessfully.");
     }
 
     @PatchMapping
-    public ResponseEntity<Void> updateRole(@PathVariable Long id, @RequestParam Role role) {
+    public ResponseEntity<Void> updateRole(@PathVariable Long id, @RequestBody Role role) {
         userService.updateRole(id, role);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
