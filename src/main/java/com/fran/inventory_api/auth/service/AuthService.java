@@ -8,7 +8,6 @@ import com.fran.inventory_api.auth.entity.User;
 import com.fran.inventory_api.auth.exception.AuthenticationException;
 import com.fran.inventory_api.auth.jwt.JwtService;
 import com.fran.inventory_api.auth.repository.UserRepository;
-import com.fran.inventory_api.system.exception.UserNotFoundException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -60,12 +59,5 @@ public class AuthService {
         return AuthResponse.builder()
                 .token(jwtService.getToken(user))
                 .build();
-    }
-
-    public void updatePassword(Long id, String password) {
-        User user = userRepository.findById(id)
-                .orElseThrow(() -> new UserNotFoundException("User not found"));
-        user.setPassword(passwordEncoder.encode(password));
-        userRepository.save(user);
     }
 }

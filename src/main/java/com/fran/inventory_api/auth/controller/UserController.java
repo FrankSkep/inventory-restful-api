@@ -1,12 +1,18 @@
 package com.fran.inventory_api.auth.controller;
 
+import com.fran.inventory_api.auth.dto.UpdatePasswordRequest;
 import com.fran.inventory_api.auth.entity.Role;
 import com.fran.inventory_api.auth.dto.UserRequest;
+import com.fran.inventory_api.auth.entity.User;
 import com.fran.inventory_api.auth.service.UserService;
+import com.fran.inventory_api.auth.entity.UserNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -35,5 +41,13 @@ public class UserController {
     public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
         userService.deleteUser(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+    @PatchMapping("/password")
+    public ResponseEntity<String> updatePassword(@RequestBody UpdatePasswordRequest password) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        userService.updatePassword(userDetails.getUsername(), password);
+        return ResponseEntity.ok("Password updated successfully.");
     }
 }
