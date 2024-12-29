@@ -8,6 +8,7 @@ import com.fran.inventory_api.auth.entity.User;
 import com.fran.inventory_api.auth.exception.AuthenticationException;
 import com.fran.inventory_api.auth.jwt.JwtService;
 import com.fran.inventory_api.auth.repository.UserRepository;
+import com.fran.inventory_api.application.exception.UserNotFoundException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -35,14 +36,14 @@ public class AuthService {
                     .build();
         } catch (
                 Exception e) {
-            throw new AuthenticationException("Usuario o contraseña incorrectos");
+            throw new AuthenticationException("Incorrect user or password.");
         }
     }
 
     public AuthResponse register(RegisterRequest request) {
 
         if (userRepository.existsByUsername(request.getUsername())) {
-            throw new AuthenticationException("El usuario ya existe");
+            throw new AuthenticationException("User already exists.");
         }
 
         User user = User.builder()
@@ -61,7 +62,10 @@ public class AuthService {
                 .build();
     }
 
-    public void delete(String username) {
-        userRepository.deleteByUsername(username);
+    public void updatePassword(Long id, String password) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new UserNotFoundException("User not found"));
+        user.setPassword(passwordEncoder.encode(password));
+        userRepository.save(user);
     }
 }
