@@ -4,6 +4,7 @@ import com.fran.inventory_api.system.dto.MovementResponse;
 import com.fran.inventory_api.system.entity.Movement;
 import com.fran.inventory_api.system.service.MovementService;
 
+import java.net.URI;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -44,7 +45,8 @@ public class MovementController {
 
     @PostMapping
     public ResponseEntity<Movement> createMovement(@RequestBody Movement movement) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(movementService.createMovement(movement));
+        Movement createdMovement = movementService.createMovement(movement);
+        return ResponseEntity.created(null).body(createdMovement);
     }
 
     @DeleteMapping

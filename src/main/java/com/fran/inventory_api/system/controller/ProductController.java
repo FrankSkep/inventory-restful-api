@@ -10,6 +10,7 @@ import com.fran.inventory_api.system.service.ProductService;
 import com.fran.inventory_api.system.service.Impl.ReportService;
 import com.fran.inventory_api.system.service.FileValidator;
 
+import java.net.URI;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -65,13 +66,13 @@ public class ProductController {
                 file);
         productRequest.setId(product.getId());
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(productMapper.toDTO(product));
+        return ResponseEntity.created(URI.create("/api/products/" + product.getId())).body(productMapper.toDTO(product));
     }
 
     @PutMapping("/{id}")
     @PreAuthorize("hasRole('MODERATOR')")
-    public ResponseEntity<String> updateProduct(@PathVariable Long id, @ModelAttribute ProductRequest productRequest,
-                                                @RequestPart(value = "file", required = false) MultipartFile newOptionalImage) {
+    public ResponseEntity<Void> updateProduct(@PathVariable Long id, @ModelAttribute ProductRequest productRequest,
+                                              @RequestPart(value = "file", required = false) MultipartFile newOptionalImage) {
 
         productRequest.setId(id);
         productService.updateProduct(productMapper.toEntityWithId(productRequest));
@@ -80,7 +81,7 @@ public class ProductController {
             productService.updateProductImage(newOptionalImage, productRequest.getId());
         }
 
-        return ResponseEntity.ok("Product updated successfully");
+        return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("/{id}")

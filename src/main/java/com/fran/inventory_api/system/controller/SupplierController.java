@@ -8,8 +8,10 @@ import com.fran.inventory_api.system.dto.SupplierRequest;
 import com.fran.inventory_api.system.service.SupplierService;
 import jakarta.validation.Valid;
 
+import java.net.URI;
 import java.util.List;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
@@ -50,8 +52,8 @@ public class SupplierController {
 
         Supplier supplier = supplierMapper.toEntity(supplierRequest);
 
-        supplierService.createSupplier(supplier);
-        return ResponseEntity.ok(supplier);
+        Supplier createdSupplier = supplierService.createSupplier(supplier);
+        return ResponseEntity.created(URI.create("/api/suppliers/" + createdSupplier.getId())).body(createdSupplier);
     }
 
     @PutMapping("/{id}")
