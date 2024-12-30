@@ -35,8 +35,8 @@ public class SupplierController {
     }
 
     @GetMapping
-    public List<SupplierResponseBasic> getSuppliers() {
-        return supplierService.getAllSuppliers();
+    public ResponseEntity<List<SupplierResponseBasic>> getSuppliers() {
+        return ResponseEntity.ok(supplierService.getAllSuppliers());
     }
 
     @GetMapping("/{id}")
@@ -46,11 +46,7 @@ public class SupplierController {
 
     @PostMapping
     @PreAuthorize("hasRole('MODERATOR')")
-    public ResponseEntity<?> createSupplier(@Valid @RequestBody SupplierRequest supplierRequest, BindingResult result) {
-
-        if (result.hasErrors()) {
-            return ResponseEntity.badRequest().body(result.getAllErrors());
-        }
+    public ResponseEntity<?> createSupplier(@RequestBody SupplierRequest supplierRequest) {
 
         Supplier supplier = supplierMapper.toEntity(supplierRequest);
 
@@ -60,20 +56,16 @@ public class SupplierController {
 
     @PutMapping("/{id}")
     @PreAuthorize("hasRole('MODERATOR')")
-    public ResponseEntity<?> updateSupplier(@PathVariable Long id, @Valid @RequestBody SupplierRequest supplier, BindingResult result) {
-
-        if (result.hasErrors()) {
-            return ResponseEntity.badRequest().body(result.getAllErrors());
-        }
-
-        return ResponseEntity.ok(supplierService.updateSupplier(supplierMapper.toEntityFromDTOWithId(supplier)));
+    public ResponseEntity<Supplier> updateSupplier(@PathVariable Long id, @RequestBody SupplierRequest supplier) {
+        Supplier sup = supplierService.updateSupplier(supplierMapper.toEntityFromDTOWithId(supplier));
+        return ResponseEntity.ok(sup);
     }
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('MODERATOR')")
-    public ResponseEntity<?> deleteSupplier(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteSupplier(@PathVariable Long id) {
 
         supplierService.deleteSupplier(id);
-        return ResponseEntity.ok().body("Producto eliminado correctamente.");
+        return ResponseEntity.noContent().build();
     }
 }

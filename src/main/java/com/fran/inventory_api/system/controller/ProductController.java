@@ -2,13 +2,13 @@ package com.fran.inventory_api.system.controller;
 
 import com.fran.inventory_api.system.dto.ProductRequest;
 import com.fran.inventory_api.system.dto.ProductResponseBasic;
+import com.fran.inventory_api.system.dto.ProductResponseDetailed;
 import com.fran.inventory_api.system.entity.Product;
 import com.fran.inventory_api.system.exception.InvalidFileException;
 import com.fran.inventory_api.system.mapper.ProductMapper;
 import com.fran.inventory_api.system.service.ProductService;
 import com.fran.inventory_api.system.service.Impl.ReportService;
 import com.fran.inventory_api.system.service.FileValidator;
-import jakarta.validation.Valid;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -46,14 +46,14 @@ public class ProductController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> getProductDetails(@PathVariable Long id) {
+    public ResponseEntity<ProductResponseDetailed> getProductDetails(@PathVariable Long id) {
         return ResponseEntity.ok(productService.getProductDetails(id));
     }
 
     @PostMapping
     @PreAuthorize("hasRole('MODERATOR')")
     public ResponseEntity<ProductRequest> createProduct(
-            @Valid @ModelAttribute ProductRequest productRequest,
+            @ModelAttribute ProductRequest productRequest,
             @RequestPart(value = "file", required = false) MultipartFile file) {
 
         if (file != null && !FileValidator.isValidFile(file)) {
@@ -65,7 +65,7 @@ public class ProductController {
                 file);
         productRequest.setId(product.getId());
 
-        return new ResponseEntity<>(productMapper.toDTO(product), HttpStatus.CREATED);
+        return ResponseEntity.status(HttpStatus.CREATED).body(productMapper.toDTO(product));
     }
 
     @PutMapping("/{id}")
@@ -80,14 +80,14 @@ public class ProductController {
             productService.updateProductImage(newOptionalImage, productRequest.getId());
         }
 
-        return ResponseEntity.ok().body("Product updated successfully");
+        return ResponseEntity.ok("Product updated successfully");
     }
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('MODERATOR')")
-    public ResponseEntity<String> deleteProduct(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteProduct(@PathVariable Long id) {
         productService.deleteProduct(id);
-        return ResponseEntity.ok("Product deleted successfully.");
+        return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/report")

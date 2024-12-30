@@ -3,6 +3,7 @@ package com.fran.inventory_api.system.controller;
 import com.fran.inventory_api.system.entity.Category;
 import com.fran.inventory_api.system.service.CategoryService;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -20,31 +21,31 @@ public class CategoryController {
     }
 
     @GetMapping
-    public List<Category> getAllCategories() {
-        return categoryService.getAllCategories();
+    public ResponseEntity<List<Category>> getAllCategories() {
+        return ResponseEntity.ok(categoryService.getAllCategories());
     }
 
     @GetMapping("/{id}")
-    public Category getCategoryDetails(@PathVariable Long id) {
-        return categoryService.getCategoryById(id);
+    public ResponseEntity<Category> getCategoryDetails(@PathVariable Long id) {
+        return ResponseEntity.ok(categoryService.getCategoryById(id));
     }
 
     @PostMapping
     @PreAuthorize("hasRole('MODERATOR')")
-    public Category createCategory(@RequestBody Category category) {
-        return categoryService.createCategory(category);
+    public ResponseEntity<Category> createCategory(@RequestBody Category category) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(categoryService.createCategory(category));
     }
 
     @PutMapping("/{id}")
     @PreAuthorize("hasRole('MODERATOR')")
-    public Category updateCategory(@PathVariable Long id, @RequestBody Category category) {
-        return categoryService.updateCategory(category);
+    public ResponseEntity<Category> updateCategory(@PathVariable Long id, @RequestBody Category category) {
+        return ResponseEntity.ok(categoryService.updateCategory(category));
     }
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('MODERATOR')")
     public ResponseEntity<?> deleteCategory(@PathVariable Long id) {
         categoryService.deleteCategory(id);
-        return ResponseEntity.ok().body("Categoría eliminada correctamente.");
+        return ResponseEntity.noContent().build();
     }
 }

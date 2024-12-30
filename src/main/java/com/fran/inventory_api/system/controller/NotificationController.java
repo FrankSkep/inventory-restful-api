@@ -2,7 +2,6 @@ package com.fran.inventory_api.system.controller;
 
 import com.fran.inventory_api.system.entity.Notification;
 import com.fran.inventory_api.system.service.NotificationService;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -20,32 +19,32 @@ public class NotificationController {
     }
 
     @GetMapping("/unread")
-    public List<Notification> getUnreadNotifications() {
-        return notificationService.getUnread();
+    public ResponseEntity<List<Notification>> getUnreadNotifications() {
+        return ResponseEntity.ok(notificationService.getUnread());
     }
 
     @GetMapping
-    public List<Notification> getAllNotifications() {
-        return notificationService.getAll();
+    public ResponseEntity<List<Notification>> getAllNotifications() {
+        return ResponseEntity.ok(notificationService.getAll());
     }
 
     @PostMapping("/{id}/read")
-    public ResponseEntity<?> markAsRead(@PathVariable Long id) {
+    public ResponseEntity<String> markAsRead(@PathVariable Long id) {
         notificationService.readed(id);
-        return ResponseEntity.status(HttpStatus.OK).body("Notificación marcada como leída");
+        return ResponseEntity.ok("Notification marked as read");
     }
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('MODERATOR')")
-    public ResponseEntity<?> deleteNotification(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteNotification(@PathVariable Long id) {
         notificationService.delete(id);
-        return ResponseEntity.status(HttpStatus.OK).body("Notificación eliminada");
+        return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping
     @PreAuthorize("hasRole('MODERATOR')")
-    public ResponseEntity<?> deleteAllNotifications() {
+    public ResponseEntity<Void> deleteAllNotifications() {
         notificationService.deleteAll();
-        return ResponseEntity.status(HttpStatus.OK).body("Notificaciones eliminadas");
+        return ResponseEntity.noContent().build();
     }
 }

@@ -51,27 +51,27 @@ public class MovementController {
     @PreAuthorize("hasRole('MODERATOR')")
     public ResponseEntity<Void> deleteAllMovements() {
         movementService.deleteAllMovements();
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('MODERATOR')")
     public ResponseEntity<Void> deleteMovement(@PathVariable Long id) {
         movementService.deleteMovement(id);
-        return ResponseEntity.status(HttpStatus.OK).build();
+        return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/entries")
     @PreAuthorize("hasRole('MODERATOR')")
     public ResponseEntity<Void> deleteAllEntries() {
         movementService.deleteAllEntries();
-        return ResponseEntity.status(HttpStatus.OK).build();
+        return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("/outputs")
     public ResponseEntity<Void> deleteAllOutputs() {
         movementService.deleteAllOutputs();
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/report/{type}")
