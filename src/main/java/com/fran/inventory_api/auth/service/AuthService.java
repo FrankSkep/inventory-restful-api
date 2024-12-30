@@ -6,6 +6,7 @@ import com.fran.inventory_api.auth.dto.RegisterRequest;
 import com.fran.inventory_api.auth.entity.Role;
 import com.fran.inventory_api.auth.entity.User;
 import com.fran.inventory_api.auth.exception.AuthenticationException;
+import com.fran.inventory_api.auth.exception.UserNotFoundException;
 import com.fran.inventory_api.auth.jwt.JwtService;
 import com.fran.inventory_api.auth.repository.UserRepository;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -28,7 +29,8 @@ public class AuthService {
     public AuthResponse login(LoginRequest request) {
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
-            UserDetails user = userRepository.findByUsername(request.getUsername()).orElseThrow();
+            UserDetails user = userRepository.findByUsername(request.getUsername())
+                    .orElseThrow(() -> new UserNotFoundException("User not found."));
             String token = jwtService.getToken(user);
             return AuthResponse.builder()
                     .token(token)

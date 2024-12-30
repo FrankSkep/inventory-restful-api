@@ -11,8 +11,6 @@ import lombok.Setter;
 @AllArgsConstructor
 public class UserRequest {
 
-    Long id;
-
     @NotBlank(message = "Username is mandatory")
     private String username;
 

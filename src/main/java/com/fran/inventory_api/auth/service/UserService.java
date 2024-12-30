@@ -1,6 +1,6 @@
 package com.fran.inventory_api.auth.service;
 
-import com.fran.inventory_api.auth.dto.UpdatePasswordRequest;
+import com.fran.inventory_api.auth.dto.PasswordRequest;
 import com.fran.inventory_api.auth.entity.Role;
 import com.fran.inventory_api.auth.entity.User;
 import com.fran.inventory_api.auth.exception.IncorrectPasswordException;
@@ -18,9 +18,18 @@ public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public void updateUser(UserRequest user) {
-        User userEntity = userRepository.findById(user.getId())
-                .orElseThrow(() -> new UserNotFoundException("User not found"));
+    private User getById(Long id) {
+        return userRepository.findById(id)
+                .orElseThrow(() -> new UserNotFoundException("User not found."));
+    }
+
+    private User getByUsername(String username) {
+        return userRepository.findByUsername(username)
+                .orElseThrow(() -> new UserNotFoundException("User not found."));
+    }
+
+    public void updateUser(String username, UserRequest user) {
+        User userEntity = getByUsername(username);
 
         userEntity.setUsername(user.getUsername());
         userEntity.setFirstname(user.getFirstname());
@@ -30,26 +39,23 @@ public class UserService {
     }
 
     public void updateRole(Long id, Role role) {
-        User user = userRepository.findById(id)
-                .orElseThrow(() -> new UserNotFoundException("User not found"));
+        User user = getById(id);
         user.setRole(role);
         userRepository.save(user);
     }
 
     public void deleteUser(Long id) {
-        User user = userRepository.findById(id)
-                .orElseThrow(() -> new UserNotFoundException("User not found"));
+        User user = getById(id);
         userRepository.delete(user);
     }
 
-    public void updatePassword(String username, UpdatePasswordRequest password) {
-        User user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new UserNotFoundException("User not found"));
+    public void updatePassword(String username, PasswordRequest password) {
+        User user = getByUsername(username);
 
         if (passwordEncoder.matches(password.getOldPassword(), user.getPassword())) {
             user.setPassword(passwordEncoder.encode(password.getNewPassword()));
         } else {
-            throw new IncorrectPasswordException("Old password does not match");
+            throw new IncorrectPasswordException("Old password does not match.");
         }
         userRepository.save(user);
     }

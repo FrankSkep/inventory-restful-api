@@ -1,6 +1,6 @@
 package com.fran.inventory_api.auth.controller;
 
-import com.fran.inventory_api.auth.dto.UpdatePasswordRequest;
+import com.fran.inventory_api.auth.dto.PasswordRequest;
 import com.fran.inventory_api.auth.entity.Role;
 import com.fran.inventory_api.auth.dto.UserRequest;
 import com.fran.inventory_api.auth.service.UserService;
@@ -20,11 +20,12 @@ public class UserController {
 
     private final UserService userService;
 
-    @PutMapping("/{id}")
-    public ResponseEntity<String> updateUser(@PathVariable Long id, @RequestBody UserRequest userReq) {
-        userReq.setId(id);
-        userService.updateUser(userReq);
-        return ResponseEntity.ok("User updated sucessfully.");
+    @PutMapping
+    public ResponseEntity<String> updateUser(@RequestBody UserRequest userReq) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        userService.updateUser(userDetails.getUsername(), userReq);
+        return ResponseEntity.ok("Data updated sucessfully.");
     }
 
     @PatchMapping("/{id}")
@@ -42,7 +43,7 @@ public class UserController {
     }
 
     @PatchMapping("/password")
-    public ResponseEntity<String> updatePassword(@RequestBody UpdatePasswordRequest password) {
+    public ResponseEntity<String> updatePassword(@RequestBody PasswordRequest password) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         userService.updatePassword(userDetails.getUsername(), password);
