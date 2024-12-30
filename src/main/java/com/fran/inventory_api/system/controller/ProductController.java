@@ -4,7 +4,7 @@ import com.fran.inventory_api.system.dto.ProductRequest;
 import com.fran.inventory_api.system.dto.ProductResponseBasic;
 import com.fran.inventory_api.system.entity.Product;
 import com.fran.inventory_api.system.exception.InvalidFileException;
-import com.fran.inventory_api.system.mapper.ProductMapperDTO;
+import com.fran.inventory_api.system.mapper.ProductMapper;
 import com.fran.inventory_api.system.service.ProductService;
 import com.fran.inventory_api.system.service.Impl.ReportService;
 import com.fran.inventory_api.system.service.FileValidator;
@@ -29,12 +29,12 @@ import org.springframework.web.multipart.MultipartFile;
 public class ProductController {
 
     private final ProductService productService;
-    private final ProductMapperDTO productoMapper;
+    private final ProductMapper productMapper;
     private final ReportService reportService;
 
-    public ProductController(ProductService productService, ProductMapperDTO productoMapper, ReportService reportService) {
+    public ProductController(ProductService productService, ProductMapper productMapper, ReportService reportService) {
         this.productService = productService;
-        this.productoMapper = productoMapper;
+        this.productMapper = productMapper;
         this.reportService = reportService;
     }
 
@@ -61,11 +61,11 @@ public class ProductController {
         }
 
         Product product = productService.createProduct(
-                productoMapper.toEntity(productRequest),
+                productMapper.toEntity(productRequest),
                 file);
         productRequest.setId(product.getId());
 
-        return new ResponseEntity<>(productoMapper.toDTO(product), HttpStatus.CREATED);
+        return new ResponseEntity<>(productMapper.toDTO(product), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
@@ -74,7 +74,7 @@ public class ProductController {
                                                 @RequestPart(value = "file", required = false) MultipartFile newOptionalImage) {
 
         productRequest.setId(id);
-        productService.updateProduct(productoMapper.toEntityWithId(productRequest));
+        productService.updateProduct(productMapper.toEntityWithId(productRequest));
 
         if (FileValidator.isValidFile(newOptionalImage)) {
             productService.updateProductImage(newOptionalImage, productRequest.getId());

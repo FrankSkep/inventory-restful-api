@@ -4,7 +4,7 @@ import com.fran.inventory_api.system.dto.ProductResponseSupplier;
 import com.fran.inventory_api.system.dto.SupplierResponseBasic;
 import com.fran.inventory_api.system.dto.SupplierResponseDetailed;
 import com.fran.inventory_api.system.exception.SupplierNotFoundException;
-import com.fran.inventory_api.system.mapper.SupplierMapperDTO;
+import com.fran.inventory_api.system.mapper.SupplierMapper;
 import com.fran.inventory_api.system.repository.SupplierRepository;
 import com.fran.inventory_api.system.entity.Supplier;
 import com.fran.inventory_api.system.service.SupplierService;
@@ -20,7 +20,7 @@ public class SupplierServiceImpl implements SupplierService {
 
     private final SupplierRepository supplierRepository;
 
-    public SupplierServiceImpl(SupplierRepository supplierRepository, SupplierMapperDTO proveedorMapper) {
+    public SupplierServiceImpl(SupplierRepository supplierRepository, SupplierMapper proveedorMapper) {
         this.supplierRepository = supplierRepository;
     }
 

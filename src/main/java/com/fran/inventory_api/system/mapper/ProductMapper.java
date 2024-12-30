@@ -1,7 +1,6 @@
 package com.fran.inventory_api.system.mapper;
 
 import com.fran.inventory_api.system.entity.Product;
-import com.fran.inventory_api.system.dto.ProductResponseBasic;
 import com.fran.inventory_api.system.dto.ProductRequest;
 import com.fran.inventory_api.system.dto.ProductResponseDetailed;
 import com.fran.inventory_api.system.service.CategoryService;
@@ -9,14 +8,14 @@ import com.fran.inventory_api.system.service.SupplierService;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ProductMapperDTO {
+public class ProductMapper {
 
-    private final SupplierMapperDTO proveedorMapper;
+    private final SupplierMapper supplierMapper;
     private final CategoryService categoryService;
     private final SupplierService supplierService;
 
-    public ProductMapperDTO(SupplierMapperDTO proveedorMapper, CategoryService categoryService, SupplierService supplierService) {
-        this.proveedorMapper = proveedorMapper;
+    public ProductMapper(SupplierMapper supplierMapper, CategoryService categoryService, SupplierService supplierService) {
+        this.supplierMapper = supplierMapper;
         this.categoryService = categoryService;
         this.supplierService = supplierService;
     }
@@ -34,18 +33,6 @@ public class ProductMapperDTO {
                 product.getMinStock());
     }
 
-    public ProductResponseBasic toDTObasic(Product product) {
-        return new ProductResponseBasic(
-                product.getId(),
-                product.getName(),
-                product.getDescription(),
-                product.getPrice(),
-                product.getStock(),
-                product.getCategory().getName(),
-                product.getImage() != null ? product.getImage().getUrl() : null
-        );
-    }
-
     public ProductResponseDetailed toDTOdetailed(Product product) {
         return new ProductResponseDetailed(
                 product.getId(),
@@ -55,7 +42,7 @@ public class ProductMapperDTO {
                 product.getStock(),
                 product.getCategory().getName(),
                 product.getImage() != null ? product.getImage().getUrl() : null,
-                proveedorMapper.toDTObasic(product.getSupplier()),
+                supplierMapper.toDTObasic(product.getSupplier()),
                 product.getMinStock(),
                 product.getStockMovements()
         );

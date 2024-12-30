@@ -7,7 +7,7 @@ import com.fran.inventory_api.system.entity.Product;
 import com.fran.inventory_api.system.exception.InsufficientStockException;
 import com.fran.inventory_api.system.exception.ProductNotFoundException;
 import com.fran.inventory_api.system.exception.RequiredValueException;
-import com.fran.inventory_api.system.mapper.ProductMapperDTO;
+import com.fran.inventory_api.system.mapper.ProductMapper;
 import com.fran.inventory_api.system.repository.ProductRepository;
 import com.fran.inventory_api.system.service.ImageService;
 import com.fran.inventory_api.system.service.ProductService;
@@ -26,12 +26,12 @@ import org.springframework.web.multipart.MultipartFile;
 public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
-    private final ProductMapperDTO productoMapper;
+    private final ProductMapper productoMapper;
     private final ImageService imageService;
     private final NotificationService notificationService;
 
     public ProductServiceImpl(ProductRepository productRepository,
-                              ProductMapperDTO productoMapper, ImageService imageService,
+                              ProductMapper productoMapper, ImageService imageService,
                               NotificationService notificationService) {
         this.productRepository = productRepository;
         this.productoMapper = productoMapper;

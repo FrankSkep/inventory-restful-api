@@ -7,7 +7,7 @@ import com.fran.inventory_api.system.entity.Supplier;
 import org.springframework.stereotype.Component;
 
 @Component
-public class SupplierMapperDTO {
+public class SupplierMapper {
 
     public SupplierResponseBasic toDTObasic(Supplier supplier) {
         return new SupplierResponseBasic(
@@ -20,7 +20,6 @@ public class SupplierMapperDTO {
         );
     }
 
-    // Mapeo para agregacion de nuevo proveedor
     public Supplier toEntity(SupplierRequest dto) {
         return new Supplier(
                 dto.getName(),
@@ -31,7 +30,6 @@ public class SupplierMapperDTO {
         );
     }
 
-    // Mapeo para edicion de proveedor
     public Supplier toEntityFromDTOWithId(SupplierRequest dto) {
         return new Supplier(
                 dto.getId(),

@@ -3,7 +3,7 @@ package com.fran.inventory_api.system.controller;
 import com.fran.inventory_api.system.dto.SupplierResponseBasic;
 import com.fran.inventory_api.system.dto.SupplierResponseDetailed;
 import com.fran.inventory_api.system.entity.Supplier;
-import com.fran.inventory_api.system.mapper.SupplierMapperDTO;
+import com.fran.inventory_api.system.mapper.SupplierMapper;
 import com.fran.inventory_api.system.dto.SupplierRequest;
 import com.fran.inventory_api.system.service.SupplierService;
 import jakarta.validation.Valid;
@@ -27,11 +27,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class SupplierController {
 
     private final SupplierService supplierService;
-    private final SupplierMapperDTO proveedorMapper;
+    private final SupplierMapper supplierMapper;
 
-    public SupplierController(SupplierService supplierService, SupplierMapperDTO proveedorMapper) {
+    public SupplierController(SupplierService supplierService, SupplierMapper supplierMapper) {
         this.supplierService = supplierService;
-        this.proveedorMapper = proveedorMapper;
+        this.supplierMapper = supplierMapper;
     }
 
     @GetMapping
@@ -52,7 +52,7 @@ public class SupplierController {
             return ResponseEntity.badRequest().body(result.getAllErrors());
         }
 
-        Supplier supplier = proveedorMapper.toEntity(supplierRequest);
+        Supplier supplier = supplierMapper.toEntity(supplierRequest);
 
         supplierService.createSupplier(supplier);
         return ResponseEntity.ok(supplier);
@@ -66,7 +66,7 @@ public class SupplierController {
             return ResponseEntity.badRequest().body(result.getAllErrors());
         }
 
-        return ResponseEntity.ok(supplierService.updateSupplier(proveedorMapper.toEntityFromDTOWithId(supplier)));
+        return ResponseEntity.ok(supplierService.updateSupplier(supplierMapper.toEntityFromDTOWithId(supplier)));
     }
 
     @DeleteMapping("/{id}")
