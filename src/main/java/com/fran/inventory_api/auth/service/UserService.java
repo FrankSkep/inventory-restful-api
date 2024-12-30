@@ -1,12 +1,12 @@
 package com.fran.inventory_api.auth.service;
 
 import com.fran.inventory_api.auth.dto.PasswordRequest;
+import com.fran.inventory_api.auth.dto.UserRequest;
 import com.fran.inventory_api.auth.entity.Role;
 import com.fran.inventory_api.auth.entity.User;
 import com.fran.inventory_api.auth.exception.IncorrectPasswordException;
-import com.fran.inventory_api.auth.repository.UserRepository;
-import com.fran.inventory_api.auth.dto.UserRequest;
 import com.fran.inventory_api.auth.exception.UserNotFoundException;
+import com.fran.inventory_api.auth.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;

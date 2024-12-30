@@ -1,9 +1,8 @@
 package com.fran.inventory_api.system.mapper;
 
-import com.fran.inventory_api.system.dto.SupplierResponseBasic;
 import com.fran.inventory_api.system.dto.SupplierRequest;
+import com.fran.inventory_api.system.dto.SupplierResponseBasic;
 import com.fran.inventory_api.system.entity.Supplier;
-
 import org.springframework.stereotype.Component;
 
 @Component

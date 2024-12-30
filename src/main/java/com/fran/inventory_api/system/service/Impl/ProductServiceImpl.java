@@ -1,6 +1,7 @@
 package com.fran.inventory_api.system.service.Impl;
 
 import com.fran.inventory_api.system.dto.ProductResponseBasic;
+import com.fran.inventory_api.system.dto.ProductResponseDetailed;
 import com.fran.inventory_api.system.entity.Image;
 import com.fran.inventory_api.system.entity.Movement;
 import com.fran.inventory_api.system.entity.Product;
@@ -10,17 +11,15 @@ import com.fran.inventory_api.system.exception.RequiredValueException;
 import com.fran.inventory_api.system.mapper.ProductMapper;
 import com.fran.inventory_api.system.repository.ProductRepository;
 import com.fran.inventory_api.system.service.ImageService;
-import com.fran.inventory_api.system.service.ProductService;
-import com.fran.inventory_api.system.dto.ProductResponseDetailed;
 import com.fran.inventory_api.system.service.NotificationService;
+import com.fran.inventory_api.system.service.ProductService;
 import jakarta.transaction.Transactional;
-
-import java.util.List;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 @Service
 public class ProductServiceImpl implements ProductService {

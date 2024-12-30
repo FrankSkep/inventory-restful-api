@@ -2,19 +2,17 @@ package com.fran.inventory_api.system.controller;
 
 import com.fran.inventory_api.system.dto.MovementResponse;
 import com.fran.inventory_api.system.entity.Movement;
-import com.fran.inventory_api.system.service.MovementService;
-
-import java.net.URI;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.List;
-
 import com.fran.inventory_api.system.service.Impl.ReportService;
+import com.fran.inventory_api.system.service.MovementService;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/stock-movements")

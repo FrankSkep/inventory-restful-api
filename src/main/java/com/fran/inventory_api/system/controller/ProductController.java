@@ -6,14 +6,9 @@ import com.fran.inventory_api.system.dto.ProductResponseDetailed;
 import com.fran.inventory_api.system.entity.Product;
 import com.fran.inventory_api.system.exception.InvalidFileException;
 import com.fran.inventory_api.system.mapper.ProductMapper;
-import com.fran.inventory_api.system.service.ProductService;
-import com.fran.inventory_api.system.service.Impl.ReportService;
 import com.fran.inventory_api.system.service.FileValidator;
-
-import java.net.URI;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-
+import com.fran.inventory_api.system.service.Impl.ReportService;
+import com.fran.inventory_api.system.service.ProductService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -24,6 +19,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.net.URI;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @RestController
 @RequestMapping("/api/products")

@@ -1,9 +1,9 @@
 package com.fran.inventory_api.system.service;
 
 import com.fran.inventory_api.system.dto.ProductResponseBasic;
+import com.fran.inventory_api.system.dto.ProductResponseDetailed;
 import com.fran.inventory_api.system.entity.Movement;
 import com.fran.inventory_api.system.entity.Product;
-import com.fran.inventory_api.system.dto.ProductResponseDetailed;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.multipart.MultipartFile;

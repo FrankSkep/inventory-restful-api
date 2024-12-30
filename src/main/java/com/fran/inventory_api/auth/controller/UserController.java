@@ -1,8 +1,8 @@
 package com.fran.inventory_api.auth.controller;
 
 import com.fran.inventory_api.auth.dto.PasswordRequest;
-import com.fran.inventory_api.auth.entity.Role;
 import com.fran.inventory_api.auth.dto.UserRequest;
+import com.fran.inventory_api.auth.entity.Role;
 import com.fran.inventory_api.auth.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -21,11 +21,11 @@ public class UserController {
     private final UserService userService;
 
     @PutMapping
-    public ResponseEntity<String> updateUser(@RequestBody UserRequest userReq) {
+    public ResponseEntity<UserRequest> updateUser(@RequestBody UserRequest userReq) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         userService.updateUser(userDetails.getUsername(), userReq);
-        return ResponseEntity.ok("Data updated sucessfully.");
+        return ResponseEntity.ok(userReq);
     }
 
     @PatchMapping("/{id}")
@@ -39,7 +39,7 @@ public class UserController {
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
         userService.deleteUser(id);
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        return ResponseEntity.noContent().build();
     }
 
     @PatchMapping("/password")

@@ -1,8 +1,8 @@
 package com.fran.inventory_api.system.mapper;
 
-import com.fran.inventory_api.system.entity.Product;
 import com.fran.inventory_api.system.dto.ProductRequest;
 import com.fran.inventory_api.system.dto.ProductResponseDetailed;
+import com.fran.inventory_api.system.entity.Product;
 import com.fran.inventory_api.system.service.CategoryService;
 import com.fran.inventory_api.system.service.SupplierService;
 import org.springframework.stereotype.Component;

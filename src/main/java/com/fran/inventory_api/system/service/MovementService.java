@@ -1,7 +1,7 @@
 package com.fran.inventory_api.system.service;
 
-import com.fran.inventory_api.system.entity.Movement;
 import com.fran.inventory_api.system.dto.MovementResponse;
+import com.fran.inventory_api.system.entity.Movement;
 
 import java.util.List;
 

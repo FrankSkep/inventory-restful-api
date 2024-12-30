@@ -6,10 +6,9 @@ import com.fran.inventory_api.system.exception.MovementNotFoundException;
 import com.fran.inventory_api.system.repository.MovementRepository;
 import com.fran.inventory_api.system.service.MovementService;
 import com.fran.inventory_api.system.service.ProductService;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
-
-import org.springframework.stereotype.Service;
 
 @Service
 public class MovementServiceImpl implements MovementService {

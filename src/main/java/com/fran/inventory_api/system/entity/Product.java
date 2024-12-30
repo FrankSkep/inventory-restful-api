@@ -71,5 +71,6 @@ public class Product {
         this.minStock = minStock;
     }
 
-    public Product() {}
+    public Product() {
+    }
 }

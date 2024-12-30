@@ -64,7 +64,8 @@ public class ImageServiceImpl implements ImageService {
     public void completeDeletion(Image image) {
         try {
             cloudinaryService.delete(image.getImageId());
-        } catch (Exception e) {
+        } catch (
+                Exception e) {
             throw new FileOperationErrorException(e.toString());
         }
         imageRepository.deleteById(image.getId());
