@@ -39,10 +39,10 @@ public class ProductController {
     }
 
     @GetMapping
-    public Page<ProductResponseBasic> getProducts(@RequestParam(defaultValue = "0") int page,
-                                                  @RequestParam(defaultValue = "10") int size) {
+    public ResponseEntity<Page<ProductResponseBasic>> getProducts(@RequestParam(defaultValue = "0") int page,
+                                                                  @RequestParam(defaultValue = "10") int size) {
         Pageable pageable = PageRequest.of(page, size);
-        return productService.getProductsPage(pageable);
+        return ResponseEntity.ok(productService.getProductsPage(pageable));
     }
 
     @GetMapping("/{id}")
@@ -105,7 +105,7 @@ public class ProductController {
 
         } catch (
                 Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 }

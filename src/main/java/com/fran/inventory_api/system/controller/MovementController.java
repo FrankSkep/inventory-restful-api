@@ -50,7 +50,7 @@ public class MovementController {
     @PostMapping
     public ResponseEntity<Movement> createMovement(@RequestBody Movement movement) {
         Movement createdMovement = movementService.createMovement(movement);
-        return ResponseEntity.created(null).body(createdMovement);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdMovement);
     }
 
     @DeleteMapping
