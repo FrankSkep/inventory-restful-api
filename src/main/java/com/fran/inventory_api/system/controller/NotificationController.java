@@ -40,14 +40,14 @@ public class NotificationController {
     }
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasRole('MODERATOR')")
+    @PreAuthorize("hasAnyRole('MODERATOR', 'ADMIN')")
     public ResponseEntity<Void> deleteNotification(@PathVariable Long id) {
         notificationService.delete(id);
         return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping
-    @PreAuthorize("hasRole('MODERATOR')")
+    @PreAuthorize("hasAnyRole('MODERATOR', 'ADMIN')")
     public ResponseEntity<Void> deleteAllNotifications() {
         notificationService.deleteAll();
         return ResponseEntity.noContent().build();
