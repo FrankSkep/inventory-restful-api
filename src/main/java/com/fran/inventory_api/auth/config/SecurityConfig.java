@@ -50,7 +50,7 @@ public class SecurityConfig {
     public AuthenticationEntryPoint authenticationEntryPoint() {
         return (request, response, authException) -> {
             response.setStatus(HttpStatus.UNAUTHORIZED.value());
-            response.getWriter().write("Necesitas autenticarte para acceder a este recurso.");
+            response.getWriter().write("You need to authenticate to access this resource..");
         };
     }
 
@@ -59,7 +59,7 @@ public class SecurityConfig {
     public AccessDeniedHandler accessDeniedHandler() {
         return (request, response, accessDeniedException) -> {
             response.setStatus(HttpStatus.FORBIDDEN.value());
-            response.getWriter().write("No tienes permisos para acceder a este recurso.");
+            response.getWriter().write("You do not have permissions to access this resource.");
         };
     }
 }
