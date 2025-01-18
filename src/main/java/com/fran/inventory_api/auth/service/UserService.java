@@ -38,14 +38,19 @@ public class UserService {
         userRepository.save(userEntity);
     }
 
-    public void updateRole(Long id, Role role) {
-        User user = getById(id);
+    public void updateRole(Long userId, Role role) {
+        User user = getById(userId);
         user.setRole(role);
         userRepository.save(user);
     }
 
     public void deleteUser(Long id) {
         User user = getById(id);
+        userRepository.delete(user);
+    }
+
+    public void deleteUser(String username) {
+        User user = getByUsername(username);
         userRepository.delete(user);
     }
 

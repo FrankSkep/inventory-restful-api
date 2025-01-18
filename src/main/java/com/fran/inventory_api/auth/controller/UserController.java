@@ -35,9 +35,17 @@ public class UserController {
 
     @PatchMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<Void> updateRole(@PathVariable Long id, @RequestBody Role role) {
+    public ResponseEntity<String> updateRole(@PathVariable Long id, @RequestBody Role role) {
         userService.updateRole(id, role);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok("The " + role.name() + "role is assigned to the user with id " + id);
+    }
+
+    @DeleteMapping
+    public ResponseEntity<Void> deleteMyUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        userService.deleteUser(userDetails.getUsername());
+        return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("/{id}")
