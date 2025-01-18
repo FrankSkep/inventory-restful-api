@@ -91,7 +91,7 @@ public class ProductController {
     }
 
     @GetMapping("/report")
-    public ResponseEntity<byte[]> generarReporteInventario() {
+    public ResponseEntity<byte[]> generateReport() {
         try {
             byte[] pdfBytes = reportService.generateProductsReport(productService.getAllProducts());
 
