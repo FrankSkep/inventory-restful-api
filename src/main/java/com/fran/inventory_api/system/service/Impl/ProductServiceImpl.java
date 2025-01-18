@@ -38,6 +38,11 @@ public class ProductServiceImpl implements ProductService {
         this.notificationService = notificationService;
     }
 
+    private Product getById(Long id) {
+        return productRepository.findById(id)
+                .orElseThrow(() -> new ProductNotFoundException("Product with id " + id + " not found"));
+    }
+
     // get all products basic info
     @Override
     public List<ProductResponseBasic> getAllProducts() {
@@ -54,8 +59,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public ProductResponseDetailed getProductDetails(Long id) {
 
-        Product product = productRepository.findById(id)
-                .orElseThrow(() -> new ProductNotFoundException("Product not found"));
+        Product product = getById(id);
 
         return productoMapper.toDTOdetailed(product);
     }
@@ -75,8 +79,7 @@ public class ProductServiceImpl implements ProductService {
     // update a existing product
     @Override
     public void updateProduct(Product product) {
-        Product productDB = productRepository.findById(product.getId())
-                .orElseThrow(() -> new ProductNotFoundException("Product not found"));
+        Product productDB = getById(product.getId());
 
         productDB.setName(product.getName());
         productDB.setDescription(product.getDescription());
@@ -90,9 +93,9 @@ public class ProductServiceImpl implements ProductService {
     // update the image of a product
     @Override
     @Transactional
-    public void updateProductImage(MultipartFile file, Long productoId) {
+    public void updateProductImage(MultipartFile file, Long productId) {
 
-        Product productDB = productRepository.getReferenceById(productoId);
+        Product productDB = getById(productId);
         Image imageActual = productDB.getImage();
 
         if (imageActual != null) {
@@ -108,8 +111,7 @@ public class ProductServiceImpl implements ProductService {
     // delete a product
     @Override
     public void deleteProduct(Long id) {
-        Product product = productRepository.findById(id)
-                .orElseThrow(() -> new ProductNotFoundException("Product not found"));
+        Product product = getById(id);
 
         // delete the image if exists
         if (product.getImage() != null) {
@@ -125,8 +127,7 @@ public class ProductServiceImpl implements ProductService {
     @Transactional
     public Movement updateStock(Movement movement) {
 
-        Product product = productRepository.findById(movement.getProduct().getId())
-                .orElseThrow(() -> new ProductNotFoundException("Product not found"));
+        Product product = getById(movement.getProduct().getId());
 
         Long currentStock = product.getStock();
         Long movementStock = movement.getQuantity();

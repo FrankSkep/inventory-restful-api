@@ -17,6 +17,11 @@ public class NotificationServiceImpl implements NotificationService {
         this.notificationRepository = notificationRepository;
     }
 
+    private Notification getById(Long id) {
+        return notificationRepository.findById(id)
+                .orElseThrow(() -> new NotificationNotFoundException("Notification not found"));
+    }
+
     @Override
     public void sendNotification(String message) {
         Notification notification = new Notification(message);
@@ -34,16 +39,14 @@ public class NotificationServiceImpl implements NotificationService {
 
     @Override
     public void readed(Long id) {
-        Notification notification = notificationRepository.findById(id)
-                .orElseThrow(() -> new NotificationNotFoundException("Notificación no encontrada"));
+        Notification notification = getById(id);
         notification.setRead(true);
         notificationRepository.save(notification);
     }
 
     @Override
     public void delete(Long id) {
-        Notification notification = notificationRepository.findById(id)
-                .orElseThrow(() -> new NotificationNotFoundException("Notificación no encontrada"));
+        Notification notification = getById(id);
         notificationRepository.delete(notification);
     }
 

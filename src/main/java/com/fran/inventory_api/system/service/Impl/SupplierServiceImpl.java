@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class SupplierServiceImpl implements SupplierService {
@@ -36,7 +35,7 @@ public class SupplierServiceImpl implements SupplierService {
     @Override
     public Supplier updateSupplier(Supplier supplier) {
 
-        Supplier supplierDB = supplierRepository.getReferenceById(supplier.getId());
+        Supplier supplierDB = getById(supplier.getId());
 
         supplierDB.setName(supplier.getName());
         supplierDB.setAddress(supplier.getAddress());
@@ -49,9 +48,7 @@ public class SupplierServiceImpl implements SupplierService {
 
     @Override
     public void deleteSupplier(Long id) {
-
-        Supplier supplier = supplierRepository.findById(id)
-                .orElseThrow(() -> new SupplierNotFoundException("Proveedor con id " + id + " no encontrado"));
+        Supplier supplier = getById(id);
 
         supplierRepository.delete(supplier);
     }
@@ -59,26 +56,22 @@ public class SupplierServiceImpl implements SupplierService {
     @Override
     public Supplier getById(Long id) {
         return supplierRepository.findById(id)
-                .orElseThrow(() -> new SupplierNotFoundException("Proveedor con id " + id + " no encontrado"));
+                .orElseThrow(() -> new SupplierNotFoundException("Supplier with id " + id + " not found"));
     }
 
     @Override
     public SupplierResponseDetailed getDetails(Long id) {
-        Optional<Supplier> supplierOpt = supplierRepository.findSupplierById(id);
-        if (supplierOpt.isPresent()) {
-            Supplier supplier = supplierOpt.get();
-            List<ProductResponseSupplier> products = supplierRepository.findProductsBySupplierId(id);
-            return new SupplierResponseDetailed(
-                    supplier.getId(),
-                    supplier.getName(),
-                    supplier.getAddress(),
-                    supplier.getEmail(),
-                    supplier.getPhone(),
-                    supplier.getTaxIdentification(),
-                    new HashSet<>(products)
-            );
-        } else {
-            throw new SupplierNotFoundException("Supplier not found");
-        }
+        Supplier supplier = getById(id);
+
+        List<ProductResponseSupplier> products = supplierRepository.findProductsBySupplierId(id);
+        return new SupplierResponseDetailed(
+                supplier.getId(),
+                supplier.getName(),
+                supplier.getAddress(),
+                supplier.getEmail(),
+                supplier.getPhone(),
+                supplier.getTaxIdentification(),
+                new HashSet<>(products)
+        );
     }
 }

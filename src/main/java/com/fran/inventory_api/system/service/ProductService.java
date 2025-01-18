@@ -22,7 +22,7 @@ public interface ProductService {
 
     void updateProduct(Product productReq);
 
-    void updateProductImage(MultipartFile file, Long productoId);
+    void updateProductImage(MultipartFile file, Long productId);
 
     void deleteProduct(Long id);
 

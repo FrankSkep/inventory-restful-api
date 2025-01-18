@@ -22,6 +22,11 @@ public class ImageServiceImpl implements ImageService {
         this.imageRepository = imageRepository;
     }
 
+    private Image getById(Long id) {
+        return imageRepository.findById(id)
+                .orElseThrow(() -> new FileOperationErrorException("Image with id " + id + " not found."));
+    }
+
     @Override
     public Image uploadImage(MultipartFile file) {
         Map uploadResult = null;
@@ -40,7 +45,7 @@ public class ImageServiceImpl implements ImageService {
     @Override
     public Image updateImage(MultipartFile file, Image image) {
 
-        Image imageDB = imageRepository.getReferenceById(image.getId());
+        Image imageDB = getById(image.getId());
         Map uploadResult = null;
 
         // try to upload the new image
@@ -68,7 +73,8 @@ public class ImageServiceImpl implements ImageService {
                 Exception e) {
             throw new FileOperationErrorException(e.toString());
         }
-        imageRepository.deleteById(image.getId());
+        Image imageDB = getById(image.getId());
+        imageRepository.delete(imageDB);
     }
 
     @Override

@@ -54,7 +54,7 @@ public class ProductMapper {
                 product.getDescription(),
                 product.getPrice(),
                 product.getStock(),
-                categoryService.getCategoryByName(product.getCategory()),
+                categoryService.getByName(product.getCategory()),
                 supplierService.getById(product.getSupplierId()),
                 product.getMinStock()
         );
@@ -67,7 +67,7 @@ public class ProductMapper {
                 product.getDescription(),
                 product.getPrice(),
                 product.getStock(),
-                categoryService.getCategoryByName(product.getCategory()),
+                categoryService.getByName(product.getCategory()),
                 supplierService.getById(product.getSupplierId()),
                 product.getMinStock()
         );
