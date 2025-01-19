@@ -4,6 +4,8 @@ import com.fran.inventory_api.system.entity.Notification;
 import com.fran.inventory_api.system.exception.NotificationNotFoundException;
 import com.fran.inventory_api.system.repository.NotificationRepository;
 import com.fran.inventory_api.system.service.NotificationService;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -29,15 +31,19 @@ public class NotificationServiceImpl implements NotificationService {
     }
 
     @Override
+    @Cacheable("unreadNotifications")
     public List<Notification> getUnread() {
         return notificationRepository.findByisReadFalse();
     }
 
+    @Override
+    @Cacheable("allNotifications")
     public List<Notification> getAll() {
         return notificationRepository.findAll();
     }
 
     @Override
+    @CacheEvict(value = {"unreadNotifications", "allNotifications"}, allEntries = true)
     public void readed(Long id) {
         Notification notification = getById(id);
         notification.setRead(true);
@@ -45,12 +51,14 @@ public class NotificationServiceImpl implements NotificationService {
     }
 
     @Override
+    @CacheEvict(value = {"unreadNotifications", "allNotifications"}, allEntries = true)
     public void delete(Long id) {
         Notification notification = getById(id);
         notificationRepository.delete(notification);
     }
 
     @Override
+    @CacheEvict(value = {"unreadNotifications", "allNotifications"}, allEntries = true)
     public void deleteAll() {
         notificationRepository.deleteAll();
     }

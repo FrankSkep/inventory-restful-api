@@ -247,9 +247,7 @@ To interact with the API, use tools like Postman or cURL. The endpoints are docu
 ##### <a id="roleupdate">Update Role -> /api/users/{id}</a>
 
 ```json
-{
-  "role": "ADMIN"
-}
+"ROLE_NAME"
 ```
 
 ##### <a id="passwordupdate">Update Password -> /api/users/password</a>
@@ -264,8 +262,6 @@ To interact with the API, use tools like Postman or cURL. The endpoints are docu
 ##### <a id="productcreate">Create Product -> /api/products</a>
 
 ```json
-Content-Type: multipart/form-data
-
 {
     "name": "Product Name",
     "description": "Product Description",
@@ -274,11 +270,13 @@ Content-Type: multipart/form-data
     "category": "Category Name",
     "supplierId": 1,
     "minStock": 5,
-    "image": (binary image file)
+    "image": "(binary image file)"
 }
 ```
 
 ##### <a id="productupdate">Update Product -> /api/products/{id}</a>
+
+Content-Type: multipart/form-data
 
 ```json
 {
@@ -288,7 +286,8 @@ Content-Type: multipart/form-data
   "stock": 15,
   "category": "Updated Category Name",
   "supplierId": 1,
-  "minStock": 5
+  "minStock": 5,
+  "image": "(binary image file)"
 }
 ```
 
