@@ -1,6 +1,6 @@
 package com.fran.inventory_api.auth.config;
 
-import com.fran.inventory_api.auth.repository.UserRepository;
+import com.fran.inventory_api.system.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

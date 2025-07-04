@@ -1,4 +1,4 @@
-package com.fran.inventory_api.auth.dto;
+package com.fran.inventory_api.system.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;

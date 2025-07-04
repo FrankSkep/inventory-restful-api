@@ -1,192 +1,215 @@
-![Status](https://img.shields.io/badge/status-in%20development-yellow)
-
 # Inventory RESTful API
 
-A RESTful API for inventory management, handling products, suppliers, categories, stock movements, and notifications. It features JWT-based authentication for role-based access control and integrates Cloudinary for image management.
+A RESTful API for inventory management, handling products, suppliers, categories, stock movements, and notifications. It features JWT-based authentication with role-based access control, integrates **Cloudinary** for image management, and includes interactive API documentation via **Springdoc OpenAPI**.
 
 ## Table of Contents
 
-- [Features](#features)
-- [Architecture](#architecture)
-- [Endpoints](#endpoints)
-- [Role Permissions](#role-permissions)
-- [Requirements](#requirements)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Sample Valid JSON Request Bodies](#sample-valid-json-request-bodies)
-- [License](#license)
+* [Features](#features)
+* [Architecture](#architecture)
+* [API Documentation](#api-documentation)
+* [Endpoints](#endpoints)
+* [Role Permissions](#role-permissions)
+* [Requirements](#requirements)
+* [Installation](#installation)
+* [Usage](#usage)
+* [Sample Valid JSON Request Bodies](#sample-valid-json-request-bodies)
+* [License](#license)
 
 ## Features
 
-### Authentication and Authorization
+### Authentication & Authorization
 
-- User registration and login.
-- JWT token generation and validation.
-- Endpoint protection by roles (`USER`, `MOD`, and `ADMIN`).
-- Specific exception handling (invalid token, unauthorized access).
+* User registration and login.
+* JWT token generation and validation.
+* Role-based endpoint protection (`USER`, `MOD`, `ADMIN`).
+* Specific exception handling (invalid tokens, unauthorized access).
 
 ### Products
 
-- Full CRUD for products with pagination and filters.
-- Image management via **Cloudinary**.
-- PDF reports of the current inventory.
-- Association with suppliers and categories.
+* Full CRUD with pagination and filters.
+* Image management via **Cloudinary**.
+* PDF inventory reports.
+* Association with suppliers and categories.
 
 ### Categories
 
-- Full CRUD for categories.
-- Hierarchical relationship with products.
+* Full CRUD operations.
+* Hierarchical relationship with products.
 
 ### Suppliers
 
-- Full CRUD for suppliers.
-- Association with products.
+* Full CRUD operations.
+* Product association.
 
 ### Movements
 
-- Registration of stock entries and exits.
-- Export reports in PDF format.
-- Alerts for low stock.
+* Registration of stock entries and outputs.
+* Export reports as PDF.
+* Low stock alerts.
 
 ### Notifications
 
-- Centralized notification management.
-- System to mark as read or delete them.
+* Centralized notification management.
+* Mark as read or delete.
 
-### Global Exceptions
+### Global Exception Handling
 
-- Centralized error handling in:
-  - Data validation.
-  - Authentication and authorization.
-  - Resources not found.
-  - Forbidden operations.
+* Centralized error handling for:
+
+    * Data validation.
+    * Authentication and authorization.
+    * Resource not found.
+    * Forbidden operations.
 
 ## Architecture
 
-The API uses a modular design based on RESTful controllers, business services, and repositories.
+This API uses a modular design with:
 
-### Main Technologies:
+* **RESTful controllers**: handle requests and responses.
+* **Business services**: encapsulate core logic.
+* **Repositories**: manage persistence with Spring Data JPA.
 
-- **Spring Boot**: Core framework.
-- **Spring Security & JWT**: Authentication and authorization.
-- **Spring Data JPA & MySQL**: Database management.
-- **Cloudinary**: Image storage.
+### Main Technologies
+
+* **Spring Boot**: core framework.
+* **Spring Security & JWT**: authentication and authorization.
+* **Spring Data JPA & MySQL**: database management.
+* **Cloudinary**: image storage.
+* **Springdoc OpenAPI**: auto-generated interactive API documentation.
+
+## API Documentation
+
+Interactive API documentation is available via **Springdoc OpenAPI**, accessible when running the application at:
+
+```
+http://localhost:8080/swagger-ui.html
+```
+
+This provides detailed information for each endpoint, schemas, and expected responses.
 
 ## Endpoints
 
+Below is an overview. For detailed request/response structures, visit the [API Documentation](#api-documentation).
+
+<details>
+  <summary>View endpoints</summary>
+
 ### Authentication
 
-| Method | Endpoint         | Description                  | Sample Valid Request Body |
-| ------ | ---------------- | ---------------------------- | ------------------------- |
-| POST   | /api/auth/signin | Log in and obtain JWT token. | [JSON](#signin)           |
-| POST   | /api/auth/signup | Register a new user.         | [JSON](#signup)           |
+| Method | Endpoint         | Description                  |
+| ------ | ---------------- | ---------------------------- |
+| POST   | /api/auth/signin | Log in and obtain JWT token. |
+| POST   | /api/auth/signup | Register a new user.         |
 
 ### Users
 
-| Method | Endpoint            | Description                               | Sample Valid Request Body |
-| ------ | ------------------- | ----------------------------------------- | ------------------------- |
-| PUT    | /api/users          | Update the authenticated user's details.  | [JSON](#userupdate)       |
-| PATCH  | /api/users/{id}     | Update the role of a user (Admin only).   | [JSON](#roleupdate)       |
-| DELETE | /api/users          | Delete the authenticated user's account.  |                           |
-| DELETE | /api/users/{id}     | Delete a user by ID (Admin only).         |                           |
-| PATCH  | /api/users/password | Update the authenticated user's password. | [JSON](#passwordupdate)   |
+| Method | Endpoint            | Description                           |
+| ------ | ------------------- | ------------------------------------- |
+| PUT    | /api/users          | Update authenticated user's details.  |
+| PATCH  | /api/users/{id}     | Update user role (Admin only).        |
+| DELETE | /api/users          | Delete authenticated user's account.  |
+| DELETE | /api/users/{id}     | Delete user by ID (Admin only).       |
+| PATCH  | /api/users/password | Update authenticated user's password. |
 
 ### Products
 
-| Method | Endpoint             | Description                          | Sample Valid Request Body |
-| ------ | -------------------- | ------------------------------------ | ------------------------- |
-| GET    | /api/products        | Get paginated and filtered products. |                           |
-| GET    | /api/products/{id}   | Get product details.                 |                           |
-| POST   | /api/products        | Add a new product to the inventory.  | [JSON](#productcreate)    |
-| PUT    | /api/products/{id}   | Edit an existing product.            | [JSON](#productupdate)    |
-| DELETE | /api/products/{id}   | Delete a product.                    |                           |
-| GET    | /api/products/report | Generate inventory report.           |                           |
+| Method | Endpoint             | Description                          |
+| ------ | -------------------- | ------------------------------------ |
+| GET    | /api/products        | Get paginated and filtered products. |
+| GET    | /api/products/{id}   | Get product details.                 |
+| POST   | /api/products        | Add a new product to inventory.      |
+| PUT    | /api/products/{id}   | Edit existing product.               |
+| DELETE | /api/products/{id}   | Delete product.                      |
+| GET    | /api/products/report | Generate inventory report.           |
 
 ### Categories
 
-| Method | Endpoint             | Description                   | Sample Valid Request Body |
-| ------ | -------------------- | ----------------------------- | ------------------------- |
-| GET    | /api/categories      | Get a list of all categories. |                           |
-| GET    | /api/categories/{id} | View category details.        |                           |
-| POST   | /api/categories      | Register a new category.      | [JSON](#categorycreate)   |
-| PUT    | /api/categories/{id} | Edit category details.        | [JSON](#categoryupdate)   |
-| DELETE | /api/categories/{id} | Delete a category.            |                           |
+| Method | Endpoint             | Description            |
+| ------ | -------------------- | ---------------------- |
+| GET    | /api/categories      | List all categories.   |
+| GET    | /api/categories/{id} | View category details. |
+| POST   | /api/categories      | Register new category. |
+| PUT    | /api/categories/{id} | Edit category.         |
+| DELETE | /api/categories/{id} | Delete category.       |
 
 ### Suppliers
 
-| Method | Endpoint            | Description                  | Sample Valid Request Body |
-| ------ | ------------------- | ---------------------------- | ------------------------- |
-| GET    | /api/suppliers      | Get a list of all suppliers. |                           |
-| GET    | /api/suppliers/{id} | View supplier details.       |                           |
-| POST   | /api/suppliers      | Register a new supplier.     | [JSON](#suppliercreate)   |
-| PUT    | /api/suppliers/{id} | Edit supplier details.       | [JSON](#supplierupdate)   |
-| DELETE | /api/suppliers/{id} | Delete a supplier.           |                           |
+| Method | Endpoint            | Description            |
+| ------ | ------------------- | ---------------------- |
+| GET    | /api/suppliers      | List all suppliers.    |
+| GET    | /api/suppliers/{id} | View supplier details. |
+| POST   | /api/suppliers      | Register new supplier. |
+| PUT    | /api/suppliers/{id} | Edit supplier.         |
+| DELETE | /api/suppliers/{id} | Delete supplier.       |
 
 ### Movements
 
-| Method | Endpoint                           | Description                                      | Sample Valid Request Body |
-| ------ | ---------------------------------- | ------------------------------------------------ | ------------------------- |
-| GET    | /api/stock-movements               | Get all movements.                               |                           |
-| GET    | /api/stock-movements/entries       | Get stock entries.                               |                           |
-| GET    | /api/stock-movements/outputs       | Get stock outputs.                               |                           |
-| DELETE | /api/stock-movements               | Delete all movements.                            |                           |
-| DELETE | /api/stock-movements/{id}          | Delete a stock movement.                         |                           |
-| DELETE | /api/stock-movements/entries       | Delete all stock entries.                        |                           |
-| DELETE | /api/stock-movements/outputs       | Delete all stock outputs.                        |                           |
-| POST   | /api/stock-movements               | Register a stock movement.                       | [JSON](#movementcreate)   |
-| GET    | /api/stock-movements/report/{type} | Generate movement report (general, entry, exit). |                           |
+| Method | Endpoint                           | Description               |
+| ------ | ---------------------------------- | ------------------------- |
+| GET    | /api/stock-movements               | Get all movements.        |
+| GET    | /api/stock-movements/entries       | Get stock entries.        |
+| GET    | /api/stock-movements/outputs       | Get stock outputs.        |
+| POST   | /api/stock-movements               | Register stock movement.  |
+| GET    | /api/stock-movements/report/{type} | Generate movement report. |
+| DELETE | /api/stock-movements               | Delete all movements.     |
+| DELETE | /api/stock-movements/{id}          | Delete movement by ID.    |
+| DELETE | /api/stock-movements/entries       | Delete all stock entries. |
+| DELETE | /api/stock-movements/outputs       | Delete all stock outputs. |
 
 ### Notifications
 
-| Method | Endpoint                     | Description                  |
-| ------ | ---------------------------- | ---------------------------- |
-| GET    | /api/notifications/unread    | Get unread notifications.    |
-| GET    | /api/notifications           | Get all notifications.       |
-| POST   | /api/notifications/{id}/read | Mark a notification as read. |
-| DELETE | /api/notifications/{id}      | Delete a notification.       |
-| DELETE | /api/notifications           | Delete all notifications.    |
+| Method | Endpoint                     | Description                |
+| ------ | ---------------------------- | -------------------------- |
+| GET    | /api/notifications/unread    | Get unread notifications.  |
+| GET    | /api/notifications           | Get all notifications.     |
+| POST   | /api/notifications/{id}/read | Mark notification as read. |
+| DELETE | /api/notifications/{id}      | Delete notification.       |
+| DELETE | /api/notifications           | Delete all notifications.  |
+
+</details>
 
 ## Role Permissions
 
-#### `USER` User
+#### `USER`
 
-- Can view and register basic resources, such as products and stock movements.
-- Cannot modify, delete critical resources, or manage roles.
+* View and register basic resources (products, stock movements).
+* Cannot modify or delete critical resources, nor manage roles.
 
-#### `MOD` Moderator
+#### `MOD` (Moderator)
 
-- Can view and register resources.
-- Has additional permissions to delete users with the `USER` role.
-- Cannot manage roles or access advanced settings.
+* View and register resources.
+* Can delete users with the `USER` role.
+* Cannot manage roles or access advanced settings.
 
-#### `ADMIN` Administrator
+#### `ADMIN`
 
-- Full access to the system, including:
-  - Modify and delete any resource.
-  - Manage roles (assign or revoke).
-  - Delete users with the `USER` and `MOD` roles.
+* Full system access:
+
+    * Modify and delete any resource.
+    * Manage roles.
+    * Delete users with `USER` or `MOD` roles.
 
 ## Requirements
 
-- **Java 17+**
-- **MySQL**
-- **Maven**
+* **Java 17+**
+* **MySQL**
+* **Maven**
 
 ## Installation
 
 1. Clone the repository:
 
-   ```sh
+   ```bash
    git clone https://github.com/FrankSkep/inventory-rest-api
    ```
 
-2. Create MySQL database:
+2. Create the MySQL database:
 
-   ```bash
-   create database database_name
+   ```sql
+   create database your_database_name;
    ```
 
-3. Configure the `.env` file:
+3. Configure environment variables in `.env`:
 
    ```properties
    CLOUDINARY_CLOUD_NAME=your_cloud_name
@@ -200,19 +223,22 @@ The API uses a modular design based on RESTful controllers, business services, a
 
 4. Build and run the project:
 
-   ```sh
+   ```bash
    mvn spring-boot:run
    ```
 
-The app will start running at <http://localhost:8080>
+The app will start at [http://localhost:8080](http://localhost:8080).
 
 ## Usage
 
-To interact with the API, use tools like Postman or cURL. The endpoints are documented in the corresponding section.
+Use tools like Postman or cURL to interact with the API. Full endpoint details are available via [API Documentation](#api-documentation).
 
 ## Sample Valid JSON Request Bodies
 
-##### <a id="signup">Sign Up -> /api/auth/signup</a>
+<details>
+  <summary>View samples</summary>
+
+##### Sign Up -> /api/auth/signup
 
 ```json
 {
@@ -224,7 +250,7 @@ To interact with the API, use tools like Postman or cURL. The endpoints are docu
 }
 ```
 
-##### <a id="signin">Log In -> /api/auth/signin</a>
+##### Log In -> /api/auth/signin
 
 ```json
 {
@@ -233,7 +259,7 @@ To interact with the API, use tools like Postman or cURL. The endpoints are docu
 }
 ```
 
-##### <a id="userupdate">Update User -> /api/users</a>
+##### Update User -> /api/users
 
 ```json
 {
@@ -244,13 +270,13 @@ To interact with the API, use tools like Postman or cURL. The endpoints are docu
 }
 ```
 
-##### <a id="roleupdate">Update Role -> /api/users/{id}</a>
+##### Update Role -> /api/users/{id}
 
 ```json
 "ROLE_NAME"
 ```
 
-##### <a id="passwordupdate">Update Password -> /api/users/password</a>
+##### Update Password -> /api/users/password
 
 ```json
 {
@@ -259,22 +285,24 @@ To interact with the API, use tools like Postman or cURL. The endpoints are docu
 }
 ```
 
-##### <a id="productcreate">Create Product -> /api/products</a>
+##### Create Product -> /api/products
+
+Content-Type: multipart/form-data
 
 ```json
 {
-    "name": "Product Name",
-    "description": "Product Description",
-    "price": 100.0,
-    "stock": 10,
-    "category": "Category Name",
-    "supplierId": 1,
-    "minStock": 5,
-    "image": "(binary image file)"
+  "name": "Product Name",
+  "description": "Product Description",
+  "price": 100.0,
+  "stock": 10,
+  "category": "Category Name",
+  "supplierId": 1,
+  "minStock": 5,
+  "image": "(binary image file)"
 }
 ```
 
-##### <a id="productupdate">Update Product -> /api/products/{id}</a>
+##### Update Product -> /api/products/{id}
 
 Content-Type: multipart/form-data
 
@@ -291,7 +319,7 @@ Content-Type: multipart/form-data
 }
 ```
 
-##### <a id="categorycreate">Create Category -> /api/categories</a>
+##### Create Category -> /api/categories
 
 ```json
 {
@@ -299,7 +327,7 @@ Content-Type: multipart/form-data
 }
 ```
 
-##### <a id="categoryupdate">Update Category -> /api/categories/{id}</a>
+##### Update Category -> /api/categories/{id}
 
 ```json
 {
@@ -307,7 +335,7 @@ Content-Type: multipart/form-data
 }
 ```
 
-##### <a id="suppliercreate">Create Supplier -> /api/suppliers</a>
+##### Create Supplier -> /api/suppliers
 
 ```json
 {
@@ -319,7 +347,7 @@ Content-Type: multipart/form-data
 }
 ```
 
-##### <a id="supplierupdate">Update Supplier -> /api/suppliers/{id}</a>
+##### Update Supplier -> /api/suppliers/{id}
 
 ```json
 {
@@ -331,7 +359,7 @@ Content-Type: multipart/form-data
 }
 ```
 
-##### <a id="movementcreate">Create Movement -> /api/stock-movements</a>
+##### Create Movement -> /api/stock-movements
 
 ```json
 {
@@ -346,7 +374,9 @@ Content-Type: multipart/form-data
 }
 ```
 
+</details>
+
 ## License
 
-**[GNU Affero General Public License v3.0](https://www.gnu.org/licenses/agpl-3.0.html)**.
+**[GNU Affero General Public License v3.0](https://www.gnu.org/licenses/agpl-3.0.html)**
 © 2024 FrankSkep. See the LICENSE file for more information.

@@ -32,6 +32,11 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authRequest ->
                         authRequest
                                 .requestMatchers("/api/auth/**").permitAll()
+                                .requestMatchers(
+                                        "/v3/api-docs/**",
+                                        "/swagger-ui/**",
+                                        "/swagger-ui.html")
+                                .permitAll()
                                 .anyRequest().authenticated()
                 )
                 .sessionManagement(sessionManager ->
@@ -45,7 +50,6 @@ public class SecurityConfig {
                 .build();
     }
 
-    // Manejador de excepciones de autenticación
     @Bean
     public AuthenticationEntryPoint authenticationEntryPoint() {
         return (request, response, authException) -> {
@@ -54,7 +58,6 @@ public class SecurityConfig {
         };
     }
 
-    // Manejador de excepciones de acceso denegado
     @Bean
     public AccessDeniedHandler accessDeniedHandler() {
         return (request, response, accessDeniedException) -> {

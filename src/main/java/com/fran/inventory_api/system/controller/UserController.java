@@ -1,9 +1,9 @@
-package com.fran.inventory_api.auth.controller;
+package com.fran.inventory_api.system.controller;
 
 import com.fran.inventory_api.auth.dto.PasswordRequest;
-import com.fran.inventory_api.auth.dto.UserRequest;
-import com.fran.inventory_api.auth.entity.Role;
-import com.fran.inventory_api.auth.service.UserService;
+import com.fran.inventory_api.system.dto.UserRequest;
+import com.fran.inventory_api.system.entity.Role;
+import com.fran.inventory_api.system.service.Impl.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;

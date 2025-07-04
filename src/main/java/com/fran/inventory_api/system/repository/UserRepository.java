@@ -1,6 +1,6 @@
-package com.fran.inventory_api.auth.repository;
+package com.fran.inventory_api.system.repository;
 
-import com.fran.inventory_api.auth.entity.User;
+import com.fran.inventory_api.system.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
