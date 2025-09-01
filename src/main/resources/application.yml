@@ -1,0 +1,50 @@
+# Application Configuration
+spring:
+  application:
+    name: InventoryManagement
+  cache:
+    type: simple
+  config:
+    import: "optional:file:src/main/resources/.env[.properties]"
+
+  # Database Configuration
+  datasource:
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  # Hibernate Configuration
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+  # Multipart Configuration
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 5MB
+      max-request-size: 5MB
+
+# Server Configuration
+server:
+  port: 8080
+
+# Logging Configuration
+logging:
+  level:
+    org.springframework.cache: DEBUG
+
+# Cloudinary Configuration
+cloudinary:
+  cloud_name: ${CLOUDINARY_CLOUD_NAME}
+  api_key: ${CLOUDINARY_API_KEY}
+  api_secret: ${CLOUDINARY_API_SECRET}
+
+# JWT Configuration
+jwt:
+  secret:
+    key: ${JWT_SECRET_KEY}
+  expiration:
+    time: 86400000
